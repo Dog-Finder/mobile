@@ -18,9 +18,9 @@
         "plugin:react-native/all"
     ],
     "plugins": [
-        "prettier",
         "react",
-        "react-native"
+        "react-native",
+        "prettier"
     ],
     "globals": {
         "React": "readonly"
@@ -31,7 +31,8 @@
             {
                 "trailingComma": "es5",
                 "semi": false,
-                "singleQuote": true
+                "singleQuote": true,
+                "tabWidth": 2
             }
         ],
         "prefer-const": [
