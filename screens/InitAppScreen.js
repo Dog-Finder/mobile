@@ -13,6 +13,7 @@ export default class InitAppScreen extends Component {
     return (
       <View style={styles.container}>
         <Text> Init App</Text>
+        <Text> Cambio Ian</Text>
         <Button title="Advance" onPress={this.advance} />
       </View>
     )
