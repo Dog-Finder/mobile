@@ -12,20 +12,37 @@ export default class InitAppScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text> Init App</Text>
-        <Button title="Advance" onPress={this.advance} />
+        <View style={styles.buttonContainer}>
+          <Button title="Busco un perro" onPress={this.advance} />
+        </View>
+        <View style={styles.buttonContainer}>
+          <Text style={styles.titleText}> Logo PerdiDog </Text>
+        </View>
+        <View style={styles.buttonContainer}>
+          <Button title="Encontré un perro" onPress={this.advance} />
+        </View>
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  buttonContainer: {
+    alignItems: 'center',
     backgroundColor: '#fff',
     flex: 1,
-    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  container: {
+    backgroundColor: '#fff',
+    flex: 2,
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 15,
+  },
+  titleText: {
+    fontSize: 20,
+    fontWeight: 'bold',
   },
 })
