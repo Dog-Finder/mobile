@@ -1,4 +1,16 @@
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
+import axiosMiddleware from 'redux-axios-middleware'
+import thunk from 'redux-thunk'
+import axios from 'axios'
+
 import rootReducer from './reducers'
 
-export default createStore(rootReducer)
+export const client = axios.create({
+  baseURL: 'https://3mqzqt43hg.execute-api.us-east-1.amazonaws.com/playground',
+  responseType: 'json',
+  requestType: 'json',
+})
+
+const middlewares = [axiosMiddleware(client), thunk]
+
+export default createStore(rootReducer, applyMiddleware(...middlewares))

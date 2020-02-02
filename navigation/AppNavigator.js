@@ -4,8 +4,8 @@ import AuthStack from './AuthStack'
 import InitAppStack from './InitAppStack'
 import MainAppSwitch from './MainAppSwitch'
 import AuthLoadingScreen from '../screens/AuthLoadingScreen'
-
-import MainTabNavigator from './MainTabNavigator'
+import LostDogScreen from '../screens/LostDogScreen'
+import HomeScreen from '../screens/HomeScreen'
 
 export default createAppContainer(
   createSwitchNavigator(
@@ -16,9 +16,11 @@ export default createAppContainer(
       Auth: AuthStack,
       InitApp: InitAppStack,
       MainApp: MainAppSwitch,
+      Debug: LostDogScreen,
+      Home: HomeScreen,
     },
     {
-      initialRouteName: 'AuthLoading',
+      initialRouteName: 'InitApp',
     }
   )
 )

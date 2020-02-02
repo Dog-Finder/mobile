@@ -1,29 +1,37 @@
 import React, { Component } from 'react'
 import { Text, StyleSheet, View, Button } from 'react-native'
+import Proptypes from 'prop-types'
 
 export default class InitAppScreen extends Component {
   constructor(props) {
     super(props)
-    this.advance = this.advance.bind(this)
   }
-  advance() {
-    this.props.navigation.navigate('MainApp')
-  }
+
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.buttonContainer}>
-          <Button title="Busco un perro" onPress={this.advance} />
+          <Button
+            title="Busco un perro"
+            onPress={() => this.props.navigation.navigate('LostDog')}
+          />
         </View>
         <View style={styles.buttonContainer}>
           <Text style={styles.titleText}> Logo PerdiDog </Text>
         </View>
         <View style={styles.buttonContainer}>
-          <Button title="Encontré un perro" onPress={this.advance} />
+          <Button
+            title="Encontré un perro"
+            onPress={() => this.props.navigation.navigate('MainApp')}
+          />
         </View>
       </View>
     )
   }
+}
+
+InitAppScreen.propTypes = {
+  navigation: Proptypes.object.isRequired,
 }
 
 const styles = StyleSheet.create({

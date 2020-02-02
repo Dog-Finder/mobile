@@ -1,4 +1,4 @@
 import { combineReducers } from 'redux'
-import todos from './todos'
+import lostDogReducer from './lostDog'
 
-export default combineReducers({ todos })
+export default combineReducers({ lostDogReducer })
