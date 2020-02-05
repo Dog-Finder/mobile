@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { View, StyleSheet, Button } from 'react-native'
 import { Input } from 'react-native-elements'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
+import { Appearance } from 'react-native-appearance'
 
 export class LostDogForm extends Component {
   constructor(props) {
@@ -49,6 +50,7 @@ export class LostDogForm extends Component {
   }
 
   render() {
+    const colorScheme = Appearance.getColorScheme()
     return (
       <View>
         <Input
@@ -68,6 +70,7 @@ export class LostDogForm extends Component {
           isVisible={this.state.isDatePickerVisible}
           onConfirm={this.onConfirmDatePicker}
           onCancel={this.onCancelDatePicker}
+          isDarkModeEnabled={colorScheme === 'dark'}
         />
         <Input
           onChangeText={this.onChangePhoto}
