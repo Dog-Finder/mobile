@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 import { Camera } from 'expo-camera'
-import * as Permissions from 'expo-permissions'
 import { Platform } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import * as ImagePicker from 'expo-image-picker'
@@ -23,13 +22,10 @@ export default class PictureScreen extends Component {
 
   async componentDidMount() {
     if (Platform.OS === 'ios') {
-      const { permissions } = await Permissions.askAsync(
-        Permissions.CAMERA_ROLL
-      )
-      const galleryStatus = permissions.cameraRoll.status
-      this.setState({ hasGalleryPermission: galleryStatus === 'granted' })
+      const { status } = await ImagePicker.requestCameraRollPermissionsAsync()
+      this.setState({ hasGalleryPermission: status === 'granted' })
     }
-    const { status } = await Permissions.askAsync(Permissions.CAMERA)
+    const { status } = await ImagePicker.requestCameraPermissionsAsync()
     this.setState({ hasCameraPermission: status === 'granted' })
   }
   prepareRatio = async () => {
