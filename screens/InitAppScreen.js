@@ -1,10 +1,18 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View, Button } from 'react-native'
+import { StyleSheet, View, Button, Image } from 'react-native'
 import Proptypes from 'prop-types'
 
 export default class InitAppScreen extends Component {
   constructor(props) {
     super(props)
+    this.advance = this.advance.bind(this)
+    this.openCamera = this.openCamera.bind(this)
+  }
+  advance() {
+    this.props.navigation.navigate('Home')
+  }
+  openCamera() {
+    this.props.navigation.navigate('Picture')
   }
 
   render() {
@@ -16,14 +24,12 @@ export default class InitAppScreen extends Component {
             onPress={() => this.props.navigation.navigate('LostDog')}
           />
         </View>
+        <Image
+          source={require('../assets/images/logo002.jpg')}
+          style={styles.image}
+        />
         <View style={styles.buttonContainer}>
-          <Text style={styles.titleText}> Logo PerdiDog </Text>
-        </View>
-        <View style={styles.buttonContainer}>
-          <Button
-            title="Encontré un perro"
-            onPress={() => this.props.navigation.navigate('MainApp')}
-          />
+          <Button title="Encontré un perro" onPress={this.openCamera} />
         </View>
       </View>
     )
@@ -49,8 +55,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingTop: 15,
   },
-  titleText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
+  image: { height: 110, width: 254 },
 })

@@ -1,11 +1,10 @@
-import React from 'react'
 import { createAppContainer, createSwitchNavigator } from 'react-navigation'
 import AuthStack from './AuthStack'
-import InitAppStack from './InitAppStack'
 import MainAppSwitch from './MainAppSwitch'
 import AuthLoadingScreen from '../screens/AuthLoadingScreen'
 import LostDogScreen from '../screens/LostDogScreen'
 import HomeScreen from '../screens/HomeScreen'
+import InitAppStack from './InitAppStack'
 
 export default createAppContainer(
   createSwitchNavigator(
