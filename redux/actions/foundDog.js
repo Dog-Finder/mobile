@@ -6,7 +6,7 @@ export const actions = {
 
 export function postFoundDog(authToken, data) {
   return {
-    type: actions.POST_FOUD_DOG,
+    type: actions.POST_FOUND_DOG,
     payload: {
       request: {
         url: `/found-dog`,
