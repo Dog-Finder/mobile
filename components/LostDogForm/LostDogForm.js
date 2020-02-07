@@ -15,6 +15,11 @@ export class LostDogForm extends Component {
       photo: '',
       description: '',
       isDatePickerVisible: false,
+      validate: {
+        name: false,
+        date: false,
+        description: false,
+      },
     }
     this.onChangeName = this.onChangeName.bind(this)
     this.onChangeDate = this.onChangeDate.bind(this)
@@ -26,7 +31,9 @@ export class LostDogForm extends Component {
   }
 
   onChangeName(name) {
-    this.setState({ name })
+    this.setState(currentState => {
+      return { name, validate: { ...currentState, name: name !== '' } }
+    })
   }
   onChangeDate() {
     this.setState({ isDatePickerVisible: true })
@@ -35,10 +42,21 @@ export class LostDogForm extends Component {
     this.setState({ photo })
   }
   onChangeDescription(description) {
-    this.setState({ description })
+    this.setState(currentState => {
+      return {
+        description,
+        validate: { ...currentState, description: description !== '' },
+      }
+    })
   }
   onConfirmDatePicker(date) {
-    this.setState({ date, isDatePickerVisible: false })
+    this.setState(currentState => {
+      return {
+        date,
+        isDatePickerVisible: false,
+        validate: { ...currentState, date: date !== '' },
+      }
+    })
   }
   onCancelDatePicker() {
     this.setState({ isDatePickerVisible: false })
@@ -47,6 +65,11 @@ export class LostDogForm extends Component {
     const { name, date, photo, description } = this.state
     const data = { name, date, photo, description }
     this.props.onSubmitHandler('12345', data)
+  }
+
+  validate() {
+    const { name, date, description } = this.state.validate
+    return name && date && description
   }
 
   render() {
@@ -82,7 +105,11 @@ export class LostDogForm extends Component {
           containerStyle={styles.input}
           label="Descripción"
         ></Input>
-        <Button onPress={this.onPressHandler} title="Submit"></Button>
+        <Button
+          disabled={!this.validate()}
+          onPress={this.onPressHandler}
+          title="Submit"
+        ></Button>
       </View>
     )
   }
