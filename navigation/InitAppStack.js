@@ -5,6 +5,7 @@ import HomeScreen from '../screens/HomeScreen'
 import PictureScreen from '../screens/PictureScreen'
 import AcceptPictureScreen from '../screens/AcceptPictureScreen'
 import FoundDogScreen from '../screens/FoundDogScreen'
+import ShowPictureScreen from '../screens/ShowPictureScreen'
 
 export default createStackNavigator({
   InitApp: {
@@ -29,4 +30,10 @@ export default createStackNavigator({
   },
   FoundDog: FoundDogScreen,
   LostDog: LostDogScreen,
+  ShowPicture: {
+    screen: ShowPictureScreen,
+    navigationOptions: {
+      header: null,
+    },
+  },
 })

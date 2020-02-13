@@ -13,7 +13,6 @@ export default class AcceptPictureScreen extends Component {
     this.props.navigation.navigate('Picture')
   }
   selectPicture(selectUri) {
-    // LostDog for debug, should be FoundDog
     this.props.navigation.navigate('FoundDog', {
       uri: selectUri,
     })

@@ -10,36 +10,25 @@ export class FoundDogForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      name: '',
       date: '',
-      photo: '',
       description: '',
       isDatePickerVisible: false,
+      imagePath: this.imagePath,
       validate: {
         name: false,
         date: false,
         description: false,
       },
     }
-    this.onChangeName = this.onChangeName.bind(this)
     this.onChangeDate = this.onChangeDate.bind(this)
-    this.onChangePhoto = this.onChangePhoto.bind(this)
     this.onChangeDescription = this.onChangeDescription.bind(this)
     this.onConfirmDatePicker = this.onConfirmDatePicker.bind(this)
     this.onCancelDatePicker = this.onCancelDatePicker.bind(this)
     this.onPressHandler = this.onPressHandler.bind(this)
   }
 
-  onChangeName(name) {
-    this.setState(currentState => {
-      return { name, validate: { ...currentState, name: name !== '' } }
-    })
-  }
   onChangeDate() {
     this.setState({ isDatePickerVisible: true })
-  }
-  onChangePhoto(photo) {
-    this.setState({ photo })
   }
   onChangeDescription(description) {
     this.setState(currentState => {
@@ -76,30 +65,13 @@ export class FoundDogForm extends Component {
     const colorScheme = Appearance.getColorScheme()
     return (
       <View>
-        <Input
-          onChangeText={this.onChangeName}
-          containerStyle={styles.input}
-          label="Nombre"
-        ></Input>
-        <Input
-          onTouchEnd={this.onChangeDate}
-          containerStyle={styles.input}
-          label="Fecha"
-          disabled={true}
-          placeholder="Ingresar Fecha"
-          value={this.state.date.toString()}
-        ></Input>
+        <Button title="Show Date Picker" onPress={this.onChangeDate} />
         <DateTimePickerModal
           isVisible={this.state.isDatePickerVisible}
           onConfirm={this.onConfirmDatePicker}
           onCancel={this.onCancelDatePicker}
           isDarkModeEnabled={colorScheme === 'dark'}
         />
-        <Input
-          onChangeText={this.onChangePhoto}
-          containerStyle={styles.input}
-          label="Foto"
-        ></Input>
         <Input
           onChangeText={this.onChangeDescription}
           containerStyle={styles.input}
@@ -108,7 +80,7 @@ export class FoundDogForm extends Component {
         <Button
           disabled={!this.validate()}
           onPress={this.onPressHandler}
-          title="Submit"
+          title="Publicar perro"
         ></Button>
       </View>
     )
@@ -117,6 +89,7 @@ export class FoundDogForm extends Component {
 
 FoundDogForm.propTypes = {
   onSubmitHandler: PropTypes.func.isRequired,
+  imagePath: PropTypes.string.isRequired,
 }
 
 const styles = StyleSheet.create({

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import FoundDogForm from '../components/FoundDogForm/FoundDogForm'
 import { postFoundDog } from '../redux/actions/foundDog'
 import { getSignedUrl } from '../redux/actions/images'
@@ -12,12 +12,13 @@ export class FoundDogScreen extends Component {
     super(props)
     this.onSubmitHandler = this.onSubmitHandler.bind(this)
     this.uploadImage = this.uploadImage.bind(this)
+    this.imagePath = this.props.navigation.getParam('uri')
+    this.pressPicture = this.pressPicture.bind(this)
   }
   async componentDidMount() {}
 
   async onSubmitHandler(token, data) {
-    const filePath = await this.props.navigation.getParam('uri') // Replace with path
-    const imageLink = await this.uploadImage(filePath)
+    const imageLink = await this.uploadImage(this.imagePath)
     data.imageLinks = imageLink
     this.props.postFoundDog(token, data)
     this.props.navigation.navigate('Home')
@@ -31,6 +32,11 @@ export class FoundDogScreen extends Component {
     await fetch(url, { method: 'PUT', body: blob }) // Actual upload to S3
     return imageLink
   }
+  pressPicture(selectUri) {
+    this.props.navigation.navigate('ShowPicture', {
+      uri: selectUri,
+    })
+  }
 
   render() {
     return (
@@ -38,11 +44,28 @@ export class FoundDogScreen extends Component {
         <Header
           centerComponent={{
             text: 'PERRO ENCONTRADO',
-            style: { color: '#fff' },
+            style: { color: '#fff', fontWeight: 'bold' },
           }}
         ></Header>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            onPress={() => {
+              this.pressPicture(this.imagePath)
+            }}
+            style={styles.buttonStyle}
+          >
+            <Image
+              source={{ uri: this.imagePath }}
+              style={styles.imageStyle}
+              resizeMode="center"
+            />
+          </TouchableOpacity>
+        </View>
         <View style={styles.form}>
-          <FoundDogForm onSubmitHandler={this.onSubmitHandler}></FoundDogForm>
+          <FoundDogForm
+            onSubmitHandler={this.onSubmitHandler}
+            imagePath={this.imagePath}
+          ></FoundDogForm>
         </View>
       </View>
     )
@@ -51,16 +74,32 @@ export class FoundDogScreen extends Component {
 
 FoundDogScreen.propTypes = {
   postFoundDog: PropTypes.func.isRequired,
+  getSignedUrl: PropTypes.func.isRequired,
   navigation: PropTypes.object.isRequired,
 }
 
 const styles = StyleSheet.create({
+  buttonContainer: {
+    color: 'transparent',
+    flex: 0.6,
+    flexDirection: 'row',
+    alignSelf: 'center',
+    justifyContent: 'space-around',
+  },
+  buttonStyle: {
+    alignSelf: 'center',
+    flex: 0.3,
+  },
   container: {
+    color: 'transparent',
     flex: 1,
     justifyContent: 'flex-start',
   },
   form: {
     marginTop: 10,
+  },
+  imageStyle: {
+    flex: 1,
   },
 })
 
