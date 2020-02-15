@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { View, StyleSheet, Button } from 'react-native'
+import { View, StyleSheet, Button, Image, TouchableOpacity } from 'react-native'
 import { Input } from 'react-native-elements'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import { Appearance } from 'react-native-appearance'
@@ -64,24 +64,38 @@ export class FoundDogForm extends Component {
   render() {
     const colorScheme = Appearance.getColorScheme()
     return (
-      <View>
-        <Button title="Show Date Picker" onPress={this.onChangeDate} />
-        <DateTimePickerModal
-          isVisible={this.state.isDatePickerVisible}
-          onConfirm={this.onConfirmDatePicker}
-          onCancel={this.onCancelDatePicker}
-          isDarkModeEnabled={colorScheme === 'dark'}
-        />
-        <Input
-          onChangeText={this.onChangeDescription}
-          containerStyle={styles.input}
-          label="Descripción"
-        ></Input>
-        <Button
-          disabled={!this.validate()}
-          onPress={this.onPressHandler}
-          title="Publicar perro"
-        ></Button>
+      <View style={styles.container}>
+        <TouchableOpacity
+          onPress={this.props.pressPicture}
+          style={styles.button}
+        >
+          <Image
+            style={styles.imageStyle}
+            source={{
+              uri: this.props.imagePath,
+            }}
+            resizeMode="stretch"
+          />
+        </TouchableOpacity>
+        <View style={styles.form}>
+          <Button title="Show Date Picker" onPress={this.onChangeDate} />
+          <DateTimePickerModal
+            isVisible={this.state.isDatePickerVisible}
+            onConfirm={this.onConfirmDatePicker}
+            onCancel={this.onCancelDatePicker}
+            isDarkModeEnabled={colorScheme === 'dark'}
+          />
+          <Input
+            onChangeText={this.onChangeDescription}
+            containerStyle={styles.input}
+            label="Descripción"
+          ></Input>
+          <Button
+            disabled={!this.validate()}
+            onPress={this.onPressHandler}
+            title="Publicar perro"
+          ></Button>
+        </View>
       </View>
     )
   }
@@ -90,9 +104,22 @@ export class FoundDogForm extends Component {
 FoundDogForm.propTypes = {
   onSubmitHandler: PropTypes.func.isRequired,
   imagePath: PropTypes.string.isRequired,
+  pressPicture: PropTypes.func.isRequired,
 }
 
 const styles = StyleSheet.create({
+  button: {
+    flex: 1,
+  },
+  container: {
+    flex: 1,
+  },
+  form: {
+    flex: 1,
+  },
+  imageStyle: {
+    flex: 1,
+  },
   input: {
     paddingBottom: 10,
   },

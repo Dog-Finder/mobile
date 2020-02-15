@@ -32,9 +32,9 @@ export class FoundDogScreen extends Component {
     await fetch(url, { method: 'PUT', body: blob }) // Actual upload to S3
     return imageLink
   }
-  pressPicture(selectUri) {
+  pressPicture() {
     this.props.navigation.navigate('ShowPicture', {
-      uri: selectUri,
+      uri: this.imagePath,
     })
   }
 
@@ -47,26 +47,11 @@ export class FoundDogScreen extends Component {
             style: { color: '#fff', fontWeight: 'bold' },
           }}
         ></Header>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            onPress={() => {
-              this.pressPicture(this.imagePath)
-            }}
-            style={styles.buttonStyle}
-          >
-            <Image
-              source={{ uri: this.imagePath }}
-              style={styles.imageStyle}
-              resizeMode="center"
-            />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.form}>
-          <FoundDogForm
-            onSubmitHandler={this.onSubmitHandler}
-            imagePath={this.imagePath}
-          ></FoundDogForm>
-        </View>
+        <FoundDogForm
+          onSubmitHandler={this.onSubmitHandler}
+          imagePath={this.imagePath}
+          pressPicture={this.pressPicture}
+        ></FoundDogForm>
       </View>
     )
   }
@@ -79,26 +64,7 @@ FoundDogScreen.propTypes = {
 }
 
 const styles = StyleSheet.create({
-  buttonContainer: {
-    color: 'transparent',
-    flex: 0.6,
-    flexDirection: 'row',
-    alignSelf: 'center',
-    justifyContent: 'space-around',
-  },
-  buttonStyle: {
-    alignSelf: 'center',
-    flex: 0.3,
-  },
   container: {
-    color: 'transparent',
-    flex: 1,
-    justifyContent: 'flex-start',
-  },
-  form: {
-    marginTop: 10,
-  },
-  imageStyle: {
     flex: 1,
   },
 })
