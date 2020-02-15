@@ -1,31 +1,51 @@
 import React, { Component } from 'react'
-import { StyleSheet, ImageBackground } from 'react-native'
-import { Button } from 'react-native-elements'
+import { StyleSheet, ImageBackground, View } from 'react-native'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import PropTypes from 'prop-types'
 
-export default class AcceptPictureScreen extends Component {
+export default class ShowPictureScreen extends Component {
   constructor(props) {
     super(props)
-    this.repeatPicture = this.repeatPicture.bind(this)
+    this.goBack = this.goBack.bind(this)
   }
-  repeatPicture() {
-    this.props.navigation.navigate('Picture')
+  goBack() {
+    this.props.navigation.navigate('FoundDog')
   }
 
   render() {
-    const { navigation } = this.props
     return (
       <ImageBackground
-        source={{ uri: navigation.getParam('uri', 'NO-uri') }}
-        style={styles.image}
-      ></ImageBackground>
+        source={{ uri: this.props.navigation.getParam('uri', 'NO-uri') }}
+        style={styles.imageStyle}
+      >
+        <View style={styles.back}>
+          <Icon
+            name="arrow-left"
+            color="white"
+            size={50}
+            containerStyle={styles.buttonContainer}
+            onPress={this.goBack}
+          />
+        </View>
+      </ImageBackground>
     )
   }
 }
 
-AcceptPictureScreen.propTypes = {
+ShowPictureScreen.propTypes = {
   navigation: PropTypes.object.isRequired,
 }
 const styles = StyleSheet.create({
-  image: { flex: 1, height: '100%', width: '100%' },
+  back: {
+    flex: 0.2,
+    flexDirection: 'row',
+    color: 'transparent',
+    alignItems: 'flex-start',
+    marginTop: 22,
+    marginLeft: 3,
+  },
+  buttonContainer: {
+    color: 'transparent',
+  },
+  imageStyle: { flex: 1, height: '100%', width: '100%' },
 })
