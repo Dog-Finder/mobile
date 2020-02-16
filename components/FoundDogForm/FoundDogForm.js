@@ -83,7 +83,7 @@ export class FoundDogForm extends Component {
           {/* Inputs Top are the things next to the picture on the left side */}
           <View style={styles.InputsTop}>
             <Button
-              title="¿Cuándo lo encontró?"
+              title="¿Cuándo lo encontraste?"
               onPress={this.onChangeDate}
               buttonStyle={{
                 backgroundColor: 'steelblue',
