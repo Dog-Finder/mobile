@@ -37,16 +37,27 @@ export class FoundDogScreen extends Component {
       uri: this.imagePath,
     })
   }
+  static navigationOptions = {
+    title: 'Perro Encontrado',
+    headerStyle: {
+      backgroundColor: 'steelblue',
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+      textAlign: 'center',
+    },
+  }
 
   render() {
     return (
       <View style={styles.container}>
-        <Header
+        {/*         <Header
           centerComponent={{
             text: 'PERRO ENCONTRADO',
             style: { color: '#fff', fontWeight: 'bold' },
           }}
-        ></Header>
+        ></Header> */}
         <FoundDogForm
           onSubmitHandler={this.onSubmitHandler}
           imagePath={this.imagePath}

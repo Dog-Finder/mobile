@@ -28,7 +28,9 @@ export default createStackNavigator({
       header: null,
     },
   },
-  FoundDog: FoundDogScreen,
+  FoundDog: {
+    screen: FoundDogScreen,
+  },
   LostDog: LostDogScreen,
   ShowPicture: {
     screen: ShowPictureScreen,
