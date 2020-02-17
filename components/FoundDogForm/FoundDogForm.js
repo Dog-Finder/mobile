@@ -8,11 +8,13 @@ import {
   TouchableOpacity,
   Text,
   Picker,
+  Dimensions,
 } from 'react-native'
 import { Input, colors } from 'react-native-elements'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import { Appearance } from 'react-native-appearance'
 import { Button } from 'react-native-elements'
+import MapView from 'react-native-maps'
 
 export class FoundDogForm extends Component {
   constructor(props) {
@@ -82,32 +84,6 @@ export class FoundDogForm extends Component {
         <View style={styles.containerTop}>
           {/* Inputs Top are the things next to the picture on the left side */}
           <View style={styles.InputsTop}>
-            <Button
-              title="¿Cuándo lo encontraste?"
-              onPress={this.onChangeDate}
-              buttonStyle={{
-                backgroundColor: 'steelblue',
-                marginTop: 10,
-                marginLeft: 10,
-              }}
-            />
-            <Text
-              style={{
-                textAlign: 'center',
-                fontWeight: 'bold',
-                marginTop: 5,
-                marginLeft: 10,
-              }}
-              onPress={this.onChangeDate}
-            >
-              {this.state.date.toString().slice(4, 15)}
-            </Text>
-            <DateTimePickerModal
-              isVisible={this.state.isDatePickerVisible}
-              onConfirm={this.onConfirmDatePicker}
-              onCancel={this.onCancelDatePicker}
-              isDarkModeEnabled={colorScheme === 'dark'}
-            />
             <Text
               style={{
                 fontWeight: 'bold',
@@ -124,12 +100,42 @@ export class FoundDogForm extends Component {
             <Picker
               selectedValue={this.state.sex}
               onValueChange={this.updateSex}
-              style={{ marginLeft: 10, width: 130 }}
+              style={{
+                marginLeft: 10,
+                width: 130,
+                alignSelf: 'center',
+              }}
             >
               <Picker.Item label="No sé" value="X" />
               <Picker.Item label="Macho" value="M" />
               <Picker.Item label="Hembra" value="F" />
             </Picker>
+            <Button
+              title="¿Cuándo lo encontraste?"
+              onPress={this.onChangeDate}
+              buttonStyle={{
+                backgroundColor: 'steelblue',
+                marginTop: 15,
+                marginLeft: 10,
+              }}
+            />
+            <Text
+              style={{
+                textAlign: 'center',
+                marginTop: 5,
+                marginLeft: 10,
+                fontSize: 15,
+              }}
+              onPress={this.onChangeDate}
+            >
+              {this.state.date.toString().slice(4, 15)}
+            </Text>
+            <DateTimePickerModal
+              isVisible={this.state.isDatePickerVisible}
+              onConfirm={this.onConfirmDatePicker}
+              onCancel={this.onCancelDatePicker}
+              isDarkModeEnabled={colorScheme === 'dark'}
+            />
           </View>
           <TouchableOpacity
             onPress={this.props.pressPicture}
@@ -145,6 +151,7 @@ export class FoundDogForm extends Component {
           </TouchableOpacity>
         </View>
         <View style={styles.form}>
+          <MapView style={styles.mapStyle} />
           <Input
             onChangeText={this.onChangeDescription}
             containerStyle={styles.input}
@@ -169,7 +176,8 @@ FoundDogForm.propTypes = {
 
 const styles = StyleSheet.create({
   button: {
-    flex: 0.5,
+    flex: 0.7,
+    marginTop: 10,
   },
   container: {
     flex: 1,
@@ -183,10 +191,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   imageStyle: {
-    flex: 1,
+    flex: 0.95,
   },
   input: {
     paddingBottom: 10,
+  },
+  mapStyle: {
+    height: Dimensions.get('window').height,
+    width: Dimensions.get('window').width,
   },
 })
 
