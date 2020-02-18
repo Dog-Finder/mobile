@@ -9,6 +9,7 @@ import {
   Text,
   Picker,
   Dimensions,
+  Modal,
 } from 'react-native'
 import { Input, colors } from 'react-native-elements'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
@@ -25,6 +26,7 @@ export class FoundDogForm extends Component {
       //For sex: X is for unknown sex, M is for male, F for female
       description: '',
       isDatePickerVisible: false,
+      isMapVisible: false,
       imagePath: this.imagePath,
       validate: {
         name: false,
@@ -70,6 +72,26 @@ export class FoundDogForm extends Component {
   }
   updateSex = sex => {
     this.setState({ sex: sex })
+  }
+  setMapVisible(visible) {
+    this.setState({ isMapVisible: visible })
+  }
+
+  getCurrentLocation = async () => {
+    navigator.geolocation.getCurrentPosition(async position => {
+      const region = {
+        latitude: parseFloat(position.coords.latitude),
+        longitude: parseFloat(position.coords.longitude),
+        latitudeDelta: 0.004,
+        longitudeDelta: 0.004,
+      }
+      await this.setState({
+        initialRegion: region,
+      })
+    })
+  }
+  componentDidMount() {
+    this.getCurrentLocation()
   }
 
   validate() {
@@ -151,11 +173,35 @@ export class FoundDogForm extends Component {
           </TouchableOpacity>
         </View>
         <View style={styles.form}>
-          <MapView style={styles.mapStyle} />
+          <Button
+            title="¿Dónde lo encontraste?"
+            onPress={() => {
+              this.setMapVisible(true)
+            }}
+            buttonStyle={{
+              backgroundColor: 'steelblue',
+              marginTop: 15,
+              marginLeft: 10,
+            }}
+          />
+          <Modal
+            animationType="slide"
+            transparent={false}
+            visible={this.state.isMapVisible}
+            onRequestClose={() => {
+              alert('Modal has been closed.')
+              this.setMapVisible(false)
+            }}
+          >
+            <MapView
+              style={styles.mapStyle}
+              initialRegion={this.state.initialRegion}
+            ></MapView>
+          </Modal>
           <Input
             onChangeText={this.onChangeDescription}
             containerStyle={styles.input}
-            label="Descripción"
+            label="Comentarios"
           ></Input>
           <Button
             disabled={!this.validate()}
@@ -197,8 +243,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   mapStyle: {
-    height: Dimensions.get('window').height,
-    width: Dimensions.get('window').width,
+    flex: 1,
   },
 })
 
