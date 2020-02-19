@@ -16,6 +16,7 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import { Appearance } from 'react-native-appearance'
 import { Button } from 'react-native-elements'
 import MapView from 'react-native-maps'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 export class FoundDogForm extends Component {
   constructor(props) {
@@ -193,10 +194,22 @@ export class FoundDogForm extends Component {
               this.setMapVisible(false)
             }}
           >
-            <MapView
-              style={styles.mapStyle}
-              initialRegion={this.state.initialRegion}
-            ></MapView>
+            <View style={{ flex: 1 }}>
+              <MapView
+                style={styles.mapStyle}
+                initialRegion={this.state.initialRegion}
+              ></MapView>
+              <View style={styles.back}>
+                <Icon
+                  name="arrow-left"
+                  color="black"
+                  size={40}
+                  containerStyle={styles.buttonContainer}
+                  backgroundColor={'transparent'}
+                  onPress={() => this.setMapVisible(false)}
+                />
+              </View>
+            </View>
           </Modal>
           <Input
             onChangeText={this.onChangeDescription}
@@ -221,9 +234,22 @@ FoundDogForm.propTypes = {
 }
 
 const styles = StyleSheet.create({
+  back: {
+    alignItems: 'flex-start',
+    alignSelf: 'flex-start',
+    color: 'transparent',
+    flex: 0.2,
+    flexDirection: 'row',
+    marginLeft: 3,
+    marginTop: 8,
+    position: 'absolute',
+  },
   button: {
     flex: 0.7,
     marginTop: 10,
+  },
+  buttonContainer: {
+    color: 'transparent',
   },
   container: {
     flex: 1,
