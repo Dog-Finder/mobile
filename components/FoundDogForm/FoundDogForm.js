@@ -8,14 +8,12 @@ import {
   TouchableOpacity,
   Text,
   Picker,
-  Dimensions,
   Modal,
 } from 'react-native'
-import { Input, colors } from 'react-native-elements'
+import { Input, Button } from 'react-native-elements'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import { Appearance } from 'react-native-appearance'
-import { Button } from 'react-native-elements'
-import MapView from 'react-native-maps'
+import MapView, { Marker } from 'react-native-maps'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 export class FoundDogForm extends Component {
@@ -29,8 +27,20 @@ export class FoundDogForm extends Component {
       isDatePickerVisible: false,
       isMapVisible: false,
       imagePath: this.imagePath,
+      region: {
+        latitude: -33.4376,
+        longitude: 70.6332,
+        //plaza baquedano coordinate, this coordinates are only needed before the app gets current user location
+        latitudeDelta: 0.001,
+        longitudeDelta: 0.001,
+      },
+      marker: {
+        latitude: -33.4376,
+        longitude: 70.6332,
+        //plaza baquedano coordinate
+      },
       validate: {
-        name: false,
+        sex: false,
         date: false,
         description: false,
       },
@@ -41,6 +51,8 @@ export class FoundDogForm extends Component {
     this.onCancelDatePicker = this.onCancelDatePicker.bind(this)
     this.onPressHandler = this.onPressHandler.bind(this)
     this.updateSex = this.updateSex.bind(this)
+    this.handleRegionChange = this.handleRegionChange.bind(this)
+    this.onMarkerChange = this.onMarkerChange.bind(this)
   }
 
   onChangeDate() {
@@ -78,6 +90,17 @@ export class FoundDogForm extends Component {
     this.setState({ isMapVisible: visible })
   }
 
+  handleRegionChange = mapData => {
+    this.setState({
+      marker: { latitude: mapData.latitude, longitude: mapData.longitude },
+      region: mapData,
+    })
+  }
+
+  onMarkerChange(coordinate) {
+    this.setState({ marker: coordinate })
+  }
+
   getCurrentLocation = async () => {
     navigator.geolocation.getCurrentPosition(async position => {
       const region = {
@@ -87,10 +110,12 @@ export class FoundDogForm extends Component {
         longitudeDelta: 0.004,
       }
       await this.setState({
-        initialRegion: region,
+        region: region,
+        marker: { latitude: region.latitude, longitude: region.longitude },
       })
     })
   }
+
   componentDidMount() {
     this.getCurrentLocation()
   }
@@ -197,11 +222,29 @@ export class FoundDogForm extends Component {
             <View style={{ flex: 1 }}>
               <MapView
                 style={styles.mapStyle}
-                initialRegion={this.state.initialRegion}
-              ></MapView>
+                initialRegion={this.state.region}
+                onRegionChangeComplete={this.handleRegionChange}
+                showsBuildings={false}
+                loadingEnabled={true}
+                onPress={event =>
+                  this.onMarkerChange(event.nativeEvent.coordinate)
+                }
+                ref={map => {
+                  this.map = map
+                }}
+              >
+                <Marker
+                  draggable
+                  coordinate={{
+                    latitude: this.state.marker.latitude,
+                    longitude: this.state.marker.longitude,
+                  }}
+                  title={'Mover el pin al punto donde encontraste al perro.'}
+                />
+              </MapView>
               <View style={styles.back}>
                 <Icon
-                  name="arrow-left"
+                  name="close"
                   color="black"
                   size={40}
                   containerStyle={styles.buttonContainer}
@@ -214,7 +257,7 @@ export class FoundDogForm extends Component {
           <Input
             onChangeText={this.onChangeDescription}
             containerStyle={styles.input}
-            label="Comentarios"
+            label="Comentarios adicionales"
           ></Input>
           <Button
             disabled={!this.validate()}
@@ -235,13 +278,12 @@ FoundDogForm.propTypes = {
 
 const styles = StyleSheet.create({
   back: {
-    alignItems: 'flex-start',
-    alignSelf: 'flex-start',
+    alignSelf: 'flex-end',
     color: 'transparent',
     flex: 0.2,
     flexDirection: 'row',
     marginLeft: 3,
-    marginTop: 8,
+    marginTop: 3,
     position: 'absolute',
   },
   button: {
@@ -249,6 +291,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   buttonContainer: {
+    alignSelf: 'flex-start',
     color: 'transparent',
   },
   container: {
