@@ -10,20 +10,22 @@ import {
   Picker,
   Modal,
   TextInput,
+  Alert,
 } from 'react-native'
-import { Input, Button } from 'react-native-elements'
+import { Button } from 'react-native-elements'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import { Appearance } from 'react-native-appearance'
 import MapView, { Marker, Callout } from 'react-native-maps'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import * as Location from 'expo-location'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 export class FoundDogForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      date: new Date(),
-      sex: 'X',
+      date: '',
+      sex: 'No sé',
       address: [{ city: '', country: '', name: '', street: '', region: '' }],
       //For sex: X is for unknown sex, M is for male, F for female
       comentary: '',
@@ -45,7 +47,7 @@ export class FoundDogForm extends Component {
       validate: {
         sex: false,
         date: false,
-        comentary: false,
+        address: false,
       },
     }
     this.onChangeDate = this.onChangeDate.bind(this)
@@ -83,9 +85,35 @@ export class FoundDogForm extends Component {
     this.setState({ isDatePickerVisible: false })
   }
   onPressHandler() {
-    const { name, date, photo, description } = this.state
-    const data = { name, date, photo, description }
-    this.props.onSubmitHandler('12345', data)
+    const { sex, date, imagePath, comentary } = this.state
+    const data = { sex, date, imagePath, comentary }
+    Alert.alert(
+      'Confirmación de datos',
+      'Sexo: ' +
+        this.state.sex +
+        '\n' +
+        'Fecha: ' +
+        this.state.date.toString().slice(4, 15) +
+        '\n' +
+        'Dirección: ' +
+        this.state.address[0].street +
+        ' ' +
+        this.state.address[0].name +
+        '\n' +
+        'Comuna: ' +
+        this.state.address[0].city,
+      [
+        {
+          text: 'Confirmar',
+          onPress: () => this.props.onSubmitHandler('12345', data),
+        },
+        {
+          text: 'Cancelar',
+          style: 'cancel',
+        },
+      ],
+      { cancelable: false }
+    )
   }
   updateSex = sex => {
     this.setState({ sex: sex })
@@ -144,17 +172,21 @@ export class FoundDogForm extends Component {
   }
 
   validate() {
-    const { name, date, comentary } = this.state.validate
-    return name && date && comentary
+    const { sex, date, address } = this.state.validate
+    return sex && date && address
   }
 
   render() {
     const colorScheme = Appearance.getColorScheme()
     return (
-      <View style={styles.container} behavior="padding">
+      <KeyboardAwareScrollView
+        style={styles.container}
+        enableOnAndroid={true}
+        extraScrollHeight={140}
+      >
         <View style={styles.containerTop}>
           {/* Inputs Top are the things next to the picture on the left side */}
-          <View style={styles.InputsTop}>
+          <View style={styles.inputsTop}>
             <Text
               style={{
                 fontWeight: 'bold',
@@ -163,7 +195,9 @@ export class FoundDogForm extends Component {
                 color: 'white',
                 textAlign: 'center',
                 fontSize: 16,
-                borderRadius: 3,
+                borderRadius: 2,
+                textAlignVertical: 'center',
+                height: 30,
               }}
             >
               Sexo
@@ -177,9 +211,9 @@ export class FoundDogForm extends Component {
                 alignSelf: 'center',
               }}
             >
-              <Picker.Item label="No sé" value="X" />
-              <Picker.Item label="Macho" value="M" />
-              <Picker.Item label="Hembra" value="F" />
+              <Picker.Item label="No sé" value="No sé" />
+              <Picker.Item label="Macho" value="Macho" />
+              <Picker.Item label="Hembra" value="Hembra" />
             </Picker>
             <Button
               title="¿Cuándo lo encontraste?"
@@ -228,7 +262,7 @@ export class FoundDogForm extends Component {
             }}
             buttonStyle={{
               backgroundColor: 'steelblue',
-              marginTop: 10,
+              marginTop: 15,
               marginLeft: 10,
               marginRight: 10,
             }}
@@ -289,6 +323,17 @@ export class FoundDogForm extends Component {
                   onPress={() => this.setMapVisible(false)}
                 />
               </View>
+              <Callout style={styles.acceptCalloutStyle}>
+                <Button
+                  title="Aceptar dirección"
+                  onPress={() => {
+                    this.setMapVisible(false)
+                  }}
+                  buttonStyle={{
+                    backgroundColor: 'steelblue',
+                  }}
+                ></Button>
+              </Callout>
             </View>
           </Modal>
           {/* <Text>{JSON.stringify(this.state.address)}</Text> */}
@@ -303,19 +348,44 @@ export class FoundDogForm extends Component {
             Dirección: {this.state.address[0].street}{' '}
             {this.state.address[0].name}
           </Text>
-          <Input
-            onChangeText={this.onChangeComentary}
-            containerStyle={styles.input}
-            multiline={true}
-            label="Comentarios adicionales"
-          ></Input>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              marginTop: 10,
+              backgroundColor: 'steelblue',
+              color: 'white',
+              textAlign: 'center',
+              fontSize: 16,
+              borderRadius: 2,
+              marginLeft: 10,
+              marginRight: 10,
+              height: 30,
+              textAlignVertical: 'center',
+            }}
+          >
+            Comentarios adicionales
+          </Text>
+          <View style={styles.textAreaContainer}>
+            <TextInput
+              onChangeText={this.onChangeComentary}
+              underlineColorAndroid="transparent"
+              style={styles.textInputStyle}
+              containerStyle={styles.input}
+              numberOfLines={3}
+              multiline={true}
+              maxLength={120}
+              maxHeight={60}
+              placeholder="Comentarios adicionales a los datos anteriores"
+            ></TextInput>
+          </View>
           <Button
             disabled={!this.validate()}
             onPress={this.onPressHandler}
+            style={{ marginTop: 10 }}
             title="Publicar perro"
           ></Button>
         </View>
-      </View>
+      </KeyboardAwareScrollView>
     )
   }
 }
@@ -327,6 +397,11 @@ FoundDogForm.propTypes = {
 }
 
 const styles = StyleSheet.create({
+  acceptCalloutStyle: {
+    alignSelf: 'center',
+    bottom: 5,
+    position: 'absolute',
+  },
   back: {
     alignSelf: 'flex-end',
     color: 'transparent',
@@ -337,7 +412,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   button: {
-    flex: 0.7,
+    flex: 0.65,
     marginTop: 10,
   },
   buttonContainer: {
@@ -355,7 +430,7 @@ const styles = StyleSheet.create({
   },
   calloutView: {
     alignSelf: 'flex-start',
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
     borderRadius: 10,
     flexDirection: 'row',
     marginLeft: 5,
@@ -367,7 +442,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   containerTop: {
-    flex: 0.5,
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
@@ -381,17 +456,23 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   imageStyle: {
-    flex: 0.95,
+    flex: 1,
   },
   input: {
-    alignSelf: 'center',
-    height: '30%',
-    marginTop: 5,
-    paddingBottom: 10,
+    flex: 1,
+    justifyContent: 'flex-start',
   },
+  inputsTop: {},
   mapStyle: {
     flex: 1,
   },
+  textAreaContainer: {
+    borderColor: 'grey',
+    borderWidth: 1,
+    margin: 10,
+    padding: '1%',
+  },
+  textInputStyle: { fontSize: 16, textAlignVertical: 'top' },
 })
 
 const mapStateToProps = state => ({})
