@@ -9,12 +9,14 @@ import {
   Text,
   Picker,
   Modal,
+  TextInput,
 } from 'react-native'
 import { Input, Button } from 'react-native-elements'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import { Appearance } from 'react-native-appearance'
-import MapView, { Marker } from 'react-native-maps'
+import MapView, { Marker, Callout } from 'react-native-maps'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import * as Location from 'expo-location'
 
 export class FoundDogForm extends Component {
   constructor(props) {
@@ -22,8 +24,9 @@ export class FoundDogForm extends Component {
     this.state = {
       date: new Date(),
       sex: 'X',
+      address: [{ city: '', country: '', name: '', street: '', region: '' }],
       //For sex: X is for unknown sex, M is for male, F for female
-      description: '',
+      comentary: '',
       isDatePickerVisible: false,
       isMapVisible: false,
       imagePath: this.imagePath,
@@ -42,27 +45,28 @@ export class FoundDogForm extends Component {
       validate: {
         sex: false,
         date: false,
-        description: false,
+        comentary: false,
       },
     }
     this.onChangeDate = this.onChangeDate.bind(this)
-    this.onChangeDescription = this.onChangeDescription.bind(this)
+    this.onChangeComentary = this.onChangeComentary.bind(this)
     this.onConfirmDatePicker = this.onConfirmDatePicker.bind(this)
     this.onCancelDatePicker = this.onCancelDatePicker.bind(this)
     this.onPressHandler = this.onPressHandler.bind(this)
     this.updateSex = this.updateSex.bind(this)
     this.handleRegionChange = this.handleRegionChange.bind(this)
     this.onMarkerChange = this.onMarkerChange.bind(this)
+    // this.onSearchAddress = this.onSearchAddress.bind(this)
   }
 
   onChangeDate() {
     this.setState({ isDatePickerVisible: true })
   }
-  onChangeDescription(description) {
+  onChangeComentary(comentary) {
     this.setState(currentState => {
       return {
-        description,
-        validate: { ...currentState, description: description !== '' },
+        comentary,
+        validate: { ...currentState, comentary: comentary !== '' },
       }
     })
   }
@@ -90,16 +94,32 @@ export class FoundDogForm extends Component {
     this.setState({ isMapVisible: visible })
   }
 
-  handleRegionChange = mapData => {
+  handleRegionChange(mapData) {
     this.setState({
-      marker: { latitude: mapData.latitude, longitude: mapData.longitude },
       region: mapData,
     })
   }
 
-  onMarkerChange(coordinate) {
+  async onMarkerChange(coordinate) {
     this.setState({ marker: coordinate })
+    const address = await Location.reverseGeocodeAsync(coordinate)
+    this.setState({ address: address })
   }
+
+  /*   async onSearchAddress(address) {
+    const coords = await Location.geocodeAsync(address)
+    const mapData = {
+      latitude: coords[0].latitude,
+      longitude: coords[0].longitude,
+      latitudeDelta: 0.001,
+      longitudeDelta: 0.001,
+    }
+    this.handleRegionChange(mapData)
+    this.onMarkerChange({
+      latidude: coords[0].latitude,
+      longitude: coords[0].longitude,
+    })
+  } */
 
   getCurrentLocation = async () => {
     navigator.geolocation.getCurrentPosition(async position => {
@@ -111,7 +131,10 @@ export class FoundDogForm extends Component {
       }
       await this.setState({
         region: region,
-        marker: { latitude: region.latitude, longitude: region.longitude },
+      })
+      await this.onMarkerChange({
+        latitude: region.latitude,
+        longitude: region.longitude,
       })
     })
   }
@@ -121,14 +144,14 @@ export class FoundDogForm extends Component {
   }
 
   validate() {
-    const { name, date, description } = this.state.validate
-    return name && date && description
+    const { name, date, comentary } = this.state.validate
+    return name && date && comentary
   }
 
   render() {
     const colorScheme = Appearance.getColorScheme()
     return (
-      <View style={styles.container}>
+      <View style={styles.container} behavior="padding">
         <View style={styles.containerTop}>
           {/* Inputs Top are the things next to the picture on the left side */}
           <View style={styles.InputsTop}>
@@ -136,11 +159,11 @@ export class FoundDogForm extends Component {
               style={{
                 fontWeight: 'bold',
                 marginTop: 10,
-                marginLeft: 10,
                 backgroundColor: 'steelblue',
                 color: 'white',
                 textAlign: 'center',
                 fontSize: 16,
+                borderRadius: 3,
               }}
             >
               Sexo
@@ -164,7 +187,6 @@ export class FoundDogForm extends Component {
               buttonStyle={{
                 backgroundColor: 'steelblue',
                 marginTop: 15,
-                marginLeft: 10,
               }}
             />
             <Text
@@ -206,8 +228,9 @@ export class FoundDogForm extends Component {
             }}
             buttonStyle={{
               backgroundColor: 'steelblue',
-              marginTop: 15,
+              marginTop: 10,
               marginLeft: 10,
+              marginRight: 10,
             }}
           />
           <Modal
@@ -215,7 +238,7 @@ export class FoundDogForm extends Component {
             transparent={false}
             visible={this.state.isMapVisible}
             onRequestClose={() => {
-              alert('Modal has been closed.')
+              // alert('Modal has been closed.')
               this.setMapVisible(false)
             }}
           >
@@ -242,6 +265,20 @@ export class FoundDogForm extends Component {
                   title={'Mover el pin al punto donde encontraste al perro.'}
                 />
               </MapView>
+              <Callout>
+                <View style={styles.calloutView}>
+                  <TextInput
+                    style={styles.calloutSearch}
+                    /*                     onSubmitEditing={event =>
+                      this.onSearchAddress(event.nativeEvent.text)
+                    } */
+                    editable={false}
+                    returnKeyType={'search'}
+                  >
+                    {this.state.address[0].street} {this.state.address[0].name}
+                  </TextInput>
+                </View>
+              </Callout>
               <View style={styles.back}>
                 <Icon
                   name="close"
@@ -254,9 +291,22 @@ export class FoundDogForm extends Component {
               </View>
             </View>
           </Modal>
+          {/* <Text>{JSON.stringify(this.state.address)}</Text> */}
+          <Text
+            style={styles.formAdress}
+            onPress={() => {
+              this.setMapVisible(true)
+            }}
+          >
+            Región: {this.state.address[0].region} {'\n'}
+            Comuna: {this.state.address[0].city} {'\n'}
+            Dirección: {this.state.address[0].street}{' '}
+            {this.state.address[0].name}
+          </Text>
           <Input
-            onChangeText={this.onChangeDescription}
+            onChangeText={this.onChangeComentary}
             containerStyle={styles.input}
+            multiline={true}
             label="Comentarios adicionales"
           ></Input>
           <Button
@@ -294,6 +344,25 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     color: 'transparent',
   },
+  calloutSearch: {
+    alignSelf: 'center',
+    borderColor: 'transparent',
+    borderWidth: 0.0,
+    height: 40,
+    marginLeft: 3,
+    marginRight: 5,
+    width: '99%',
+  },
+  calloutView: {
+    alignSelf: 'flex-start',
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    borderRadius: 10,
+    flexDirection: 'row',
+    marginLeft: 5,
+    marginRight: '6%',
+    marginTop: 5,
+    width: '89%',
+  },
   container: {
     flex: 1,
   },
@@ -305,10 +374,19 @@ const styles = StyleSheet.create({
   form: {
     flex: 1,
   },
+  formAdress: {
+    lineHeight: 25,
+    marginBottom: '5%',
+    marginLeft: 10,
+    marginTop: 5,
+  },
   imageStyle: {
     flex: 0.95,
   },
   input: {
+    alignSelf: 'center',
+    height: '30%',
+    marginTop: 5,
     paddingBottom: 10,
   },
   mapStyle: {
