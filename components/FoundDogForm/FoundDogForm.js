@@ -31,7 +31,6 @@ export class FoundDogForm extends Component {
       comentary: '',
       isDatePickerVisible: false,
       isMapVisible: false,
-      imagePath: this.imagePath,
       region: {
         latitude: -33.4376,
         longitude: 70.6332,
@@ -85,8 +84,8 @@ export class FoundDogForm extends Component {
     this.setState({ isDatePickerVisible: false })
   }
   onPressHandler() {
-    const { sex, date, imagePath, comentary } = this.state
-    const data = { sex, date, imagePath, comentary }
+    const { sex, date, comentary } = this.state
+    const data = { sex, date, comentary }
     Alert.alert(
       'Confirmación de datos',
       'Sexo: ' +
