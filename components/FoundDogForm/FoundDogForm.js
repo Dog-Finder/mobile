@@ -24,10 +24,9 @@ export class FoundDogForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      date: '',
+      date: 'Seleccionar fecha',
       sex: 'No sé',
       address: [{ city: '', country: '', name: '', street: '', region: '' }],
-      //For sex: X is for unknown sex, M is for male, F for female
       comentary: '',
       isDatePickerVisible: false,
       isMapVisible: false,
@@ -57,6 +56,7 @@ export class FoundDogForm extends Component {
     this.updateSex = this.updateSex.bind(this)
     this.handleRegionChange = this.handleRegionChange.bind(this)
     this.onMarkerChange = this.onMarkerChange.bind(this)
+    this.displayDate = this.displayDate.bind(this)
     // this.onSearchAddress = this.onSearchAddress.bind(this)
   }
 
@@ -170,6 +170,14 @@ export class FoundDogForm extends Component {
     this.getCurrentLocation()
   }
 
+  displayDate() {
+    if (this.state.date === 'Seleccionar fecha') {
+      return 'Seleccionar fecha'
+    } else {
+      return this.state.date.toString().slice(4, 15)
+    }
+  }
+
   validate() {
     const { sex, date, address } = this.state.validate
     return sex && date && address
@@ -231,7 +239,7 @@ export class FoundDogForm extends Component {
               }}
               onPress={this.onChangeDate}
             >
-              {this.state.date.toString().slice(4, 15)}
+              {this.displayDate()}
             </Text>
             <DateTimePickerModal
               isVisible={this.state.isDatePickerVisible}
