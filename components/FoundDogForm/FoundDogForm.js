@@ -233,8 +233,8 @@ export class FoundDogForm extends Component {
             <Text
               style={{
                 textAlign: 'center',
-                marginTop: 5,
-                marginLeft: 10,
+                marginTop: 10,
+                marginBottom: 10,
                 fontSize: 15,
               }}
               onPress={this.onChangeDate}
