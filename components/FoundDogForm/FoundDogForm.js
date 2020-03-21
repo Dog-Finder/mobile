@@ -19,6 +19,7 @@ import MapView, { Marker, Callout } from 'react-native-maps'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import * as Location from 'expo-location'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import SexPicker from '../SexPicker/SexPicker'
 
 export class FoundDogForm extends Component {
   constructor(props) {
@@ -84,8 +85,9 @@ export class FoundDogForm extends Component {
     this.setState({ isDatePickerVisible: false })
   }
   onPressHandler() {
-    const { sex, date, comentary } = this.state
-    const data = { sex, date, comentary }
+    const { sex, date, comentary, marker, address } = this.state
+    // saving marker and address (which is redundant) to make it easier when showing dog data and not needing to calculate again
+    const data = { sex, date, comentary, marker, address }
     Alert.alert(
       'Confirmación de datos',
       'Sexo: ' +
