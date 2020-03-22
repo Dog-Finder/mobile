@@ -7,7 +7,6 @@ import {
   Image,
   TouchableOpacity,
   Text,
-  Picker,
   Modal,
   TextInput,
   Alert,
@@ -19,8 +18,22 @@ import MapView, { Marker, Callout } from 'react-native-maps'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import * as Location from 'expo-location'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import SexPicker from '../SexPicker/SexPicker'
+import SexPicker from '../SexPicker/SexPicker.android'
 
+const sexes = [
+  {
+    label: 'No sé',
+    value: 'No sé',
+  },
+  {
+    label: 'Macho',
+    value: 'Macho',
+  },
+  {
+    label: 'Hembra',
+    value: 'Hembra',
+  },
+]
 export class FoundDogForm extends Component {
   constructor(props) {
     super(props)
@@ -211,19 +224,11 @@ export class FoundDogForm extends Component {
             >
               Sexo
             </Text>
-            <Picker
-              selectedValue={this.state.sex}
+            <SexPicker
+              value={this.state.sex}
               onValueChange={this.updateSex}
-              style={{
-                marginLeft: 10,
-                width: 130,
-                alignSelf: 'center',
-              }}
-            >
-              <Picker.Item label="No sé" value="No sé" />
-              <Picker.Item label="Macho" value="Macho" />
-              <Picker.Item label="Hembra" value="Hembra" />
-            </Picker>
+              items={sexes}
+            />
             <Button
               title="¿Cuándo lo encontraste?"
               onPress={this.onChangeDate}
