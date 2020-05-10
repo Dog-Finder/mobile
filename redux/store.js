@@ -6,7 +6,7 @@ import axios from 'axios'
 import rootReducer from './reducers'
 
 export const client = axios.create({
-  baseURL: 'https://3mqzqt43hg.execute-api.us-east-1.amazonaws.com/playground',
+  baseURL: 'https://oc4igqmvr3.execute-api.us-east-1.amazonaws.com/playground',
   responseType: 'json',
   requestType: 'json',
 })
