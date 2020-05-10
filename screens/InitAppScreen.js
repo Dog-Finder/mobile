@@ -21,7 +21,7 @@ export default class InitAppScreen extends Component {
         <View style={styles.buttonContainer}>
           <Button
             title="Busco un perro"
-            onPress={() => this.props.navigation.navigate('LostDog')}
+            onPress={() => this.props.navigation.navigate('Home')}
           />
         </View>
         <Image
