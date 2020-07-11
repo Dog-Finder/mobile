@@ -3,6 +3,7 @@ import {
   View,
   Text,
   Button,
+  Image,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -26,14 +27,14 @@ class FoundDogListScreen extends Component {
   }
 
   render() {
-    // const foundDogList = this.props.foundDogList.map((foundDog, i) => {
-    //   return <Button key={i} title={foundDog.id} />
-    // })
-    const foundDogList = Array(100)
-      .fill()
-      .map((x, i) => {
-        return <Text key={i}>Item {i}</Text>
-      })
+    const foundDogList = this.props.foundDogList.map((foundDog, i) => {
+      return (
+        <View key={i}>
+          <Text>Un texto base</Text>
+          <Image style={styles.image} source={{ uri: foundDog.imageLinks }} />
+        </View>
+      )
+    })
 
     return (
       <SafeAreaView styles={styles.container}>
@@ -48,12 +49,14 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: Constants.statusBarHeight,
   },
+  image: {
+    flex: 1,
+    height: 300,
+    width: null,
+  },
   scrollView: {
     backgroundColor: 'pink',
     marginHorizontal: 20,
-  },
-  text: {
-    fontSize: 42,
   },
 })
 
