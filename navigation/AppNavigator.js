@@ -15,7 +15,7 @@ export default createAppContainer(
       Home: HomeBottomTab,
     },
     {
-      initialRouteName: 'Home', // Should be Auth
+      initialRouteName: 'InitApp', // 'Home', // Should be Auth
     }
   )
 )
