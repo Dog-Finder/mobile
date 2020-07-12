@@ -7,7 +7,7 @@ import { postFoundDog } from '../redux/actions/foundDog'
 import { getSignedUrl } from '../redux/actions/images'
 import { Header } from 'react-native-elements'
 
-export class FoundDogScreen extends Component {
+class FoundDogScreen extends Component {
   constructor(props) {
     super(props)
     this.onSubmitHandler = this.onSubmitHandler.bind(this)

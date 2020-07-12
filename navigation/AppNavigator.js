@@ -1,9 +1,7 @@
 import { createAppContainer, createSwitchNavigator } from 'react-navigation'
 import AuthStack from './AuthStack'
-import MainAppSwitch from './MainAppSwitch'
 import AuthLoadingScreen from '../screens/AuthLoadingScreen'
-import LostDogScreen from '../screens/LostDogScreen'
-import HomeScreen from '../screens/HomeScreen'
+import HomeBottomTab from './HomeBottomTab'
 import InitAppStack from './InitAppStack'
 
 export default createAppContainer(
@@ -14,12 +12,10 @@ export default createAppContainer(
       AuthLoading: AuthLoadingScreen,
       Auth: AuthStack,
       InitApp: InitAppStack,
-      MainApp: MainAppSwitch,
-      Debug: LostDogScreen,
-      Home: HomeScreen,
+      Home: HomeBottomTab,
     },
     {
-      initialRouteName: 'InitApp',
+      initialRouteName: 'InitApp', // 'Home', // Should be Auth
     }
   )
 )

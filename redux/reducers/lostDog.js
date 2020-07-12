@@ -8,6 +8,16 @@ export default function lostDogReducer(state = {}, action) {
       return { ...state, loading: false }
     case lostDogActions.POST_LOST_DOG_FAIL:
       return { ...state, loading: false }
+    case lostDogActions.LOST_DOG_LIST:
+      return { ...state, loading: true }
+    case lostDogActions.LOST_DOG_LIST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        lostDogList: action.payload.data.resource,
+      }
+    case lostDogActions.LOST_DOG_LIST_FAIL:
+      return { ...state, loading: false }
     default:
       return state
   }
