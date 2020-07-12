@@ -7,7 +7,7 @@ export default class AuthLoadingScreen extends Component {
   }
   async makeAsyncStuff() {
     await new Promise(resolve => {
-      setTimeout(resolve, 3000)
+      setTimeout(resolve, 1000)
     })
     this.props.navigation.navigate('Auth')
   }

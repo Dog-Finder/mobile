@@ -3,7 +3,6 @@
     "name": "DogFinder",
     "slug": "DogFinder-mobile",
     "privacy": "public",
-    "sdkVersion": "35.0.0",
     "platforms": [
       "ios",
       "android",
@@ -24,7 +23,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "userInterfaceStyle": "automatic"
     }
   }
 }

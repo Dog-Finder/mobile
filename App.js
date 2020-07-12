@@ -8,6 +8,7 @@ import { Provider } from 'react-redux'
 
 import AppNavigator from './navigation/AppNavigator'
 import store from './redux/store'
+import { AppearanceProvider } from 'react-native-appearance'
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false)
@@ -22,12 +23,14 @@ export default function App(props) {
     )
   } else {
     return (
-      <Provider store={store}>
-        <View style={styles.container}>
-          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          <AppNavigator />
-        </View>
-      </Provider>
+      <AppearanceProvider>
+        <Provider store={store}>
+          <View style={styles.container}>
+            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+            <AppNavigator />
+          </View>
+        </Provider>
+      </AppearanceProvider>
     )
   }
 }
