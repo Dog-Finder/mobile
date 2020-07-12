@@ -5,6 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import HomeScreen from '../screens/HomeScreen'
 import FoundDogListScreen from '../screens/FoundDogListScreen'
+import LostDogListScreen from '../screens/LostDogListScreen'
 
 const HomeIcon = props => (
   <Entypo name="home" size={24} color={props.focused ? 'black' : 'gray'} />
@@ -41,7 +42,7 @@ export default createBottomTabNavigator(
       },
     },
     LostDog: {
-      screen: HomeScreen,
+      screen: LostDogListScreen,
       navigationOptions: {
         tabBarLabel: 'Perdidos',
         tabBarIcon: LostDogIcon,

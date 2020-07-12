@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View, Image } from 'react-native'
+import { Text, StyleSheet, View } from 'react-native'
 import PropTypes from 'prop-types'
+import { Card } from 'react-native-elements'
 
 export default class FoundDogItem extends Component {
   static propTypes = {
@@ -10,11 +11,12 @@ export default class FoundDogItem extends Component {
     const { imageLinks, date, comentary } = this.props.dog
     const parsedDate = new Date(date)
     return (
-      <View>
-        <Image style={styles.image} source={{ uri: imageLinks }} />
-        <Text>Fecha Aviso: {parsedDate.toDateString()}</Text>
-        <Text>Comentario: {comentary}</Text>
-      </View>
+      <Card title="Card" image={{ uri: imageLinks }} imageStyle={styles.image}>
+        <View>
+          <Text>Fecha Aviso: {parsedDate.toDateString()}</Text>
+          <Text>Comentario: {comentary}</Text>
+        </View>
+      </Card>
     )
   }
 }
