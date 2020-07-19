@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Input, Card } from 'react-native-elements'
 import DateTimeInput from 'components/inputs/DateTimeInput'
+import { SexInput } from 'components/inputs/SexInput'
 
 export default class FoundDogForm extends Component {
   render() {
@@ -14,6 +15,7 @@ export default class FoundDogForm extends Component {
             onConfirm={() => {}}
             onCancel={() => {}}
           />
+          <SexInput onValueChange={() => {}} />
         </Card>
       </View>
     )
