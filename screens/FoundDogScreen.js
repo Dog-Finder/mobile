@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { View, StyleSheet, Image, TouchableOpacity } from 'react-native'
-import FoundDogForm from '../components/FoundDogForm/FoundDogForm'
+import FoundDogForm from '../components/FoundDogForm/FoundDogForm2'
 import { postFoundDog } from '../redux/actions/foundDog'
 import { getSignedUrl } from '../redux/actions/images'
 import { Header } from 'react-native-elements'
@@ -52,7 +52,7 @@ class FoundDogScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {/*         <Header
+        {/* <Header
           centerComponent={{
             text: 'PERRO ENCONTRADO',
             style: { color: '#fff', fontWeight: 'bold' },

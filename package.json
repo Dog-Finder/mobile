@@ -17,6 +17,7 @@
     "@react-native-community/datetimepicker": "2.4.0",
     "@react-navigation/web": "^1.0.0-alpha.9",
     "axios": "^0.19.2",
+    "babel-plugin-module-resolver": "^4.0.0",
     "expo": "^38.0.0",
     "expo-asset": "~8.1.7",
     "expo-camera": "~8.3.1",
