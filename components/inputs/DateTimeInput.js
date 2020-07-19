@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Keyboard } from 'react-native'
+import { View, Keyboard, TouchableOpacity } from 'react-native'
 import { Appearance } from 'react-native-appearance'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import { Input } from 'react-native-elements'
@@ -11,6 +11,7 @@ export default class DateTimeInput extends Component {
     this.onConfirm = this.onConfirm.bind(this)
     this.onCancel = this.onCancel.bind(this)
     this.onPress = this.onPress.bind(this)
+    this.textInput = React.createRef()
   }
   onConfirm(date) {
     this.setState({ isModalVisible: false, value: date.toDateString() })
@@ -25,14 +26,17 @@ export default class DateTimeInput extends Component {
 
   render() {
     const colorScheme = Appearance.getColorScheme()
-    Keyboard.dismiss()
     return (
       <View>
-        <Input
-          onFocus={this.onPress}
-          placeholder={this.props.placeholder}
-          value={this.state.value}
-        ></Input>
+        <TouchableOpacity onPress={this.onPress}>
+          <View pointerEvents="none">
+            <Input
+              disabled
+              placeholder={this.props.placeholder}
+              value={this.state.value}
+            ></Input>
+          </View>
+        </TouchableOpacity>
         <DateTimePickerModal
           isVisible={this.state.isModalVisible}
           onConfirm={this.onConfirm}

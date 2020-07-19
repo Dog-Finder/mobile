@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import { StyleSheet, View, TouchableOpacity } from 'react-native'
 import * as Location from 'expo-location'
 import { Input, Card, Image } from 'react-native-elements'
@@ -11,6 +11,10 @@ export default class FoundDogForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      name: '',
+      sex: '',
+      commentary: '',
+      date: '',
       marker: {},
       address: {
         street: '',
@@ -34,7 +38,9 @@ export default class FoundDogForm extends Component {
     })
   }
 
+  // console.log(this.state)
   render() {
+    // console.log(this.state)
     return (
       <View>
         <Card title="Información General">
@@ -45,24 +51,42 @@ export default class FoundDogForm extends Component {
               source={{ uri: this.props.imagePath }}
             />
           </TouchableOpacity>
-          <Input placeholder="Nombre" />
+          <Input
+            placeholder="Nombre"
+            onChangeText={name => {
+              this.setState({ name })
+            }}
+            value={this.state.name}
+          />
           <DateTimeInput
             placeholder="¿Cuándo lo encontraste?"
             isVisible={false}
-            onConfirm={() => {}}
+            onConfirm={date => {
+              this.setState({ date })
+            }}
             onCancel={() => {}}
           />
-          <SexInput onValueChange={() => {}} />
-          <Input placeholder="Descripción"></Input>
-        </Card>
-        <Card title="Ubicación">
-          <MapInput
-            onDragEnd={this.onDragEnd}
-            street={this.state.address.street}
-            city={this.state.address.city}
-            country={this.state.address.country}
+          <SexInput
+            onValueChange={sex => {
+              this.setState({ sex })
+            }}
           />
+          <Input
+            placeholder="Descripción"
+            onChangeText={commentary => {
+              this.setState({ commentary })
+            }}
+            value={this.state.commentary}
+          ></Input>
         </Card>
+        {/* <Card title="Ubicación">
+        <MapInput
+          onDragEnd={this.onDragEnd}
+          street={this.state.address.street}
+          city={this.state.address.city}
+          country={this.state.address.country}
+        />
+      </Card> */}
       </View>
     )
   }
