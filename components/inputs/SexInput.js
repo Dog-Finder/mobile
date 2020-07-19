@@ -6,6 +6,7 @@ export const SexInput = props => {
     <RNPickerSelect
       style={pickerSelectStyles}
       onValueChange={props.onValueChange}
+      placeholder={{ label: 'Sexo', value: null }}
       items={[
         { label: 'Macho', value: 'male' },
         { label: 'Hembra', value: 'female' },

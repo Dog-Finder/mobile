@@ -30,7 +30,7 @@ export default class DateTimeInput extends Component {
       <View>
         <Input
           onFocus={this.onPress}
-          placeholder="Date"
+          placeholder={this.props.placeholder}
           value={this.state.value}
         ></Input>
         <DateTimePickerModal

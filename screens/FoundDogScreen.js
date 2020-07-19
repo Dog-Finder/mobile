@@ -1,7 +1,15 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { View, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import {
+  View,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  SafeAreaView,
+  ScrollView,
+} from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import FoundDogForm from '../components/FoundDogForm/FoundDogForm2'
 import { postFoundDog } from '../redux/actions/foundDog'
 import { getSignedUrl } from '../redux/actions/images'
@@ -51,19 +59,15 @@ class FoundDogScreen extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        {/* <Header
-          centerComponent={{
-            text: 'PERRO ENCONTRADO',
-            style: { color: '#fff', fontWeight: 'bold' },
-          }}
-        ></Header> */}
-        <FoundDogForm
-          onSubmitHandler={this.onSubmitHandler}
-          imagePath={this.imagePath}
-          pressPicture={this.pressPicture}
-        ></FoundDogForm>
-      </View>
+      <SafeAreaView styles={styles.container}>
+        <KeyboardAwareScrollView>
+          <FoundDogForm
+            onSubmitHandler={this.onSubmitHandler}
+            imagePath={this.imagePath}
+            pressPicture={this.pressPicture}
+          ></FoundDogForm>
+        </KeyboardAwareScrollView>
+      </SafeAreaView>
     )
   }
 }
