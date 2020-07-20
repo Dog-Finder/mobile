@@ -15,6 +15,7 @@ export default class DateTimeInput extends Component {
   }
   onConfirm(date) {
     this.setState({ isModalVisible: false, value: date.toDateString() })
+    this.props.onConfirm(date)
   }
   onCancel() {
     this.setState({ isModalVisible: false })
