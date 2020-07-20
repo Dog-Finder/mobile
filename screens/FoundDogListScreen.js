@@ -13,7 +13,7 @@ import { connect } from 'react-redux'
 import Constants from 'expo-constants'
 
 import { getFoundDogList } from '../redux/actions/foundDog'
-import FoundDogItem from '../components/FoudDog/FoundDogItem'
+import FoundDogItem from '../components/FoundDog/FoundDogItem'
 
 class FoundDogListScreen extends Component {
   constructor(props) {
@@ -31,7 +31,6 @@ class FoundDogListScreen extends Component {
     const foundDogList = this.props.foundDogList.map((foundDog, i) => {
       return <FoundDogItem key={i} dog={foundDog}></FoundDogItem>
     })
-
     return (
       <SafeAreaView styles={styles.container}>
         <ScrollView styles={styles.scrollView}>{foundDogList}</ScrollView>

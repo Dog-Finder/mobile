@@ -8,13 +8,15 @@ export default class FoundDogItem extends Component {
     dog: PropTypes.object.isRequired,
   }
   render() {
-    const { imageLinks, date, comentary } = this.props.dog
+    const { imageLinks, date, comentary, address, sex } = this.props.dog
     const parsedDate = new Date(date)
+    const existingAddress = typeof address === 'undefined' ? '' : address[0] //no funciona
     return (
-      <Card title="Card" image={{ uri: imageLinks }} imageStyle={styles.image}>
+      <Card image={{ uri: imageLinks }} imageStyle={styles.image}>
         <View>
           <Text>Fecha Aviso: {parsedDate.toDateString()}</Text>
           <Text>Comentario: {comentary}</Text>
+          <Text>{sex}</Text>
         </View>
       </Card>
     )
