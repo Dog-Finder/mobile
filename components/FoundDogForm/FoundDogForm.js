@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, TouchableOpacity } from 'react-native'
+import PropTypes from 'prop-types'
 import * as Location from 'expo-location'
 import { Input, Card, Image, Button } from 'react-native-elements'
-import MapView, { Marker } from 'react-native-maps'
 import DateTimeInput from 'components/inputs/DateTimeInput'
 import { SexInput } from 'components/inputs/SexInput'
 import MapInput from 'components/inputs/MapInput'
@@ -15,15 +15,25 @@ export default class FoundDogForm extends Component {
       sex: '',
       comentary: '',
       date: '',
-      marker: {},
-      address: {
-        street: '',
-        city: '',
-        country: '',
-      },
+      marker: { latitude: 51.5078788, longitude: -0.0877321 },
+      street: '',
+      city: '',
+      country: '',
     }
     this.onDragEnd = this.onDragEnd.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
+  }
+
+  async componentDidMount() {
+    const { status } = await Location.requestPermissionsAsync()
+    if (status === 'granted') {
+      const address = await Location.reverseGeocodeAsync(this.state.marker)
+      this.setState({
+        street: address[0].street,
+        city: address[0].city,
+        country: address[0].country,
+      })
+    }
   }
 
   async onDragEnd(event) {
@@ -31,16 +41,33 @@ export default class FoundDogForm extends Component {
     this.setState({ marker: coordinate })
     const address = await Location.reverseGeocodeAsync(coordinate)
     this.setState({
-      address: {
-        street: address[0].street,
-        city: address[0].city,
-        country: address[0].country,
-      },
+      street: address[0].street,
+      city: address[0].city,
+      country: address[0].country,
     })
   }
 
   onSubmit() {
-    this.props.onSubmitHandler(1234, this.state)
+    const {
+      name,
+      sex,
+      comentary,
+      date,
+      marker,
+      street,
+      city,
+      country,
+    } = this.state
+    const data = {
+      name,
+      sex,
+      comentary,
+      date,
+      marker,
+      address: { street, city, country },
+    }
+
+    this.props.onSubmitHandler(1234, data)
   }
 
   render() {
@@ -84,10 +111,14 @@ export default class FoundDogForm extends Component {
         </Card>
         <Card title="Ubicación">
           <MapInput
+            marker={this.state.marker}
+            street={this.state.street}
+            city={this.state.city}
+            country={this.state.country}
             onDragEnd={this.onDragEnd}
-            street={this.state.address.street}
-            city={this.state.address.city}
-            country={this.state.address.country}
+            onChangeStreet={street => this.setState({ street })}
+            onChangeCity={city => this.setState({ city })}
+            onChangeCountry={country => this.setState({ country })}
           />
         </Card>
         <Card>
@@ -96,6 +127,12 @@ export default class FoundDogForm extends Component {
       </View>
     )
   }
+}
+
+FoundDogForm.propTypes = {
+  onSubmitHandler: PropTypes.func.isRequired,
+  imagePath: PropTypes.string.isRequired,
+  pressPicture: PropTypes.func.isRequired,
 }
 
 const styles = StyleSheet.create({
