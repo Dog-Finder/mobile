@@ -14,7 +14,7 @@ export default class FoundDogForm extends Component {
       name: '',
       sex: '',
       comentary: '',
-      date: '',
+      date: new Date(),
       marker: { latitude: 51.5078788, longitude: -0.0877321 },
       street: '',
       city: '',

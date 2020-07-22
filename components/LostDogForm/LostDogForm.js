@@ -1,115 +1,129 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import { StyleSheet, View, TouchableOpacity } from 'react-native'
 import PropTypes from 'prop-types'
-import { View, StyleSheet, Button } from 'react-native'
-import { Input } from 'react-native-elements'
-import DateTimePickerModal from 'react-native-modal-datetime-picker'
-import { Appearance } from 'react-native-appearance'
+import * as Location from 'expo-location'
+import { Input, Card, Image, Button } from 'react-native-elements'
+import DateTimeInput from 'components/inputs/DateTimeInput'
+import { SexInput } from 'components/inputs/SexInput'
+import MapInput from 'components/inputs/MapInput'
 
-export class LostDogForm extends Component {
+export default class LostDogForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
       name: '',
-      date: '',
-      photo: '',
-      description: '',
-      isDatePickerVisible: false,
-      validate: {
-        name: false,
-        date: false,
-        description: false,
-      },
+      sex: '',
+      comentary: '',
+      date: new Date(),
+      marker: { latitude: 51.5078788, longitude: -0.0877321 },
+      street: '',
+      city: '',
+      country: '',
     }
-    this.onChangeName = this.onChangeName.bind(this)
-    this.onChangeDate = this.onChangeDate.bind(this)
-    this.onChangePhoto = this.onChangePhoto.bind(this)
-    this.onChangeDescription = this.onChangeDescription.bind(this)
-    this.onConfirmDatePicker = this.onConfirmDatePicker.bind(this)
-    this.onCancelDatePicker = this.onCancelDatePicker.bind(this)
-    this.onPressHandler = this.onPressHandler.bind(this)
+    this.onDragEnd = this.onDragEnd.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
   }
 
-  onChangeName(name) {
-    this.setState(currentState => {
-      return { name, validate: { ...currentState, name: name !== '' } }
-    })
-  }
-  onChangeDate() {
-    this.setState({ isDatePickerVisible: true })
-  }
-  onChangePhoto(photo) {
-    this.setState({ photo })
-  }
-  onChangeDescription(description) {
-    this.setState(currentState => {
-      return {
-        description,
-        validate: { ...currentState, description: description !== '' },
-      }
-    })
-  }
-  onConfirmDatePicker(date) {
-    this.setState(currentState => {
-      return {
-        date,
-        isDatePickerVisible: false,
-        validate: { ...currentState, date: date !== '' },
-      }
-    })
-  }
-  onCancelDatePicker() {
-    this.setState({ isDatePickerVisible: false })
-  }
-  onPressHandler() {
-    const { name, date, photo, description } = this.state
-    const data = { name, date, photo, description }
-    this.props.onSubmitHandler('12345', data)
+  async componentDidMount() {
+    const { status } = await Location.requestPermissionsAsync()
+    if (status === 'granted') {
+      const address = await Location.reverseGeocodeAsync(this.state.marker)
+      this.setState({
+        street: address[0].street,
+        city: address[0].city,
+        country: address[0].country,
+      })
+    }
   }
 
-  validate() {
-    const { name, date, description } = this.state.validate
-    return name && date && description
+  async onDragEnd(event) {
+    const coordinate = event.nativeEvent.coordinate
+    this.setState({ marker: coordinate })
+    const address = await Location.reverseGeocodeAsync(coordinate)
+    this.setState({
+      street: address[0].street,
+      city: address[0].city,
+      country: address[0].country,
+    })
+  }
+
+  onSubmit() {
+    const {
+      name,
+      sex,
+      comentary,
+      date,
+      marker,
+      street,
+      city,
+      country,
+    } = this.state
+    const data = {
+      name,
+      sex,
+      comentary,
+      date,
+      marker,
+      address: { street, city, country },
+    }
+
+    this.props.onSubmitHandler(1234, data)
   }
 
   render() {
-    const colorScheme = Appearance.getColorScheme()
     return (
       <View>
-        <Input
-          onChangeText={this.onChangeName}
-          containerStyle={styles.input}
-          label="Nombre"
-        ></Input>
-        <Input
-          onTouchEnd={this.onChangeDate}
-          containerStyle={styles.input}
-          label="Fecha"
-          disabled={true}
-          placeholder="Ingresar Fecha"
-          value={this.state.date.toString()}
-        ></Input>
-        <DateTimePickerModal
-          isVisible={this.state.isDatePickerVisible}
-          onConfirm={this.onConfirmDatePicker}
-          onCancel={this.onCancelDatePicker}
-          isDarkModeEnabled={colorScheme === 'dark'}
-        />
-        <Input
-          onChangeText={this.onChangePhoto}
-          containerStyle={styles.input}
-          label="Foto"
-        ></Input>
-        <Input
-          onChangeText={this.onChangeDescription}
-          containerStyle={styles.input}
-          label="Descripción"
-        ></Input>
-        <Button
-          disabled={!this.validate()}
-          onPress={this.onPressHandler}
-          title="Submit"
-        ></Button>
+        <Card title="Información General">
+          <TouchableOpacity onPress={this.props.pressPicture}>
+            <Image
+              style={styles.image}
+              resizeMode="cover"
+              source={{ uri: this.props.imagePath }}
+            />
+          </TouchableOpacity>
+          <Input
+            placeholder="Nombre"
+            onChangeText={name => {
+              this.setState({ name })
+            }}
+            value={this.state.name}
+          />
+          <DateTimeInput
+            placeholder="¿Cuándo lo encontraste?"
+            isVisible={false}
+            onConfirm={date => {
+              this.setState({ date })
+            }}
+            onCancel={() => {}}
+          />
+          <SexInput
+            onValueChange={sex => {
+              this.setState({ sex })
+            }}
+          />
+          <Input
+            placeholder="Descripción"
+            onChangeText={comentary => {
+              this.setState({ comentary })
+            }}
+            value={this.state.comentary}
+          ></Input>
+        </Card>
+        <Card title="Ubicación">
+          <MapInput
+            marker={this.state.marker}
+            street={this.state.street}
+            city={this.state.city}
+            country={this.state.country}
+            onDragEnd={this.onDragEnd}
+            onChangeStreet={street => this.setState({ street })}
+            onChangeCity={city => this.setState({ city })}
+            onChangeCountry={country => this.setState({ country })}
+          />
+        </Card>
+        <Card>
+          <Button title="Submit" onPress={this.onSubmit}></Button>
+        </Card>
       </View>
     )
   }
@@ -117,16 +131,13 @@ export class LostDogForm extends Component {
 
 LostDogForm.propTypes = {
   onSubmitHandler: PropTypes.func.isRequired,
+  pressPicture: PropTypes.func.isRequired,
 }
 
 const styles = StyleSheet.create({
-  input: {
-    paddingBottom: 10,
+  image: {
+    flex: 1,
+    height: 300,
+    width: null,
   },
 })
-
-const mapStateToProps = state => ({})
-
-const mapDispatchToProps = {}
-
-export default connect(mapStateToProps, mapDispatchToProps)(LostDogForm)
