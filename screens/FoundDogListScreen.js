@@ -29,7 +29,13 @@ class FoundDogListScreen extends Component {
 
   render() {
     const foundDogList = this.props.foundDogList.map((foundDog, i) => {
-      return <FoundDogItem key={i} dog={foundDog}></FoundDogItem>
+      return (
+        <FoundDogItem
+          key={i}
+          dog={foundDog}
+          navigator={this.props.navigation}
+        ></FoundDogItem>
+      )
     })
     return (
       <SafeAreaView styles={styles.container}>

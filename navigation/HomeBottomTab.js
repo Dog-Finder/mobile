@@ -4,8 +4,8 @@ import { Entypo } from '@expo/vector-icons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import HomeScreen from '../screens/HomeScreen'
-import FoundDogListScreen from '../screens/FoundDogListScreen'
 import LostDogListScreen from '../screens/LostDogListScreen'
+import FoundDogListStack from './FoundDogListStack'
 
 const HomeIcon = props => (
   <Entypo name="home" size={24} color={props.focused ? 'black' : 'gray'} />
@@ -35,7 +35,7 @@ export default createBottomTabNavigator(
       },
     },
     FoundDog: {
-      screen: FoundDogListScreen,
+      screen: FoundDogListStack,
       navigationOptions: {
         tabBarLabel: 'Encontrados',
         tabBarIcon: FoundDogIcon,

@@ -1,24 +1,36 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View } from 'react-native'
+import { Text, StyleSheet, View, TouchableOpacity } from 'react-native'
 import PropTypes from 'prop-types'
 import { Card } from 'react-native-elements'
 
 export default class FoundDogItem extends Component {
+  constructor(props) {
+    super(props)
+  }
   static propTypes = {
     dog: PropTypes.object.isRequired,
   }
   render() {
-    const { imageLinks, date, comentary, address, sex } = this.props.dog
+    const { imageLinks, date, comentary, address, sex, marker } = this.props.dog
     const parsedDate = new Date(date)
-    const existingAddress = typeof address === 'undefined' ? '' : address[0] //no funciona
+    const navigator = this.props.navigator
+    //const existingAddress = typeof address === 'undefined' ? 'asdf' : address[0] //no funciona
     return (
-      <Card image={{ uri: imageLinks }} imageStyle={styles.image}>
-        <View>
-          <Text>Fecha Aviso: {parsedDate.toDateString()}</Text>
-          <Text>Comentario: {comentary}</Text>
-          <Text>{sex}</Text>
-        </View>
-      </Card>
+      <TouchableOpacity
+        delayPressIn={30}
+        onPress={() =>
+          navigator.push('ShowFoundDogInfo', {
+            dogInfo: this.props.dog,
+          })
+        }
+      >
+        <Card image={{ uri: imageLinks }} imageStyle={styles.image}>
+          <View>
+            <Text>Fecha Aviso: {parsedDate.toDateString()}</Text>
+            <Text>Sexo: {sex}</Text>
+          </View>
+        </Card>
+      </TouchableOpacity>
     )
   }
 }

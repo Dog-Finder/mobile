@@ -13,7 +13,7 @@ import { connect } from 'react-redux'
 import Constants from 'expo-constants'
 
 import { getLostDogList } from '../redux/actions/lostDog'
-import FoundDogItem from '../components/FoudDog/FoundDogItem'
+import FoundDogItem from '../components/FoundDog/FoundDogItem'
 
 class LostDogListScreen extends Component {
   constructor(props) {
