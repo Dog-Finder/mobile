@@ -1,26 +1,29 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { View, StyleSheet } from 'react-native'
+import { StyleSheet, SafeAreaView } from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import * as ImagePicker from 'expo-image-picker'
 import LostDogForm from '../components/LostDogForm/LostDogForm'
 import { postLostDog } from '../redux/actions/lostDog'
 import { getSignedUrl } from '../redux/actions/images'
-import { Header } from 'react-native-elements'
 
-export class LostDogScreen extends Component {
+class LostDogScreen extends Component {
   constructor(props) {
     super(props)
+    this.state = { imagePath: undefined }
     this.onSubmitHandler = this.onSubmitHandler.bind(this)
     this.uploadImage = this.uploadImage.bind(this)
+    this.pressPicture = this.pressPicture.bind(this)
   }
-  async componentDidMount() {}
 
   async onSubmitHandler(token, data) {
-    const filePath = await this.props.navigation.getParam('uri') // Replace with path
-    const imageLink = await this.uploadImage(filePath)
-    data.imageLinks = imageLink
+    if (this.state.imagePath) {
+      const imageLink = await this.uploadImage(this.state.imagePath)
+      data.imageLinks = imageLink
+    }
     this.props.postLostDog(token, data)
-    this.props.navigation.navigate('Home')
+    this.props.navigation.navigate('LostDog')
   }
 
   async uploadImage(filePath) {
@@ -28,36 +31,61 @@ export class LostDogScreen extends Component {
     const { url, imageLink } = payload.data // signed url, simple link
     const file = await fetch(filePath) // Necesary to convert path to blob type
     const blob = await file.blob()
-    await fetch(url, { method: 'PUT', body: blob }) // Actual upload to S3
+    await fetch(url, {
+      method: 'PUT',
+      body: blob,
+      headers: new Headers({
+        'Content-Type': 'image/jpeg',
+        'Content-Disposition': 'inline',
+      }),
+    })
     return imageLink
+  }
+  async pressPicture() {
+    const picture = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    })
+    if (picture.cancelled === false) {
+      this.setState({ imagePath: picture.uri })
+    }
+  }
+
+  static navigationOptions = {
+    title: 'Perro Encontrado',
+    headerStyle: {
+      backgroundColor: 'steelblue',
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+      textAlign: 'center',
+    },
   }
 
   render() {
     return (
-      <View style={styles.container}>
-        <Header
-          centerComponent={{ text: 'PERRO PERDIDO', style: { color: '#fff' } }}
-        ></Header>
-        <View style={styles.form}>
-          <LostDogForm onSubmitHandler={this.onSubmitHandler}></LostDogForm>
-        </View>
-      </View>
+      <SafeAreaView styles={styles.container}>
+        <KeyboardAwareScrollView>
+          <LostDogForm
+            onSubmitHandler={this.onSubmitHandler}
+            imagePath={this.state.imagePath}
+            pressPicture={this.pressPicture}
+          ></LostDogForm>
+        </KeyboardAwareScrollView>
+      </SafeAreaView>
     )
   }
 }
 
 LostDogScreen.propTypes = {
   postLostDog: PropTypes.func.isRequired,
+  getSignedUrl: PropTypes.func.isRequired,
   navigation: PropTypes.object.isRequired,
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start',
-  },
-  form: {
-    marginTop: 10,
   },
 })
 

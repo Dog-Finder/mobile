@@ -28,7 +28,14 @@ class FoundDogScreen extends Component {
     const { url, imageLink } = payload.data // signed url, simple link
     const file = await fetch(filePath) // Necesary to convert path to blob type
     const blob = await file.blob()
-    await fetch(url, { method: 'PUT', body: blob }) // Actual upload to S3
+    await fetch(url, {
+      method: 'PUT',
+      body: blob,
+      headers: new Headers({
+        'Content-Type': 'image/jpeg',
+        'Content-Disposition': 'inline',
+      }),
+    }) // Actual upload to S3
     return imageLink
   }
   pressPicture() {

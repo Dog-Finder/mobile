@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from 'react-navigation'
 import { Entypo } from '@expo/vector-icons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
-import HomeScreen from '../screens/HomeScreen'
+import LostDogScreen from '../screens/LostDogScreen'
 import FoundDogListScreen from '../screens/FoundDogListScreen'
 import LostDogListScreen from '../screens/LostDogListScreen'
 
@@ -29,7 +29,7 @@ const FoundDogIcon = props => (
 export default createBottomTabNavigator(
   {
     Home: {
-      screen: HomeScreen,
+      screen: LostDogScreen,
       navigationOptions: {
         tabBarIcon: HomeIcon,
       },
