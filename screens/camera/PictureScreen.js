@@ -37,11 +37,11 @@ export default class PictureScreen extends Component {
   }
   takePicture = async () => {
     if (this.cam) {
-      // const picture = await this.cam.takePictureAsync()
-      // this.props.navigation.navigate('AcceptPicture', { uri: picture.uri })
-      this.props.navigation.navigate('AcceptPicture', {
-        uri: 'https://perro.shop/wp-content/uploads/pug.jpg',
-      })
+      const picture = await this.cam.takePictureAsync()
+      this.props.navigation.navigate('AcceptPicture', { uri: picture.uri })
+      // this.props.navigation.navigate('AcceptPicture', {
+      //   uri: 'https://perro.shop/wp-content/uploads/pug.jpg',
+      // })
     }
   }
   goBack() {
