@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { StyleSheet, SafeAreaView } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import * as ImagePicker from 'expo-image-picker'
 import LostDogForm from '../components/LostDogForm/LostDogForm'
 import { postLostDog } from '../redux/actions/lostDog'
 import { getSignedUrl } from '../redux/actions/images'
@@ -10,15 +11,17 @@ import { getSignedUrl } from '../redux/actions/images'
 class LostDogScreen extends Component {
   constructor(props) {
     super(props)
+    this.state = { imagePath: undefined }
     this.onSubmitHandler = this.onSubmitHandler.bind(this)
     this.uploadImage = this.uploadImage.bind(this)
-    this.imagePath = this.props.navigation.getParam('uri')
     this.pressPicture = this.pressPicture.bind(this)
   }
 
   async onSubmitHandler(token, data) {
-    // const imageLink = await this.uploadImage(this.imagePath)
-    data.imageLinks = 'image_link'
+    if (this.state.imagePath) {
+      const imageLink = await this.uploadImage(this.state.imagePath)
+      data.imageLinks = imageLink
+    }
     this.props.postLostDog(token, data)
     this.props.navigation.navigate('LostDog')
   }
@@ -31,11 +34,15 @@ class LostDogScreen extends Component {
     await fetch(url, { method: 'PUT', body: blob }) // Actual upload to S3
     return imageLink
   }
-  pressPicture() {
-    this.props.navigation.navigate('ShowPicture', {
-      uri: this.imagePath,
+  async pressPicture() {
+    const picture = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
     })
+    if (picture.cancelled === false) {
+      this.setState({ imagePath: picture.uri })
+    }
   }
+
   static navigationOptions = {
     title: 'Perro Encontrado',
     headerStyle: {
@@ -54,7 +61,7 @@ class LostDogScreen extends Component {
         <KeyboardAwareScrollView>
           <LostDogForm
             onSubmitHandler={this.onSubmitHandler}
-            imagePath={this.imagePath}
+            imagePath={this.state.imagePath}
             pressPicture={this.pressPicture}
           ></LostDogForm>
         </KeyboardAwareScrollView>
