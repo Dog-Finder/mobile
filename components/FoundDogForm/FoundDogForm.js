@@ -19,6 +19,7 @@ export default class FoundDogForm extends Component {
       street: '',
       city: '',
       country: '',
+      loading: false,
     }
     this.onDragEnd = this.onDragEnd.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
@@ -48,6 +49,7 @@ export default class FoundDogForm extends Component {
   }
 
   onSubmit() {
+    this.setState({ loading: true })
     const {
       name,
       sex,
@@ -122,7 +124,11 @@ export default class FoundDogForm extends Component {
           />
         </Card>
         <Card>
-          <Button title="Submit" onPress={this.onSubmit}></Button>
+          <Button
+            title="Submit"
+            onPress={this.onSubmit}
+            loading={this.state.loading}
+          ></Button>
         </Card>
       </View>
     )

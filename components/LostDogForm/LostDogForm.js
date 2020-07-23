@@ -19,6 +19,7 @@ export default class LostDogForm extends Component {
       street: '',
       city: '',
       country: '',
+      loading: false,
     }
     this.onDragEnd = this.onDragEnd.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
@@ -47,7 +48,8 @@ export default class LostDogForm extends Component {
     })
   }
 
-  onSubmit() {
+  async onSubmit() {
+    this.setState({ loading: true })
     const {
       name,
       sex,
@@ -67,7 +69,8 @@ export default class LostDogForm extends Component {
       address: { street, city, country },
     }
 
-    this.props.onSubmitHandler(1234, data)
+    await this.props.onSubmitHandler(1234, data)
+    this.setState({ loading: false })
   }
 
   render() {
@@ -122,7 +125,11 @@ export default class LostDogForm extends Component {
           />
         </Card>
         <Card>
-          <Button title="Submit" onPress={this.onSubmit}></Button>
+          <Button
+            title="Submit"
+            onPress={this.onSubmit}
+            loading={this.state.loading}
+          ></Button>
         </Card>
       </View>
     )
