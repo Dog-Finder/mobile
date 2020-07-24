@@ -1,48 +1,40 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { StyleSheet, View, ImageBackground } from 'react-native'
 import { Button } from 'react-native-elements'
 import PropTypes from 'prop-types'
 
-export default class AcceptPictureScreen extends Component {
-  constructor(props) {
-    super(props)
-    this.repeatPicture = this.repeatPicture.bind(this)
-    this.selectPicture = this.selectPicture.bind(this)
+const AcceptPictureScreen = ({ navigation }) => {
+  const repeatPicture = () => {
+    navigation.navigate('Picture')
   }
-  repeatPicture() {
-    this.props.navigation.navigate('Picture')
-  }
-  selectPicture(selectUri) {
-    this.props.navigation.navigate('FoundDog', {
+  const selectPicture = selectUri => {
+    navigation.navigate('FoundDog', {
       uri: selectUri,
     })
   }
-  render() {
-    const { navigation } = this.props
-    return (
-      <ImageBackground
-        source={{ uri: navigation.getParam('uri', 'NO-uri') }}
-        style={styles.image}
-      >
-        <View style={styles.buttonView}>
-          <Button
-            title="Repetir foto"
-            type="outline"
-            buttonStyle={styles.buttonStyle}
-            onPress={this.repeatPicture}
-          />
-          <Button
-            title="Usar foto"
-            type="outline"
-            buttonStyle={styles.buttonStyle}
-            onPress={() => {
-              this.selectPicture(navigation.getParam('uri', 'NO-uri'))
-            }}
-          />
-        </View>
-      </ImageBackground>
-    )
-  }
+  return (
+    <ImageBackground
+      source={{ uri: navigation.getParam('uri', 'NO-uri') }}
+      style={styles.image}
+    >
+      <View style={styles.buttonView}>
+        <Button
+          title="Repetir foto"
+          type="outline"
+          buttonStyle={styles.buttonStyle}
+          onPress={repeatPicture}
+        />
+        <Button
+          title="Usar foto"
+          type="outline"
+          buttonStyle={styles.buttonStyle}
+          onPress={() => {
+            selectPicture(navigation.getParam('uri', 'NO-uri'))
+          }}
+        />
+      </View>
+    </ImageBackground>
+  )
 }
 
 AcceptPictureScreen.propTypes = {
@@ -59,3 +51,5 @@ const styles = StyleSheet.create({
   },
   image: { flex: 1, height: '100%', width: '100%' },
 })
+
+export default AcceptPictureScreen
