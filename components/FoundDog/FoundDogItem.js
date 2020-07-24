@@ -28,6 +28,7 @@ export default class FoundDogItem extends Component {
           <View>
             <Text>Fecha Aviso: {parsedDate.toDateString()}</Text>
             <Text>Sexo: {sex}</Text>
+            <Text>Distancia a ubicación actual:</Text>
           </View>
         </Card>
       </TouchableOpacity>
