@@ -1,6 +1,5 @@
 import { createStackNavigator } from 'react-navigation'
 import InitAppScreen from '../screens/InitAppScreen'
-import LostDogScreen from '../screens/LostDogScreen'
 import FoundDogScreen from '../screens/FoundDogScreen'
 import PictureScreen from '../screens/camera/PictureScreen'
 import AcceptPictureScreen from '../screens/camera/AcceptPictureScreen'
@@ -28,8 +27,18 @@ export default createStackNavigator({
   },
   FoundDog: {
     screen: FoundDogScreen,
+    navigationOptions: {
+      title: 'Perro Encontrado',
+      headerStyle: {
+        backgroundColor: 'steelblue',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+        textAlign: 'center',
+      },
+    },
   },
-  LostDog: LostDogScreen,
   ShowPicture: {
     screen: ShowPictureScreen,
     navigationOptions: {
