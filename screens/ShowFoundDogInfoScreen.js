@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Text, ScrollView, Dimensions } from 'react-native'
+import { StyleSheet, ScrollView, Dimensions } from 'react-native'
 import PropTypes from 'prop-types'
 import { Icon, ListItem } from 'react-native-elements'
 import MapView, { Marker } from 'react-native-maps'
@@ -10,7 +10,6 @@ const height = Dimensions.get('window').height
 export default class ShowFoundDogInfoScreen extends Component {
   constructor(props) {
     super(props)
-    //this.state = {}
   }
   render() {
     const dogInfo = this.props.navigation.getParam('dogInfo', 'NO-dog')
@@ -35,18 +34,6 @@ export default class ShowFoundDogInfoScreen extends Component {
         icon: <Icon name="info" type="material" color="#517fa4" />,
       },
     ]
-    /*     Image.getSize(dogInfo.imageLinks, (imageWidth, imageHeight) => {
-      this.setState({ imageWidth, imageHeight })
-    })
-    const widthCalculator = (imageWidth, imageHeight) => {
-      if (imageWidth > width) {
-        return width * 0.8
-      } else if (imageHeight < height * 0.5) {
-        return imageWidth
-      } else {
-        return width * 0.8
-      }
-    } */
     return (
       <ScrollView>
         <Image
@@ -67,8 +54,8 @@ export default class ShowFoundDogInfoScreen extends Component {
           initialRegion={{
             latitude: dogInfo.marker.latitude,
             longitude: dogInfo.marker.longitude,
-            latitudeDelta: 0.001,
-            longitudeDelta: 0.001,
+            latitudeDelta: 0.0025,
+            longitudeDelta: 0.0025,
           }}
           showsBuildings={false}
           loadingEnabled={true}

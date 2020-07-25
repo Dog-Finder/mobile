@@ -1,13 +1,5 @@
 import React, { Component } from 'react'
-import {
-  View,
-  Text,
-  Button,
-  Image,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-} from 'react-native'
+import { SafeAreaView, ScrollView, StyleSheet } from 'react-native'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Constants from 'expo-constants'
@@ -18,15 +10,24 @@ import FoundDogItem from '../components/FoundDog/FoundDogItem'
 class FoundDogListScreen extends Component {
   constructor(props) {
     super(props)
+    this.state = {}
   }
   static propTypes = {
     getFoundDogList: PropTypes.func.isRequired,
     foundDogList: PropTypes.array.isRequired,
   }
+  getCurrentLocation = async () => {
+    navigator.geolocation.getCurrentPosition(async position => {
+      this.setState({
+        latitude: parseFloat(position.coords.latitude),
+        longitude: parseFloat(position.coords.longitude),
+      })
+    })
+  }
   componentDidMount() {
     this.props.getFoundDogList(1234)
+    this.getCurrentLocation()
   }
-
   render() {
     const foundDogList = this.props.foundDogList.map((foundDog, i) => {
       return (
@@ -34,6 +35,10 @@ class FoundDogListScreen extends Component {
           key={i}
           dog={foundDog}
           navigator={this.props.navigation}
+          userCoordinates={{
+            latitude: this.state.latitude,
+            longitude: this.state.longitude,
+          }}
         ></FoundDogItem>
       )
     })
@@ -43,6 +48,10 @@ class FoundDogListScreen extends Component {
       </SafeAreaView>
     )
   }
+}
+
+FoundDogListScreen.propTypes = {
+  navigation: PropTypes.object.isRequired,
 }
 
 const styles = StyleSheet.create({
