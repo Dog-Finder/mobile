@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { View, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, SafeAreaView } from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import FoundDogForm from '../components/FoundDogForm/FoundDogForm'
 import { postFoundDog } from '../redux/actions/foundDog'
 import { getSignedUrl } from '../redux/actions/images'
-import { Header } from 'react-native-elements'
 
 class FoundDogScreen extends Component {
   constructor(props) {
@@ -15,7 +15,6 @@ class FoundDogScreen extends Component {
     this.imagePath = this.props.navigation.getParam('uri')
     this.pressPicture = this.pressPicture.bind(this)
   }
-  async componentDidMount() {}
 
   async onSubmitHandler(token, data) {
     const imageLink = await this.uploadImage(this.imagePath)
@@ -29,7 +28,14 @@ class FoundDogScreen extends Component {
     const { url, imageLink } = payload.data // signed url, simple link
     const file = await fetch(filePath) // Necesary to convert path to blob type
     const blob = await file.blob()
-    await fetch(url, { method: 'PUT', body: blob }) // Actual upload to S3
+    await fetch(url, {
+      method: 'PUT',
+      body: blob,
+      headers: new Headers({
+        'Content-Type': 'image/jpeg',
+        'Content-Disposition': 'inline',
+      }),
+    }) // Actual upload to S3
     return imageLink
   }
   pressPicture() {
@@ -51,19 +57,15 @@ class FoundDogScreen extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        {/*         <Header
-          centerComponent={{
-            text: 'PERRO ENCONTRADO',
-            style: { color: '#fff', fontWeight: 'bold' },
-          }}
-        ></Header> */}
-        <FoundDogForm
-          onSubmitHandler={this.onSubmitHandler}
-          imagePath={this.imagePath}
-          pressPicture={this.pressPicture}
-        ></FoundDogForm>
-      </View>
+      <SafeAreaView styles={styles.container}>
+        <KeyboardAwareScrollView>
+          <FoundDogForm
+            onSubmitHandler={this.onSubmitHandler}
+            imagePath={this.imagePath}
+            pressPicture={this.pressPicture}
+          ></FoundDogForm>
+        </KeyboardAwareScrollView>
+      </SafeAreaView>
     )
   }
 }

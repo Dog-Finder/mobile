@@ -1,10 +1,10 @@
 import { createStackNavigator } from 'react-navigation'
 import InitAppScreen from '../screens/InitAppScreen'
 import LostDogScreen from '../screens/LostDogScreen'
-import PictureScreen from '../screens/PictureScreen'
-import AcceptPictureScreen from '../screens/AcceptPictureScreen'
 import FoundDogScreen from '../screens/FoundDogScreen'
-import ShowPictureScreen from '../screens/ShowPictureScreen'
+import PictureScreen from '../screens/camera/PictureScreen'
+import AcceptPictureScreen from '../screens/camera/AcceptPictureScreen'
+import ShowPictureScreen from '../screens/camera/ShowPictureScreen'
 
 export default createStackNavigator({
   InitApp: {

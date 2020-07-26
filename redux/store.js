@@ -9,7 +9,7 @@ import lostDog from './models/lostDog'
 
 export const client = axios.create({
   baseURL: 'https://all31gfkx0.execute-api.us-east-1.amazonaws.com/dev',
-  // baseURL: 'http://localhost:3000/playground',
+  // baseURL: 'http://localhost:3000/local',
   responseType: 'json',
   requestType: 'json',
 })
