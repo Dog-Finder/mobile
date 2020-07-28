@@ -1,11 +1,11 @@
 import React from 'react'
-// import {View } from 'react-native'
+import PropTypes from 'prop-types'
 import RNPickerSelect from 'react-native-picker-select'
-export const SexInput = props => {
+export const SexInput = ({ onValueChange }) => {
   return (
     <RNPickerSelect
       style={pickerSelectStyles}
-      onValueChange={props.onValueChange}
+      onValueChange={onValueChange}
       placeholder={{ label: 'Sexo', value: null }}
       items={[
         { label: 'Macho', value: 'male' },
@@ -14,6 +14,10 @@ export const SexInput = props => {
       ]}
     />
   )
+}
+
+SexInput.propTypes = {
+  onValueChange: PropTypes.func.isRequired,
 }
 
 const pickerSelectStyles = {
