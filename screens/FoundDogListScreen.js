@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import Constants from 'expo-constants'
 
 import { getFoundDogList } from '../api'
-import FoundDogItem from '../components/FoudDog/FoundDogItem'
+import FoundDogItem from '../components/FoundDog/FoundDogItem'
 
 class FoundDogListScreen extends Component {
   constructor(props) {
