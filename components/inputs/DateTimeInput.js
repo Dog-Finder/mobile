@@ -1,50 +1,39 @@
-import React, { Component } from 'react'
-import { View, Keyboard, TouchableOpacity } from 'react-native'
+import React, { useState } from 'react'
+import { View, TouchableOpacity } from 'react-native'
+import PropTypes from 'prop-types'
 import { Appearance } from 'react-native-appearance'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import { Input } from 'react-native-elements'
 
-export default class DateTimeInput extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { isModalVisible: false, value: '' }
-    this.onConfirm = this.onConfirm.bind(this)
-    this.onCancel = this.onCancel.bind(this)
-    this.onPress = this.onPress.bind(this)
-    this.textInput = React.createRef()
+const DateTimeInput = ({ onConfirm, placeholder }) => {
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [value, setValue] = useState('')
+  const colorScheme = Appearance.getColorScheme()
+  const onConfirmHandler = date => {
+    setIsModalVisible(false)
+    setValue(date.toDateString())
+    onConfirm(date)
   }
-  onConfirm(date) {
-    this.setState({ isModalVisible: false, value: date.toDateString() })
-    this.props.onConfirm(date)
-  }
-  onCancel() {
-    this.setState({ isModalVisible: false })
-  }
-
-  onPress() {
-    this.setState({ isModalVisible: true })
-  }
-
-  render() {
-    const colorScheme = Appearance.getColorScheme()
-    return (
-      <View>
-        <TouchableOpacity onPress={this.onPress}>
-          <View pointerEvents="none">
-            <Input
-              disabled
-              placeholder={this.props.placeholder}
-              value={this.state.value}
-            ></Input>
-          </View>
-        </TouchableOpacity>
-        <DateTimePickerModal
-          isVisible={this.state.isModalVisible}
-          onConfirm={this.onConfirm}
-          onCancel={this.onCancel}
-          isDarkModeEnabled={colorScheme === 'dark'}
-        />
-      </View>
-    )
-  }
+  return (
+    <View>
+      <TouchableOpacity onPress={() => setIsModalVisible(true)}>
+        <View pointerEvents="none">
+          <Input disabled placeholder={placeholder} value={value}></Input>
+        </View>
+      </TouchableOpacity>
+      <DateTimePickerModal
+        isVisible={isModalVisible}
+        onConfirm={onConfirmHandler}
+        onCancel={() => setIsModalVisible(false)}
+        isDarkModeEnabled={colorScheme === 'dark'}
+      />
+    </View>
+  )
 }
+
+DateTimeInput.propTypes = {
+  onConfirm: PropTypes.func.isRequired,
+  placeholder: PropTypes.string.isRequired,
+}
+
+export default DateTimeInput
