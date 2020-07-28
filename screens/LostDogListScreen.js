@@ -1,20 +1,15 @@
 import React, { Component } from 'react'
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import Constants from 'expo-constants'
 
-import { getLostDogList } from '../redux/actions/lostDog'
 import LostDogItem from '../components/LostDog/LostDogItem'
+import { getLostDogList } from '../api'
 
 class LostDogListScreen extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
-  }
-  static propTypes = {
-    getLostDogList: PropTypes.func.isRequired,
-    lostDogList: PropTypes.array.isRequired,
+    this.state = { lostDogList: [] }
   }
   getCurrentLocation = async () => {
     navigator.geolocation.getCurrentPosition(async position => {
@@ -24,13 +19,14 @@ class LostDogListScreen extends Component {
       })
     })
   }
-  componentDidMount() {
-    this.props.getLostDogList(1234)
+  async componentDidMount() {
+    const { data } = await getLostDogList(1234)
+    this.setState({ lostDogList: data.resource })
     this.getCurrentLocation()
   }
 
   render() {
-    const lostDogList = this.props.lostDogList.map((lostDog, i) => {
+    const lostDogList = this.state.lostDogList.map((lostDog, i) => {
       return (
         <LostDogItem
           key={i}
@@ -68,10 +64,4 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = state => ({
-  lostDogList: state.lostDog.lostDogList,
-})
-
-const mapDispatchToProps = { getLostDogList }
-
-export default connect(mapStateToProps, mapDispatchToProps)(LostDogListScreen)
+export default LostDogListScreen

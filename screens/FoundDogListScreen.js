@@ -1,16 +1,15 @@
 import React, { Component } from 'react'
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import Constants from 'expo-constants'
 
-import { getFoundDogList } from '../redux/actions/foundDog'
-import FoundDogItem from '../components/FoundDog/FoundDogItem'
+import { getFoundDogList } from '../api'
+import FoundDogItem from '../components/FoudDog/FoundDogItem'
 
 class FoundDogListScreen extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = { foundDogList: [] }
   }
   static propTypes = {
     getFoundDogList: PropTypes.func.isRequired,
@@ -24,12 +23,13 @@ class FoundDogListScreen extends Component {
       })
     })
   }
-  componentDidMount() {
-    this.props.getFoundDogList(1234)
+  async componentDidMount() {
+    const { data } = await getFoundDogList(1234)
+    this.setState({ foundDogList: data.resource })
     this.getCurrentLocation()
   }
   render() {
-    const foundDogList = this.props.foundDogList.map((foundDog, i) => {
+    const foundDogList = this.state.foundDogList.map((foundDog, i) => {
       return (
         <FoundDogItem
           key={i}
@@ -66,10 +66,4 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = state => ({
-  foundDogList: state.foundDog.foundDogList,
-})
-
-const mapDispatchToProps = { getFoundDogList }
-
-export default connect(mapStateToProps, mapDispatchToProps)(FoundDogListScreen)
+export default FoundDogListScreen

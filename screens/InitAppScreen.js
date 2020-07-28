@@ -46,3 +46,5 @@ const styles = StyleSheet.create({
   },
   image: { height: 110, width: 254 },
 })
+
+export default InitAppScreen

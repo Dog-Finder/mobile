@@ -1,18 +1,16 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { StyleSheet, SafeAreaView } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import FoundDogForm from '../components/FoundDogForm/FoundDogForm'
-import { postFoundDog } from '../redux/actions/foundDog'
-import { getSignedUrl } from '../redux/actions/images'
+import { postFoundDog, getSignedUrl } from '../api'
 
-const FoundDogScreen = ({ navigation, postFoundDog }) => {
+const FoundDogScreen = ({ navigation }) => {
   const imagePath = navigation.getParam('uri')
 
   const uploadImage = async filePath => {
-    const { payload } = await this.props.getSignedUrl(1234)
-    const { url, imageLink } = payload.data // signed url, simple link
+    const { data } = await getSignedUrl(1234)
+    const { url, imageLink } = data // signed url, simple link
     const file = await fetch(filePath) // Necesary to convert path to blob type
     const blob = await file.blob()
     await fetch(url, {
@@ -53,8 +51,6 @@ const FoundDogScreen = ({ navigation, postFoundDog }) => {
 }
 
 FoundDogScreen.propTypes = {
-  postFoundDog: PropTypes.func.isRequired,
-  getSignedUrl: PropTypes.func.isRequired,
   navigation: PropTypes.object.isRequired,
 }
 
@@ -64,11 +60,4 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = state => ({})
-
-const mapDispatchToProps = {
-  postFoundDog,
-  getSignedUrl,
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(FoundDogScreen)
+export default FoundDogScreen
