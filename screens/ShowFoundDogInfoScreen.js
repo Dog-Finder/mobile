@@ -30,7 +30,7 @@ export default class ShowFoundDogInfoScreen extends Component {
         ),
       },
       {
-        title: dogInfo.comentary,
+        title: dogInfo.commentary,
         icon: <Icon name="info" type="material" color="#517fa4" />,
       },
     ]

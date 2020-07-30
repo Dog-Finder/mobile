@@ -41,7 +41,7 @@ export class FoundDogForm extends Component {
       date: 'Seleccionar fecha',
       sex: 'No sé',
       address: [{ city: '', country: '', name: '', street: '', region: '' }],
-      comentary: '',
+      commentary: '',
       isDatePickerVisible: false,
       isMapVisible: false,
       region: {
@@ -63,7 +63,7 @@ export class FoundDogForm extends Component {
       },
     }
     this.onChangeDate = this.onChangeDate.bind(this)
-    this.onChangeComentary = this.onChangeComentary.bind(this)
+    this.onChangeCommentary = this.onChangeCommentary.bind(this)
     this.onConfirmDatePicker = this.onConfirmDatePicker.bind(this)
     this.onCancelDatePicker = this.onCancelDatePicker.bind(this)
     this.onPressHandler = this.onPressHandler.bind(this)
@@ -77,11 +77,11 @@ export class FoundDogForm extends Component {
   onChangeDate() {
     this.setState({ isDatePickerVisible: true })
   }
-  onChangeComentary(comentary) {
+  onChangeCommentary(commentary) {
     this.setState(currentState => {
       return {
-        comentary,
-        validate: { ...currentState, comentary: comentary !== '' },
+        commentary,
+        validate: { ...currentState, commentary: commentary !== '' },
       }
     })
   }
@@ -98,9 +98,9 @@ export class FoundDogForm extends Component {
     this.setState({ isDatePickerVisible: false })
   }
   onPressHandler() {
-    const { sex, date, comentary, marker, address } = this.state
+    const { sex, date, commentary, marker, address } = this.state
     // saving marker and address (which is redundant) to make it easier when showing dog data and not needing to calculate again
-    const data = { sex, date, comentary, marker, address }
+    const data = { sex, date, commentary, marker, address }
     Alert.alert(
       'Confirmación de datos',
       'Sexo: ' +
@@ -381,7 +381,7 @@ export class FoundDogForm extends Component {
           </Text>
           <View style={styles.textAreaContainer}>
             <TextInput
-              onChangeText={this.onChangeComentary}
+              onChangeText={this.onChangeCommentary}
               underlineColorAndroid="transparent"
               style={styles.textInputStyle}
               containerStyle={styles.input}

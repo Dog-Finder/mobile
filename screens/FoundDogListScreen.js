@@ -1,53 +1,47 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import Constants from 'expo-constants'
 
-import { getFoundDogList } from '../redux/actions/foundDog'
+import { getFoundDogList } from '../api'
 import FoundDogItem from '../components/FoundDog/FoundDogItem'
 
-class FoundDogListScreen extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {}
-  }
-  static propTypes = {
-    getFoundDogList: PropTypes.func.isRequired,
-    foundDogList: PropTypes.array.isRequired,
-  }
-  getCurrentLocation = async () => {
+const FoundDogListScreen = ({ navigation }) => {
+  const [foundDogList, setFoundDogList] = useState([])
+  const [latitude, setLatitude] = useState(null)
+  const [longitude, setLongitude] = useState(null)
+  const getCurrentLocation = async () => {
     navigator.geolocation.getCurrentPosition(async position => {
-      this.setState({
-        latitude: parseFloat(position.coords.latitude),
-        longitude: parseFloat(position.coords.longitude),
-      })
+      setLatitude(parseFloat(position.coords.latitude))
+      setLongitude(parseFloat(position.coords.longitude))
     })
   }
-  componentDidMount() {
-    this.props.getFoundDogList(1234)
-    this.getCurrentLocation()
-  }
-  render() {
-    const foundDogList = this.props.foundDogList.map((foundDog, i) => {
-      return (
-        <FoundDogItem
-          key={i}
-          dog={foundDog}
-          navigator={this.props.navigation}
-          userCoordinates={{
-            latitude: this.state.latitude,
-            longitude: this.state.longitude,
-          }}
-        ></FoundDogItem>
-      )
-    })
+  useEffect(() => {
+    // eslint-disable-next-line prettier/prettier
+    (async () => {
+      const { data } = await getFoundDogList(1234)
+      setFoundDogList(data.resource)
+      getCurrentLocation()
+    })()
+  }, [])
+  const foundDogItems = foundDogList.map((foundDog, i) => {
     return (
-      <SafeAreaView styles={styles.container}>
-        <ScrollView styles={styles.scrollView}>{foundDogList}</ScrollView>
-      </SafeAreaView>
+      <FoundDogItem
+        key={i}
+        dog={foundDog}
+        navigator={navigation}
+        userCoordinates={{
+          latitude: latitude,
+          longitude: longitude,
+        }}
+      ></FoundDogItem>
     )
-  }
+  })
+  return (
+    <SafeAreaView styles={styles.container}>
+      <ScrollView styles={styles.scrollView}>{foundDogItems}</ScrollView>
+    </SafeAreaView>
+  )
 }
 
 FoundDogListScreen.propTypes = {
@@ -66,10 +60,4 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = state => ({
-  foundDogList: state.foundDog.foundDogList,
-})
-
-const mapDispatchToProps = { getFoundDogList }
-
-export default connect(mapStateToProps, mapDispatchToProps)(FoundDogListScreen)
+export default FoundDogListScreen

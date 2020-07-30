@@ -1,22 +1,16 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Text, StyleSheet, View, Button } from 'react-native'
 
-export default class AuthScreen extends Component {
-  constructor(props) {
-    super(props)
-    this.advance = this.advance.bind(this)
+const AuthScreen = ({ navigation }) => {
+  const advance = () => {
+    navigation.navigate('InitApp')
   }
-  advance() {
-    this.props.navigation.navigate('InitApp')
-  }
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text> Auth </Text>
-        <Button title="Advance" onPress={this.advance} />
-      </View>
-    )
-  }
+  return (
+    <View style={styles.container}>
+      <Text> Auth </Text>
+      <Button title="Advance" onPress={advance} />
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -29,3 +23,5 @@ const styles = StyleSheet.create({
     paddingTop: 15,
   },
 })
+
+export default AuthScreen

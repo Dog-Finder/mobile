@@ -4,10 +4,9 @@ import * as Font from 'expo-font'
 import React, { useState } from 'react'
 import { Platform, StatusBar, StyleSheet, View } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
-import { Provider } from 'react-redux'
 
+import Context from './context/context'
 import AppNavigator from './navigation/AppNavigator'
-import store from './redux/store'
 import { AppearanceProvider } from 'react-native-appearance'
 
 export default function App(props) {
@@ -24,12 +23,12 @@ export default function App(props) {
   } else {
     return (
       <AppearanceProvider>
-        <Provider store={store}>
+        <Context.Provider>
           <View style={styles.container}>
             {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
             <AppNavigator />
           </View>
-        </Provider>
+        </Context.Provider>
       </AppearanceProvider>
     )
   }
