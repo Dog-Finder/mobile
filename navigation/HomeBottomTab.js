@@ -1,5 +1,5 @@
 import React from 'react'
-import { createBottomTabNavigator } from 'react-navigation'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Entypo } from '@expo/vector-icons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
@@ -26,30 +26,35 @@ const FoundDogIcon = props => (
   />
 )
 
-export default createBottomTabNavigator(
-  {
-    Home: {
-      screen: LostDogScreen,
-      navigationOptions: {
-        tabBarIcon: HomeIcon,
-      },
-    },
-    FoundDog: {
-      screen: FoundDogListStack,
-      navigationOptions: {
-        tabBarLabel: 'Encontrados',
-        tabBarIcon: FoundDogIcon,
-      },
-    },
-    LostDog: {
-      screen: LostDogListStack,
-      navigationOptions: {
-        tabBarLabel: 'Perdidos',
-        tabBarIcon: LostDogIcon,
-      },
-    },
-  },
-  {
-    tabBarOptions: { activeTintColor: 'black' },
-  }
-)
+const Tab = createBottomTabNavigator()
+
+const HomeBottomTab = () => {
+  return (
+    <Tab.Navigator tabBarOptions={{ activeTintColor: 'black' }}>
+      <Tab.Screen
+        name="Home"
+        component={LostDogScreen}
+        options={{
+          tabBarIcon: HomeIcon,
+        }}
+      ></Tab.Screen>
+      <Tab.Screen
+        name="FoundDog"
+        component={FoundDogListStack}
+        options={{
+          tabBarLabel: 'Encontrados',
+          tabBarIcon: FoundDogIcon,
+        }}
+      ></Tab.Screen>
+      <Tab.Screen
+        name="LostDog"
+        component={LostDogListStack}
+        options={{
+          tabBarLabel: 'Perdidos',
+          tabBarIcon: LostDogIcon,
+        }}
+      ></Tab.Screen>
+    </Tab.Navigator>
+  )
+}
+export default HomeBottomTab

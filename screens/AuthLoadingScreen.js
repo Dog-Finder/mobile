@@ -1,19 +1,7 @@
-import React, { useEffect } from 'react'
-import { Text, StyleSheet, View, Button } from 'react-native'
+import React from 'react'
+import { Text, StyleSheet, View } from 'react-native'
 
-const AuthLoadingScreen = ({ navigation }) => {
-  const makeAsyncStuff = async () => {
-    await new Promise(resolve => {
-      setTimeout(resolve, 1000)
-    })
-    navigation.navigate('Auth')
-  }
-  useEffect(() => {
-    // eslint-disable-next-line prettier/prettier
-    (async () => {
-      makeAsyncStuff()
-    })()
-  })
+const AuthLoadingScreen = () => {
   return (
     <View style={styles.container}>
       <Text> Auth Loading </Text>

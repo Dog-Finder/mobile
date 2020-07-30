@@ -1,15 +1,22 @@
-import { createStackNavigator } from 'react-navigation'
+import React from 'react'
+import { createStackNavigator } from '@react-navigation/stack'
 import ShowLostDogInfoScreen from '../screens/ShowLostDogInfoScreen'
 import LostDogListScreen from '../screens/LostDogListScreen'
 
-export default createStackNavigator({
-  LostDogList: {
-    screen: LostDogListScreen,
-    navigationOptions: {
-      headerStyle: { height: 7 },
-    },
-  },
-  ShowLostDogInfo: {
-    screen: ShowLostDogInfoScreen,
-  },
-})
+const Stack = createStackNavigator()
+const LostDogListStack = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="LostDogList"
+        component={LostDogListScreen}
+        options={{
+          headerStyle: { height: 7 },
+        }}
+      />
+      <Stack.Screen name="ShowLostDogInfo" component={ShowLostDogInfoScreen} />
+    </Stack.Navigator>
+  )
+}
+
+export default LostDogListStack
