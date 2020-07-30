@@ -10,7 +10,7 @@ import MapInput from 'components/inputs/MapInput'
 const FoundDogForm = ({ onSubmitHandler, pressPicture, imagePath }) => {
   const [name, setName] = useState('')
   const [sex, setSex] = useState('')
-  const [comentary, setComentary] = useState('')
+  const [commentary, setCommentary] = useState('')
   const [date, setDate] = useState(new Date())
   const [marker, setMarker] = useState({
     latitude: 51.5078788,
@@ -50,7 +50,7 @@ const FoundDogForm = ({ onSubmitHandler, pressPicture, imagePath }) => {
     const data = {
       name,
       sex,
-      comentary,
+      commentary,
       date,
       marker,
       address: { street, city, country },
@@ -82,8 +82,8 @@ const FoundDogForm = ({ onSubmitHandler, pressPicture, imagePath }) => {
         <SexInput onValueChange={sex => setSex(sex)} />
         <Input
           placeholder="Descripción"
-          onChangeText={comentary => setComentary(comentary)}
-          value={comentary}
+          onChangeText={commentary => setCommentary(commentary)}
+          value={commentary}
         ></Input>
       </Card>
       <Card title="Ubicación">

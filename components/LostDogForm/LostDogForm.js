@@ -10,7 +10,7 @@ import MapInput from 'components/inputs/MapInput'
 const LostDogForm = ({ onSubmitHandler, pressPicture, imagePath }) => {
   const [name, setName] = useState('')
   const [sex, setSex] = useState('')
-  const [comentary, setComentary] = useState('')
+  const [commentary, setCommentary] = useState('')
   const [date, setDate] = useState(new Date())
   const [marker, setMarker] = useState({
     latitude: 51.5078788,
@@ -50,7 +50,7 @@ const LostDogForm = ({ onSubmitHandler, pressPicture, imagePath }) => {
     const data = {
       name,
       sex,
-      comentary,
+      commentary,
       date,
       marker,
       address: { street, city, country },
@@ -78,8 +78,8 @@ const LostDogForm = ({ onSubmitHandler, pressPicture, imagePath }) => {
         <SexInput onValueChange={setSex} />
         <Input
           placeholder="Descripción"
-          onChangeText={setComentary}
-          value={comentary}
+          onChangeText={setCommentary}
+          value={commentary}
         ></Input>
       </Card>
       <Card title="Ubicación">
@@ -106,7 +106,7 @@ const LostDogForm = ({ onSubmitHandler, pressPicture, imagePath }) => {
 //     this.state = {
 //       name: '',
 //       sex: '',
-//       comentary: '',
+//       commentary: '',
 //       date: new Date(),
 //       marker: { latitude: 51.5078788, longitude: -0.0877321 },
 //       street: '',
@@ -146,7 +146,7 @@ const LostDogForm = ({ onSubmitHandler, pressPicture, imagePath }) => {
 //     const {
 //       name,
 //       sex,
-//       comentary,
+//       commentary,
 //       date,
 //       marker,
 //       street,
@@ -156,7 +156,7 @@ const LostDogForm = ({ onSubmitHandler, pressPicture, imagePath }) => {
 //     const data = {
 //       name,
 //       sex,
-//       comentary,
+//       commentary,
 //       date,
 //       marker,
 //       address: { street, city, country },
@@ -199,10 +199,10 @@ const LostDogForm = ({ onSubmitHandler, pressPicture, imagePath }) => {
 //           />
 //           <Input
 //             placeholder="Descripción"
-//             onChangeText={comentary => {
-//               this.setState({ comentary })
+//             onChangeText={commentary => {
+//               this.setState({ commentary })
 //             }}
-//             value={this.state.comentary}
+//             value={this.state.commentary}
 //           ></Input>
 //         </Card>
 //         <Card title="Ubicación">

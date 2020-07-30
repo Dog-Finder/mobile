@@ -15,7 +15,7 @@ export default class LostDogItem extends Component {
   }
 
   render() {
-    const { imageLinks, date, sex, marker } = this.props.dog //props: imageLinks, date, comentary, address, sex, marker, name
+    const { imageLinks, date, sex, marker } = this.props.dog //props: imageLinks, date, commentary, address, sex, marker, name
     const parsedDate = new Date(date)
     const navigator = this.props.navigator
     let distance
