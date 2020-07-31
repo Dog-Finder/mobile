@@ -5,7 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import LostDogListStack from './LostDogListStack'
 import FoundDogListStack from './FoundDogListStack'
-import LostDogScreen from '../screens/LostDogScreen'
+import LostDogScreen from '../../screens/LostDogScreen'
 
 const HomeIcon = props => (
   <Entypo name="home" size={24} color={props.focused ? 'black' : 'gray'} />

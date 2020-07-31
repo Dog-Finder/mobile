@@ -1,7 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import ShowLostDogInfoScreen from '../screens/ShowLostDogInfoScreen'
-import LostDogListScreen from '../screens/LostDogListScreen'
+import ShowLostDogInfoScreen from '../../screens/ShowLostDogInfoScreen'
+import LostDogListScreen from '../../screens/LostDogListScreen'
 
 const Stack = createStackNavigator()
 const LostDogListStack = () => {

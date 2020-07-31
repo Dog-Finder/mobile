@@ -3,9 +3,6 @@ import { StyleSheet, View, Button, Image } from 'react-native'
 import Proptypes from 'prop-types'
 
 const InitAppScreen = ({ navigation }) => {
-  const openCamera = () => {
-    navigation.navigate('Picture')
-  }
   return (
     <View style={styles.container}>
       <View style={styles.buttonContainer}>
@@ -19,7 +16,10 @@ const InitAppScreen = ({ navigation }) => {
         style={styles.image}
       />
       <View style={styles.buttonContainer}>
-        <Button title="Encontré un perro" onPress={openCamera} />
+        <Button
+          title="Encontré un perro"
+          onPress={() => navigation.push('FoundDog')}
+        />
       </View>
     </View>
   )
