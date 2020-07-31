@@ -36,8 +36,9 @@ const PictureScreen = ({ navigation }) => {
 
   const takePicture = async () => {
     if (cameraRef) {
-      const picture = await cameraRef.takePictureAsync()
-      navigation.navigate('AcceptPicture', { uri: picture.uri })
+      const { uri } = await cameraRef.takePictureAsync()
+
+      navigation.navigate('AcceptPicture', { uri })
       // this.props.navigation.navigate('AcceptPicture', {
       //   uri: 'https://perro.shop/wp-content/uploads/pug.jpg',
       // })

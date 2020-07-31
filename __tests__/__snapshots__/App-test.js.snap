@@ -24,7 +24,22 @@ exports[`App renders the root without loading screen 1`] = `
       }
     }
   >
-    <AppNavigator />
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#fff",
+          "flex": 1,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "paddingTop": 15,
+        }
+      }
+    >
+      <Text>
+         Auth Loading 
+      </Text>
+    </View>
   </View>
 </RNCAppearanceProvider>
 `;

@@ -13,11 +13,9 @@ export default class ShowPictureScreen extends Component {
   }
 
   render() {
+    const { uri } = this.props.route.params
     return (
-      <ImageBackground
-        source={{ uri: this.props.navigation.getParam('uri', 'NO-uri') }}
-        style={styles.imageStyle}
-      >
+      <ImageBackground source={{ uri }} style={styles.imageStyle}>
         <View style={styles.back}>
           <Icon
             name="arrow-left"
