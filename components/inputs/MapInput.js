@@ -1,8 +1,15 @@
+<<<<<<< HEAD
 import React, { useEffect } from 'react'
 import { View } from 'react-native'
 import { Input } from 'react-native-elements'
 import MapView, { Marker } from 'react-native-maps'
 import * as Location from 'expo-location'
+=======
+import React from 'react'
+import { View } from 'react-native'
+import { Input } from 'react-native-elements'
+import MapView, { Marker } from 'react-native-maps'
+>>>>>>> e8311e9bb1240adcc252b523a7ffd065588c026f
 import PropTypes from 'prop-types'
 
 const MapInput = props => {

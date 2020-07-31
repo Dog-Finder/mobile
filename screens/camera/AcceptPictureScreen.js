@@ -3,7 +3,8 @@ import { StyleSheet, View, ImageBackground } from 'react-native'
 import { Button } from 'react-native-elements'
 import PropTypes from 'prop-types'
 
-const AcceptPictureScreen = ({ navigation }) => {
+const AcceptPictureScreen = ({ navigation, route }) => {
+  const { uri } = route.params
   const repeatPicture = () => {
     navigation.navigate('Picture')
   }
@@ -13,10 +14,7 @@ const AcceptPictureScreen = ({ navigation }) => {
     })
   }
   return (
-    <ImageBackground
-      source={{ uri: navigation.getParam('uri', 'NO-uri') }}
-      style={styles.image}
-    >
+    <ImageBackground source={{ uri }} style={styles.image}>
       <View style={styles.buttonView}>
         <Button
           title="Repetir foto"
@@ -29,7 +27,7 @@ const AcceptPictureScreen = ({ navigation }) => {
           type="outline"
           buttonStyle={styles.buttonStyle}
           onPress={() => {
-            selectPicture(navigation.getParam('uri', 'NO-uri'))
+            selectPicture(uri)
           }}
         />
       </View>
@@ -39,6 +37,7 @@ const AcceptPictureScreen = ({ navigation }) => {
 
 AcceptPictureScreen.propTypes = {
   navigation: PropTypes.object.isRequired,
+  route: PropTypes.object.isRequired,
 }
 const styles = StyleSheet.create({
   buttonStyle: { backgroundColor: 'white' },

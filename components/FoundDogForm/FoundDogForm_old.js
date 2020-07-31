@@ -489,7 +489,7 @@ const styles = StyleSheet.create({
   textInputStyle: { fontSize: 16, textAlignVertical: 'top' },
 })
 
-const mapStateToProps = state => ({})
+const mapStateToProps = () => ({})
 
 const mapDispatchToProps = {}
 

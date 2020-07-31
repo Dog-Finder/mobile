@@ -4,9 +4,10 @@ import * as Font from 'expo-font'
 import React, { useState } from 'react'
 import { Platform, StatusBar, StyleSheet, View } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
+import { NavigationContainer } from '@react-navigation/native'
 
 import Context from './context/context'
-import AppNavigator from './navigation/AppNavigator'
+import AuthStack from './navigation/AuthStack'
 import { AppearanceProvider } from 'react-native-appearance'
 
 export default function App(props) {
@@ -26,7 +27,9 @@ export default function App(props) {
         <Context.Provider>
           <View style={styles.container}>
             {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-            <AppNavigator />
+            <NavigationContainer>
+              <AuthStack />
+            </NavigationContainer>
           </View>
         </Context.Provider>
       </AppearanceProvider>

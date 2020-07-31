@@ -5,8 +5,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import FoundDogForm from '../components/FoundDogForm/FoundDogForm'
 import { postFoundDog, getSignedUrl } from '../api'
 
-const FoundDogScreen = ({ navigation }) => {
-  const imagePath = navigation.getParam('uri')
+const FoundDogScreen = ({ navigation, route }) => {
+  const imagePath = route.params.uri
 
   const uploadImage = async filePath => {
     const { data } = await getSignedUrl(1234)
