@@ -12,7 +12,7 @@ export default class ShowFoundDogInfoScreen extends Component {
     super(props)
   }
   render() {
-    const dogInfo = this.props.navigation.getParam('dogInfo', 'NO-dog')
+    const { dogInfo } = this.props.route.params
     const parsedDate = new Date(dogInfo.date)
     const info = [
       {

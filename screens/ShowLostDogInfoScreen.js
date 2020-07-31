@@ -10,14 +10,16 @@ const height = Dimensions.get('window').height
 export default class ShowLostDogInfoScreen extends Component {
   constructor(props) {
     super(props)
+    this.dogInfo = this.props.route.params.dogInfo
+    this.props.navigation.setOptions({ title: this.dogInfo.name })
   }
-  static navigationOptions = ({ navigation }) => {
-    return {
-      title: navigation.getParam('dogInfo', 'NO-dog').name,
-    }
-  }
+  // static navigationOptions = ({ navigation }) => {
+  //   return {
+  //     title: navigation.getParam('dogInfo', 'NO-dog').name,
+  //   }
+  // }
   render() {
-    const dogInfo = this.props.navigation.getParam('dogInfo', 'NO-dog')
+    const dogInfo = this.dogInfo
     const parsedDate = new Date(dogInfo.date)
     const info = [
       {

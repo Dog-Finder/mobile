@@ -1,10 +1,13 @@
 import React from 'react'
-import { Text, StyleSheet, View } from 'react-native'
+import { StyleSheet, View, Image } from 'react-native'
 
 const AuthLoadingScreen = () => {
   return (
     <View style={styles.container}>
-      <Text> Auth Loading </Text>
+      <Image
+        source={require('../assets/images/logo002.jpg')}
+        style={styles.image}
+      />
     </View>
   )
 }
@@ -18,6 +21,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingTop: 15,
   },
+  image: { height: 110, width: 254 },
 })
 
 export default AuthLoadingScreen

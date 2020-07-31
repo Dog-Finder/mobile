@@ -7,7 +7,11 @@ const Stack = createStackNavigator()
 const AppNavigator = () => {
   return (
     <Stack.Navigator initialRouteName={'InitApp'}>
-      <Stack.Screen name="InitApp" component={InitAppStack} />
+      <Stack.Screen
+        name="InitApp"
+        component={InitAppStack}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen name="Home" component={HomeBottomTab} />
     </Stack.Navigator>
   )

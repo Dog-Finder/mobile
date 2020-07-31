@@ -9,34 +9,16 @@ import ShowPictureScreen from '../screens/camera/ShowPictureScreen'
 const Stack = createStackNavigator()
 const InitAppStack = () => {
   return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="InitApp"
-        component={InitAppScreen}
-        options={{
-          header: null,
-        }}
-      />
-      <Stack.Screen
-        name="Picture"
-        component={PictureScreen}
-        options={{
-          header: null,
-          headerMode: 'none',
-        }}
-      />
-      <Stack.Screen
-        name="AcceptPicture"
-        component={AcceptPictureScreen}
-        options={{
-          header: null,
-        }}
-      />
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="InitApp" component={InitAppScreen} />
+      <Stack.Screen name="Picture" component={PictureScreen} />
+      <Stack.Screen name="AcceptPicture" component={AcceptPictureScreen} />
       <Stack.Screen
         name="FoundDog"
         component={FoundDogScreen}
         options={{
           title: 'Perro Encontrado',
+          headerShown: true,
           headerStyle: {
             backgroundColor: 'steelblue',
           },
@@ -47,13 +29,7 @@ const InitAppStack = () => {
           },
         }}
       />
-      <Stack.Screen
-        name="ShowPicture"
-        component={ShowPictureScreen}
-        options={{
-          header: null,
-        }}
-      />
+      <Stack.Screen name="ShowPicture" component={ShowPictureScreen} />
     </Stack.Navigator>
   )
 }

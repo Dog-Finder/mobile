@@ -28,7 +28,11 @@ const AuthStack = () => {
           <Stack.Screen name="Register" component={AuthScreen} />
         </>
       ) : (
-        <Stack.Screen name="Home" component={AppNavigator} />
+        <Stack.Screen
+          name="Home"
+          component={AppNavigator}
+          options={{ headerShown: false }}
+        />
       )}
     </Stack.Navigator>
   )
