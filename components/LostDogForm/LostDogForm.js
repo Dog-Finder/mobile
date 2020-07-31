@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, View, TouchableOpacity } from 'react-native'
 import PropTypes from 'prop-types'
 import * as Location from 'expo-location'
@@ -13,9 +13,16 @@ const LostDogForm = ({ onSubmitHandler, pressPicture, imagePath }) => {
   const [commentary, setCommentary] = useState('')
   const [date, setDate] = useState(new Date())
   const [marker, setMarker] = useState({
-    latitude: 51.5078788,
-    longitude: -0.0877321,
+    latitude: -33.4376,
+    longitude: 70.6332,
   })
+  const [initialRegion, setinitialRegion] = useState({
+    latitude: -33.4376,
+    longitude: 70.6332,
+    latitudeDelta: 0.009,
+    longitudeDelta: 0.009,
+  })
+  const [number, setNumber] = useState('') //number in street is called name on address object
   const [street, setStreet] = useState('')
   const [city, setCity] = useState('')
   const [country, setCountry] = useState('')
@@ -23,21 +30,32 @@ const LostDogForm = ({ onSubmitHandler, pressPicture, imagePath }) => {
 
   const setAddress = async marker => {
     const address = await Location.reverseGeocodeAsync(marker)
-    const { street, city, country } = address[0]
+    const { name, street, city, country } = address[0]
+    setNumber(name) //this name is the street number, do not confuse with dog name
     setStreet(street)
     setCity(city)
     setCountry(country)
   }
-
-  useEffect(() => {
-    // eslint-disable-next-line prettier/prettier
-    (async () => {
-      const { status } = await Location.requestPermissionsAsync()
-      if (status === 'granted') {
-        setAddress(marker)
+  const getCurrentLocation = async mapRef => {
+    navigator.geolocation.getCurrentPosition(async position => {
+      const region = {
+        latitude: parseFloat(position.coords.latitude),
+        longitude: parseFloat(position.coords.longitude),
+        latitudeDelta: 0.009,
+        longitudeDelta: 0.009,
       }
-    })()
-  }, [])
+      setinitialRegion(region)
+      setMarker({
+        latitude: region.latitude,
+        longitude: region.longitude,
+      })
+      setAddress({
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+      })
+      mapRef.animateToRegion(region)
+    })
+  }
 
   const onDragEnd = async event => {
     const coordinate = event.nativeEvent.coordinate
@@ -85,13 +103,16 @@ const LostDogForm = ({ onSubmitHandler, pressPicture, imagePath }) => {
       <Card title="Ubicación">
         <MapInput
           marker={marker}
+          number={number} //number is street number of location
           street={street}
           city={city}
           country={country}
+          initialRegion={initialRegion}
           onDragEnd={onDragEnd}
           onChangeStreet={setStreet}
           onChangeCity={setCity}
           onChangeCountry={setCountry}
+          getCurrentLocation={getCurrentLocation}
         />
       </Card>
       <Card>
@@ -231,6 +252,7 @@ const LostDogForm = ({ onSubmitHandler, pressPicture, imagePath }) => {
 
 LostDogForm.propTypes = {
   onSubmitHandler: PropTypes.func.isRequired,
+  imagePath: PropTypes.string,
   pressPicture: PropTypes.func.isRequired,
 }
 
