@@ -12,7 +12,10 @@ const AuthScreen = ({ navigation }) => {
         title="Iniciar Sesión"
         onPress={() => navigation.push('SignIn')}
       />
-      <Button title="Registrarse" onPress={() => navigation.push('SignUp')} />
+      <Button
+        title="Registrarse"
+        onPress={() => navigation.push('InputName')}
+      />
     </View>
   )
 }
