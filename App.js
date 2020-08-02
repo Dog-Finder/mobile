@@ -6,7 +6,7 @@ import { Platform, StatusBar, StyleSheet, View } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { NavigationContainer } from '@react-navigation/native'
 
-import Context from './context/context'
+import Provider from '@context/provider'
 import AuthStack from './navigation/AuthStack'
 import { AppearanceProvider } from 'react-native-appearance'
 
@@ -24,14 +24,14 @@ export default function App(props) {
   } else {
     return (
       <AppearanceProvider>
-        <Context.Provider>
+        <Provider>
           <View style={styles.container}>
             {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
             <NavigationContainer>
               <AuthStack />
             </NavigationContainer>
           </View>
-        </Context.Provider>
+        </Provider>
       </AppearanceProvider>
     )
   }

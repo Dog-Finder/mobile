@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import AuthLoadingScreen from 'screens/session/AuthLoadingScreen'
 import AuthScreen from 'screens/session/AuthScreen'
 import SignUpScreens from 'screens/session/SignUpScreens'
 import SignInScreen from 'screens/session/SignInScreen'
+import Context from '@context/context'
 import AppNavigator from './AppNavigator'
 
 const Stack = createStackNavigator()
 
 const AuthStack = () => {
+  // const context = useContext(Context)
   const [loading, setLoading] = useState(true)
   const userToken = false
   useEffect(() => {

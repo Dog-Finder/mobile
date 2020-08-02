@@ -49,4 +49,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default InputText
+export default InputPassword
