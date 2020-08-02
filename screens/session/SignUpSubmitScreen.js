@@ -1,14 +1,22 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, View, ActivityIndicator } from 'react-native'
 import { signUp } from '@api'
+import Context from '@context/context'
 
 const SignUpSubmitScreen = ({ navigation, route }) => {
+  const context = useContext(Context)
   const { user } = route.params
   useEffect(() => {
     const sendData = async () => {
-      const { data } = await signUp(user)
-      console.log(data)
+      try {
+        const { data } = await signUp(user)
+        const token = data.resource
+        context.setToken(token)
+        navigation.navigate('Home')
+      } catch (error) {
+        console.log(error)
+      }
     }
     sendData()
   }, [])

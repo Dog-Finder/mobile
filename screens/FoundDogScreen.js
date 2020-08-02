@@ -1,15 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, SafeAreaView } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import FoundDogForm from '../components/FoundDogForm/FoundDogForm'
 import { postFoundDog, getSignedUrl } from '../api'
+import Context from '@context/context'
 
 const FoundDogScreen = ({ navigation, route }) => {
+  const context = useContext(Context)
   const imagePath = route.params.uri
 
   const uploadImage = async filePath => {
-    const { data } = await getSignedUrl(1234)
+    const { token } = context
+    const { data } = await getSignedUrl(token)
     const { url, imageLink } = data // signed url, simple link
     const file = await fetch(filePath) // Necesary to convert path to blob type
     const blob = await file.blob()
@@ -24,7 +27,8 @@ const FoundDogScreen = ({ navigation, route }) => {
     return imageLink
   }
 
-  const onSubmitHandler = async (token, data) => {
+  const onSubmitHandler = async data => {
+    const { token } = context
     const imageLink = await uploadImage(imagePath)
     data.imageLinks = imageLink
     postFoundDog(token, data)

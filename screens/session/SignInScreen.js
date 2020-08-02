@@ -8,18 +8,21 @@ const SignInScreen = ({ navigation }) => {
   const context = useContext(Context)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
   const submit = async () => {
     const userData = {
       email,
       password,
     }
+    setLoading(true)
     try {
       const { data } = await logIn(userData)
       const token = data.resource
       context.setToken(token)
       navigation.navigate('Home')
-    } catch (e) {
-      console.log(e)
+      setLoading(false)
+    } catch (error) {
+      navigation.navigate('Auth')
     }
   }
   return (
@@ -35,6 +38,7 @@ const SignInScreen = ({ navigation }) => {
           title="Continuar"
           style={styles.button}
           onPress={submit}
+          loading={loading}
         ></Button>
       </View>
     </View>
