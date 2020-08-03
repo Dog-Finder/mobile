@@ -1,8 +1,10 @@
-import React from 'react'
-import { StyleSheet, View, Button, Image } from 'react-native'
+import React, { useContext } from 'react'
+import { StyleSheet, View, Button, Image, AsyncStorage } from 'react-native'
 import Proptypes from 'prop-types'
+import Context from '@context/context'
 
 const InitAppScreen = ({ navigation }) => {
+  const context = useContext(Context)
   return (
     <View style={styles.container}>
       <View style={styles.buttonContainer}>
@@ -19,6 +21,15 @@ const InitAppScreen = ({ navigation }) => {
         <Button
           title="Encontré un perro"
           onPress={() => navigation.push('FoundDog')}
+        />
+      </View>
+      <View style={styles.buttonContainer}>
+        <Button
+          title="Logout"
+          onPress={async () => {
+            await AsyncStorage.removeItem('token')
+            context.setToken('')
+          }}
         />
       </View>
     </View>
