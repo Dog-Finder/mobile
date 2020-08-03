@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
-import { StyleSheet, View, ActivityIndicator } from 'react-native'
+import { StyleSheet, View, ActivityIndicator, AsyncStorage } from 'react-native'
 import { signUp } from '@api'
 import Context from '@context/context'
 
@@ -12,6 +12,7 @@ const SignUpSubmitScreen = ({ route }) => {
       try {
         const { data } = await signUp(user)
         const token = data.resource
+        AsyncStorage.setItem('token', token)
         context.setToken(token)
       } catch (error) {
         console.log(error)

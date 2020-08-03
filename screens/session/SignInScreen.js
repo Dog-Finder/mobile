@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { StyleSheet, SafeAreaView } from 'react-native'
+import { StyleSheet, SafeAreaView, AsyncStorage } from 'react-native'
 import { Input, Button, Card } from 'react-native-elements'
 import VerticalContainer from '@components/layout/VerticalContainer'
 import { logIn } from '@api'
@@ -20,6 +20,7 @@ const SignInScreen = ({ navigation }) => {
       const { data } = await logIn(userData)
       const token = data.resource
       context.setToken(token)
+      AsyncStorage.setItem('token', token)
       setLoading(false)
     } catch (error) {
       navigation.navigate('Auth')

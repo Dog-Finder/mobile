@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
+import { AsyncStorage } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import AuthLoadingScreen from 'screens/session/AuthLoadingScreen'
 import AuthScreen from 'screens/session/AuthScreen'
@@ -14,13 +15,12 @@ const AuthStack = () => {
   const [loading, setLoading] = useState(true)
   const userToken = context.token !== ''
   useEffect(() => {
-    const makeAsyncStuff = async () => {
-      await new Promise(resolve => {
-        setTimeout(resolve, 1000)
-      })
+    const restoreSession = async () => {
+      const token = await AsyncStorage.getItem('token')
+      if (token !== null) context.setToken(token)
       setLoading(false)
     }
-    makeAsyncStuff()
+    restoreSession()
   }, [])
   if (loading) return <AuthLoadingScreen />
   return (
