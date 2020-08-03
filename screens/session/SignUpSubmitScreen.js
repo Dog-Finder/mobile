@@ -4,7 +4,7 @@ import { StyleSheet, View, ActivityIndicator, AsyncStorage } from 'react-native'
 import { signUp } from '@api'
 import Context from '@context/context'
 
-const SignUpSubmitScreen = ({ route }) => {
+const SignUpSubmitScreen = ({ navigation, route }) => {
   const context = useContext(Context)
   const { user } = route.params
   useEffect(() => {
@@ -15,7 +15,7 @@ const SignUpSubmitScreen = ({ route }) => {
         AsyncStorage.setItem('token', token)
         context.setToken(token)
       } catch (error) {
-        console.log(error)
+        navigation.navigate('Auth')
       }
     }
     sendData()
