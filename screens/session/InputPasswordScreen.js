@@ -2,24 +2,28 @@ import React, { useState } from 'react'
 import { StyleSheet, SafeAreaView } from 'react-native'
 import PropTypes from 'prop-types'
 import InputPassword from '@components/session/InputPassword'
+import { Card } from 'react-native-elements'
 
 const InputPasswordScreen = ({ navigation, route }) => {
   const { user } = route.params
   const [password, setPassword] = useState('')
   const [confirmPass, setConfirmPass] = useState('')
   const onContinue = () => {
-    user.password = password
-    user.confirm = confirmPass
-    navigation.push('SignUpSubmit', { user })
+    if (password === confirmPass) {
+      user.password = password
+      navigation.push('SignUpSubmit', { user })
+    }
   }
   return (
     <SafeAreaView style={styles.container}>
-      <InputPassword
-        label="Elige una contraseña"
-        onChange={setPassword}
-        onChangeConfirmation={setConfirmPass}
-        onContinue={onContinue}
-      ></InputPassword>
+      <Card>
+        <InputPassword
+          label="Elige una contraseña"
+          onChange={setPassword}
+          onChangeConfirmation={setConfirmPass}
+          onContinue={onContinue}
+        ></InputPassword>
+      </Card>
     </SafeAreaView>
   )
 }

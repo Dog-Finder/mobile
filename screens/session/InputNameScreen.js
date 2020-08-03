@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, SafeAreaView } from 'react-native'
+import { Card } from 'react-native-elements'
+
 import InputText from '@components/session/InputText'
 
 const InputNameScreen = ({ navigation }) => {
@@ -10,11 +12,13 @@ const InputNameScreen = ({ navigation }) => {
   }
   return (
     <SafeAreaView style={styles.container}>
-      <InputText
-        label="¿Cuál es tu nombre?"
-        onChange={setName}
-        onContinue={onContinue}
-      ></InputText>
+      <Card>
+        <InputText
+          label="¿Cuál es tu nombre?"
+          onChange={setName}
+          onContinue={onContinue}
+        ></InputText>
+      </Card>
     </SafeAreaView>
   )
 }

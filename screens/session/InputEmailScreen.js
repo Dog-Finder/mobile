@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { StyleSheet, SafeAreaView } from 'react-native'
 import PropTypes from 'prop-types'
 import InputText from '@components/session/InputText'
+import { Card } from 'react-native-elements'
 
 const InputEmailScreen = ({ navigation, route }) => {
   const [email, setEmail] = useState('')
@@ -12,11 +13,13 @@ const InputEmailScreen = ({ navigation, route }) => {
   }
   return (
     <SafeAreaView style={styles.container}>
-      <InputText
-        label="¿Cuál es tu email?"
-        onChange={setEmail}
-        onContinue={onContinue}
-      ></InputText>
+      <Card>
+        <InputText
+          label="¿Cuál es tu email?"
+          onChange={setEmail}
+          onContinue={onContinue}
+        ></InputText>
+      </Card>
     </SafeAreaView>
   )
 }

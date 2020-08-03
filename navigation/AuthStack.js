@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import AuthLoadingScreen from 'screens/session/AuthLoadingScreen'
 import AuthScreen from 'screens/session/AuthScreen'
 import SignUpScreens from 'screens/session/SignUpScreens'
 import SignInScreen from 'screens/session/SignInScreen'
 import AppNavigator from './AppNavigator'
+import Context from '@context/context'
 
 const Stack = createStackNavigator()
 
 const AuthStack = () => {
+  const context = useContext(Context)
   const [loading, setLoading] = useState(true)
-  const userToken = false
+  const userToken = context.token !== ''
   useEffect(() => {
     const makeAsyncStuff = async () => {
       await new Promise(resolve => {
@@ -29,7 +31,6 @@ const AuthStack = () => {
         <>
           <Stack.Screen name="Auth" component={AuthScreen} />
           <Stack.Screen name="SignIn" component={SignInScreen} />
-          <Stack.Screen name="Home" component={AppNavigator} />
           {Object.entries(SignUpScreens).map(([name, component], key) => (
             <Stack.Screen name={name} component={component} key={key} />
           ))}

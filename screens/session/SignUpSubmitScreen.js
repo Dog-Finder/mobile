@@ -4,7 +4,7 @@ import { StyleSheet, View, ActivityIndicator } from 'react-native'
 import { signUp } from '@api'
 import Context from '@context/context'
 
-const SignUpSubmitScreen = ({ navigation, route }) => {
+const SignUpSubmitScreen = ({ route }) => {
   const context = useContext(Context)
   const { user } = route.params
   useEffect(() => {
@@ -13,7 +13,6 @@ const SignUpSubmitScreen = ({ navigation, route }) => {
         const { data } = await signUp(user)
         const token = data.resource
         context.setToken(token)
-        navigation.navigate('Home')
       } catch (error) {
         console.log(error)
       }

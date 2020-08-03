@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react'
-import { StyleSheet, View } from 'react-native'
-import { Input, Button } from 'react-native-elements'
+import { StyleSheet, SafeAreaView } from 'react-native'
+import { Input, Button, Card } from 'react-native-elements'
+import VerticalContainer from '@components/layout/VerticalContainer'
 import { logIn } from '@api'
 import Context from '@context/context'
 
@@ -19,29 +20,35 @@ const SignInScreen = ({ navigation }) => {
       const { data } = await logIn(userData)
       const token = data.resource
       context.setToken(token)
-      navigation.navigate('Home')
       setLoading(false)
     } catch (error) {
       navigation.navigate('Auth')
     }
   }
   return (
-    <View style={styles.container}>
-      <View style={styles.inputs}>
-        <Input label="Email" onChangeText={setEmail}></Input>
-        <Input
-          label="Password"
-          secureTextEntry
-          onChangeText={setPassword}
-        ></Input>
-        <Button
-          title="Continuar"
-          style={styles.button}
-          onPress={submit}
-          loading={loading}
-        ></Button>
-      </View>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <Card>
+        <VerticalContainer>
+          <Input
+            containerStyle={styles.inputs}
+            label="Email"
+            onChangeText={setEmail}
+          ></Input>
+          <Input
+            containerStyle={styles.inputs}
+            label="Password"
+            secureTextEntry
+            onChangeText={setPassword}
+          ></Input>
+          <Button
+            title="Continuar"
+            style={styles.button}
+            onPress={submit}
+            loading={loading}
+          ></Button>
+        </VerticalContainer>
+      </Card>
+    </SafeAreaView>
   )
 }
 
@@ -52,12 +59,10 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   container: {
-    alignItems: 'center',
-    backgroundColor: '#fff',
     flex: 1,
     justifyContent: 'center',
   },
   inputs: {
-    width: '60%',
+    width: '70%',
   },
 })
