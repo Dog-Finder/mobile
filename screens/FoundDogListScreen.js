@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native'
 import PropTypes from 'prop-types'
 import Constants from 'expo-constants'
 
+import Context from '@context/context'
 import { getFoundDogList } from '../api'
 import FoundDogItem from '../components/FoundDog/FoundDogItem'
 
 const FoundDogListScreen = ({ navigation }) => {
+  const context = useContext(Context)
   const [foundDogList, setFoundDogList] = useState([])
   const [latitude, setLatitude] = useState(null)
   const [longitude, setLongitude] = useState(null)
@@ -19,7 +21,8 @@ const FoundDogListScreen = ({ navigation }) => {
   useEffect(() => {
     // eslint-disable-next-line prettier/prettier
     (async () => {
-      const { data } = await getFoundDogList(1234)
+      const { token } = context
+      const { data } = await getFoundDogList(token)
       setFoundDogList(data.resource)
       getCurrentLocation()
     })()

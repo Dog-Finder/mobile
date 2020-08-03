@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native'
 import PropTypes from 'prop-types'
 import Constants from 'expo-constants'
 
+import Context from '@context/context'
 import LostDogItem from '../components/LostDog/LostDogItem'
 import { getLostDogList } from '../api'
 
 const LostDogListScreen = ({ navigation }) => {
+  const context = useContext(Context)
   const [lostDogList, setLostDogList] = useState([])
   const [latitude, setLatitude] = useState(null)
   const [longitude, setLongitude] = useState(null)
@@ -19,7 +21,8 @@ const LostDogListScreen = ({ navigation }) => {
   useEffect(() => {
     // eslint-disable-next-line prettier/prettier
     (async () => {
-      const { data } = await getLostDogList(1234)
+      const { token } = context
+      const { data } = await getLostDogList(token)
       setLostDogList(data.resource)
       getCurrentLocation()
     })()

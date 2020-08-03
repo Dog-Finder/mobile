@@ -71,7 +71,7 @@ const FoundDogForm = ({ onSubmitHandler, pressPicture, imagePath }) => {
       marker,
       address: { street, city, country },
     }
-    onSubmitHandler(1234, data)
+    onSubmitHandler(data)
   }
 
   return (

@@ -1,38 +1,40 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { AsyncStorage } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
-import AuthScreen from '../screens/AuthScreen'
-import AuthLoadingScreen from '../screens/AuthLoadingScreen'
+import AuthLoadingScreen from 'screens/session/AuthLoadingScreen'
+import AuthScreen from 'screens/session/AuthScreen'
+import SignUpScreens from 'screens/session/SignUpScreens'
+import SignInScreen from 'screens/session/SignInScreen'
 import AppNavigator from './AppNavigator'
+import Context from '@context/context'
 
 const Stack = createStackNavigator()
 
 const AuthStack = () => {
+  const context = useContext(Context)
   const [loading, setLoading] = useState(true)
-  const userToken = false
+  const userToken = context.token !== ''
   useEffect(() => {
-    const makeAsyncStuff = async () => {
-      await new Promise(resolve => {
-        setTimeout(resolve, 1000)
-      })
+    const restoreSession = async () => {
+      const token = await AsyncStorage.getItem('token')
+      if (token !== null) context.setToken(token)
       setLoading(false)
     }
-    makeAsyncStuff()
+    restoreSession()
   }, [])
   if (loading) return <AuthLoadingScreen />
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       {userToken ? (
+        <Stack.Screen name="Home" component={AppNavigator} />
+      ) : (
         <>
           <Stack.Screen name="Auth" component={AuthScreen} />
-          <Stack.Screen name="SignIn" component={AuthScreen} />
-          <Stack.Screen name="Register" component={AuthScreen} />
+          <Stack.Screen name="SignIn" component={SignInScreen} />
+          {Object.entries(SignUpScreens).map(([name, component], key) => (
+            <Stack.Screen name={name} component={component} key={key} />
+          ))}
         </>
-      ) : (
-        <Stack.Screen
-          name="Home"
-          component={AppNavigator}
-          options={{ headerShown: false }}
-        />
       )}
     </Stack.Navigator>
   )

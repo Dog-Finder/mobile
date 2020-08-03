@@ -3,10 +3,12 @@ import axios from 'axios'
 import { postFoundDogConfig, getFoundDogListConfig } from './foundDog'
 import { postLostDogConfig, getLostDogListConfig } from './lostDog'
 import { getSignedUrlConfig } from './images'
+import { signUpConfig, logInConfig } from './user'
 
 const client = axios.create({
-  baseURL: 'https://all31gfkx0.execute-api.us-east-1.amazonaws.com/dev',
-  // baseURL: 'http://localhost:3000/local',
+  // baseURL: 'https://all31gfkx0.execute-api.us-east-1.amazonaws.com/dev', // production
+  baseURL: 'https://yi54rctdb2.execute-api.us-east-1.amazonaws.com/staging', // staging
+  // baseURL: 'http://localhost:3000/staging', // local
   responseType: 'json',
   requestType: 'json',
 })
@@ -25,4 +27,10 @@ export function getLostDogList(authToken) {
 }
 export function getSignedUrl(authToken) {
   return client.request(getSignedUrlConfig(authToken))
+}
+export function signUp(data) {
+  return client.request(signUpConfig(data))
+}
+export function logIn(data) {
+  return client.request(logInConfig(data))
 }
