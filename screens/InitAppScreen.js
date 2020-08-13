@@ -40,6 +40,10 @@ InitAppScreen.propTypes = {
   navigation: Proptypes.object.isRequired,
 }
 
+InitAppScreen.propTypes = {
+  navigation: Proptypes.object.isRequired,
+}
+
 const styles = StyleSheet.create({
   buttonContainer: {
     alignItems: 'center',
