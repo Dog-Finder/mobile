@@ -12,11 +12,13 @@ const FoundDogListStack = () => {
         component={FoundDogListScreen}
         options={{
           headerStyle: { height: 7 },
+          headerShown: false,
         }}
       />
       <Stack.Screen
         name="ShowFoundDogInfo"
         component={ShowFoundDogInfoScreen}
+        options={{ title: null }}
       />
     </Stack.Navigator>
   )

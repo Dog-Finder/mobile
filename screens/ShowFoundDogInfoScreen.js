@@ -8,9 +8,8 @@ import Image from 'react-native-scalable-image'
 const width = Dimensions.get('window').width
 const height = Dimensions.get('window').height
 
-const ShowFoundDogInfoScreen = ({ navigation, route }) => {
+const ShowFoundDogInfoScreen = ({ route }) => {
   const map = useRef(null)
-  navigation.setOptions({ title: null })
   const { dogInfo } = route.params
   const parsedDate = new Date(dogInfo.date)
   const info = [

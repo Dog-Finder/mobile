@@ -12,6 +12,7 @@ const LostDogListStack = () => {
         component={LostDogListScreen}
         options={{
           headerStyle: { height: 7 },
+          headerShown: false,
         }}
       />
       <Stack.Screen name="ShowLostDogInfo" component={ShowLostDogInfoScreen} />
