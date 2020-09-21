@@ -9,6 +9,7 @@ import FoundDogItem from '../components/FoundDog/FoundDogItem'
 
 const FoundDogListScreen = ({ navigation }) => {
   const context = useContext(Context)
+  navigation.setOptions({ headerShown: false })
   const [foundDogList, setFoundDogList] = useState([])
   const [latitude, setLatitude] = useState(null)
   const [longitude, setLongitude] = useState(null)

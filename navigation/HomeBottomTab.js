@@ -44,6 +44,7 @@ export default createBottomTabNavigator(
     LostDog: {
       screen: LostDogListScreen,
       navigationOptions: {
+        headerShown: false,
         tabBarLabel: 'Perdidos',
         tabBarIcon: LostDogIcon,
       },

@@ -9,6 +9,7 @@ import { getLostDogList } from '../api'
 
 const LostDogListScreen = ({ navigation }) => {
   const context = useContext(Context)
+  navigation.setOptions({ headerShown: false })
   const [lostDogList, setLostDogList] = useState([])
   const [latitude, setLatitude] = useState(null)
   const [longitude, setLongitude] = useState(null)
