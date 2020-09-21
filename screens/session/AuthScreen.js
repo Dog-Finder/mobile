@@ -12,10 +12,12 @@ const AuthScreen = ({ navigation }) => {
         title="Iniciar Sesión"
         onPress={() => navigation.push('SignIn')}
       />
-      <Button
-        title="Registrarse"
-        onPress={() => navigation.push('InputName')}
-      />
+      <View style={{ marginTop: '4%' }}>
+        <Button
+          title="Registrarse"
+          onPress={() => navigation.push('InputName')}
+        />
+      </View>
     </View>
   )
 }
