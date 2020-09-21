@@ -10,7 +10,7 @@ const height = Dimensions.get('window').height
 
 const ShowFoundDogInfoScreen = ({ navigation, route }) => {
   const map = useRef(null)
-  navigation.setOptions({ title: '' })
+  navigation.setOptions({ title: null })
   const { dogInfo } = route.params
   const parsedDate = new Date(dogInfo.date)
   const info = [
