@@ -56,6 +56,7 @@ const FoundDogScreen = ({ navigation, route }) => {
 
 FoundDogScreen.propTypes = {
   navigation: PropTypes.object.isRequired,
+  route: PropTypes.object.isRequired,
 }
 
 const styles = StyleSheet.create({

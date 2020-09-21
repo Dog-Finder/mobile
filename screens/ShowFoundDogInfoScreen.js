@@ -74,6 +74,7 @@ const ShowFoundDogInfoScreen = ({ navigation, route }) => {
 
 ShowFoundDogInfoScreen.propTypes = {
   navigation: PropTypes.object.isRequired,
+  route: PropTypes.object.isRequired,
 }
 const styles = StyleSheet.create({
   image: {

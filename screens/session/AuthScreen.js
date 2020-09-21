@@ -12,7 +12,7 @@ const AuthScreen = ({ navigation }) => {
         title="Iniciar Sesión"
         onPress={() => navigation.push('SignIn')}
       />
-      <View style={{ marginTop: '4%' }}>
+      <View style={styles.buttonStyle}>
         <Button
           title="Registrarse"
           onPress={() => navigation.push('InputName')}
@@ -23,6 +23,7 @@ const AuthScreen = ({ navigation }) => {
 }
 
 const styles = StyleSheet.create({
+  buttonStyle: { marginTop: '4%' },
   container: {
     alignItems: 'center',
     backgroundColor: '#fff',
