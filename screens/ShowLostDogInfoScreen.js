@@ -73,6 +73,7 @@ const ShowLostDogInfoScreen = ({ navigation, route }) => {
 
 ShowLostDogInfoScreen.propTypes = {
   navigation: PropTypes.object.isRequired,
+  route: PropTypes.object.isRequired,
 }
 const styles = StyleSheet.create({
   image: {

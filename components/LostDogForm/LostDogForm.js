@@ -83,7 +83,11 @@ const LostDogForm = ({ onSubmitHandler, pressPicture, imagePath }) => {
           <Image
             style={styles.image}
             resizeMode="cover"
-            source={{ uri: imagePath }}
+            source={
+              imagePath
+                ? { uri: imagePath }
+                : require('../../assets/images/chooseFromGallery.webp')
+            }
           />
         </TouchableOpacity>
         <Input placeholder="Nombre" onChangeText={setName} value={name} />

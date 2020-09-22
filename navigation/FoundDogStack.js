@@ -26,7 +26,7 @@ const InitAppStack = () => {
           headerTintColor: '#fff',
           headerTitleStyle: {
             fontWeight: 'bold',
-            textAlign: 'center',
+            textAlign: 'auto',
           },
         }}
       />
