@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { StyleSheet, View, Button, Image, AsyncStorage } from 'react-native'
+import { Avatar } from 'react-native-elements'
 import Proptypes from 'prop-types'
 import Context from '@context/context'
 
@@ -7,10 +8,20 @@ const InitAppScreen = ({ navigation }) => {
   const context = useContext(Context)
   return (
     <View style={styles.container}>
+      <View style={styles.avatarContainer}>
+        <Avatar
+          size="large"
+          rounded
+          icon={{ name: 'home', type: 'font-awesome' }}
+          onPress={() => navigation.navigate('Home')}
+          activeOpacity={0.7}
+          containerStyle={styles.avatar}
+        />
+      </View>
       <View style={styles.buttonContainer}>
         <Button
           title="Busco un perro"
-          onPress={() => navigation.navigate('Home')}
+          onPress={() => navigation.navigate('LostDog')}
         />
       </View>
       <Image
@@ -40,20 +51,23 @@ InitAppScreen.propTypes = {
   navigation: Proptypes.object.isRequired,
 }
 
-InitAppScreen.propTypes = {
-  navigation: Proptypes.object.isRequired,
-}
-
 const styles = StyleSheet.create({
+  avatar: { flex: 1, margin: 5 },
+  avatarContainer: {
+    flex: 0.5,
+    flexDirection: 'column',
+    alignSelf: 'flex-start',
+    margin: 10,
+  },
   buttonContainer: {
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
     flex: 1,
     justifyContent: 'center',
   },
   container: {
     backgroundColor: '#fff',
-    flex: 2,
+    flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',

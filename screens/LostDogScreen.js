@@ -34,7 +34,7 @@ const LostDogScreen = ({ navigation }) => {
       data.imageLinks = imageLink
     }
     postLostDog(token, data)
-    navigation.navigate('LostDog')
+    navigation.navigate('Home')
   }
   const pressPicture = async () => {
     const picture = await ImagePicker.launchImageLibraryAsync({
