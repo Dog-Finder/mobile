@@ -1,8 +1,9 @@
 import React, { useContext } from 'react'
-import { StyleSheet, View, Button, Image, AsyncStorage } from 'react-native'
+import { StyleSheet, View, Button, Image } from 'react-native'
 import { Avatar } from 'react-native-elements'
 import Proptypes from 'prop-types'
 import Context from '@context/context'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const InitAppScreen = ({ navigation }) => {
   const context = useContext(Context)
@@ -31,7 +32,7 @@ const InitAppScreen = ({ navigation }) => {
       <View style={styles.buttonContainer}>
         <Button
           title="Encontré un perro"
-          onPress={() => navigation.push('FoundDog')}
+          onPress={() => navigation.navigate('FoundDog')}
         />
       </View>
       <View style={styles.buttonContainer}>
