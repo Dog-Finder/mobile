@@ -3,7 +3,7 @@ import axios from 'axios'
 import { postFoundDogConfig, getFoundDogListConfig } from './foundDog'
 import { postLostDogConfig, getLostDogListConfig } from './lostDog'
 import { getSignedUrlConfig } from './images'
-import { signUpConfig, logInConfig } from './user'
+import { signUpConfig, logInConfig, getUserDetailConfig } from './user'
 
 const client = axios.create({
   // baseURL: 'https://all31gfkx0.execute-api.us-east-1.amazonaws.com/dev', // production
@@ -33,4 +33,7 @@ export function signUp(data) {
 }
 export function logIn(data) {
   return client.request(logInConfig(data))
+}
+export function getUserDetail(authToken) {
+  return client.request(getUserDetailConfig(authToken))
 }
