@@ -13,3 +13,13 @@ export function logInConfig(data) {
     data,
   }
 }
+
+export function getUserDetailConfig(authToken) {
+  return {
+    url: '/user',
+    method: 'get',
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  }
+}

@@ -18,3 +18,13 @@ export function getLostDogListConfig(authToken) {
     },
   }
 }
+
+export function getUserLostDogListConfig(authToken) {
+  return {
+    url: '/lost-dog/user',
+    method: 'get',
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  }
+}
