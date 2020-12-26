@@ -18,3 +18,13 @@ export function getFoundDogListConfig(authToken) {
     },
   }
 }
+
+export function getUserFoundDogListConfig(authToken) {
+  return {
+    url: '/found-dog/user',
+    method: 'get',
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  }
+}
