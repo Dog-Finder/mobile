@@ -6,6 +6,7 @@ import HomeBottomTab from './home/HomeBottomTab'
 import FoundDogStack from './FoundDogStack'
 import PersonalPublicationsScreen from '../screens/PersonalPublicationsScreen'
 import ProfileScreen from '../screens/ProfileScreen'
+import ShowMyPostedDogInfoScreen from '../screens/ShowMyPostedDogInfoScreen'
 
 const Stack = createStackNavigator()
 const AppNavigator = () => {
@@ -34,6 +35,10 @@ const AppNavigator = () => {
             textAlign: 'auto',
           },
         }}
+      />
+      <Stack.Screen
+        name="ShowMyPostedDogInfo"
+        component={ShowMyPostedDogInfoScreen}
       />
     </Stack.Navigator>
   )

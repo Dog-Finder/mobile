@@ -9,7 +9,7 @@ const ProfileScreen = () => {
   const [name, setName] = useState([])
   const [id, setId] = useState([])
   const [email, setEmail] = useState([])
-  const [createdAt, setcreatedAt] = useState([]) 
+  const [createdAt, setcreatedAt] = useState([])
 
   useEffect(() => {
     // eslint-disable-next-line prettier/prettier
