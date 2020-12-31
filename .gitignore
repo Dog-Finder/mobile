@@ -12,3 +12,5 @@ web-report/
 
 .DS_Store
 debug.log
+launch.json
+debuggerWorker.js

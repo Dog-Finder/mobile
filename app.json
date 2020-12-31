@@ -25,6 +25,7 @@
     "ios": {
       "supportsTablet": true,
       "userInterfaceStyle": "automatic"
-    }
+    },
+    "sdkVersion": "40.0.0"
   }
 }

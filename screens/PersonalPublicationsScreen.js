@@ -21,12 +21,23 @@ const PersonalPublicationsScreen = ({ navigation }) => {
       setLongitude(parseFloat(position.coords.longitude))
     })
   }
+
+  function compareDogsByField(field) {
+    return function(dog1, dog2) {
+      const dateDog1 = new Date(dog1[field]),
+        dateDog2 = new Date(dog2[field])
+      return dateDog2 - dateDog1
+    }
+  }
+
   useEffect(() => {
     // eslint-disable-next-line prettier/prettier
     (async () => {
       const { token } = context
       const { data } = await getUserLostDogList(token)
-      setMyLostDogList(data.resource)
+      const orderDogDates = data.resource.slice(0)
+      orderDogDates.sort(compareDogsByField('date'))
+      setMyLostDogList(orderDogDates)
       getCurrentLocation()
     })()
   }, [])
@@ -36,7 +47,9 @@ const PersonalPublicationsScreen = ({ navigation }) => {
     (async () => {
       const { token } = context
       const { data } = await getUserFoundDogList(token)
-      setMyFoundDogList(data.resource)
+      const orderDogDates = data.resource.slice(0)
+      orderDogDates.sort(compareDogsByField('date'))
+      setMyFoundDogList(orderDogDates)
     })()
   }, [])
 
@@ -78,7 +91,7 @@ const PersonalPublicationsScreen = ({ navigation }) => {
         {showLostDogs ? (
           <View style={styles.listView}>{lostDogItems}</View>
         ) : null}
-
+        {/* Aca hay un bug raro en que a veces hay que apretar dos veces el de perros encontrados para que funcione */}
         <Button
           title="Mis perros encontrados"
           onPress={() => setShowFoundDogs(!showFoundDogs)}
