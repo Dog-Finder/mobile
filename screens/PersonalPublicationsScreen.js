@@ -21,7 +21,7 @@ const PersonalPublicationsScreen = ({ navigation }) => {
       setLongitude(parseFloat(position.coords.longitude))
     })
   }
-
+  //used to compare dog publications by date, to sort them
   function compareDogsByField(field) {
     return function(dog1, dog2) {
       const dateDog1 = new Date(dog1[field]),
