@@ -7,13 +7,13 @@ import Image from 'react-native-scalable-image'
 
 const width = Dimensions.get('window').width
 const height = Dimensions.get('window').height
-const ShowLostDogInfoScreen = ({ navigation, route }) => {
+const ShowMyPostedLostDogInfoScreen = ({ navigation, route }) => {
   const map = useRef(null)
   const { dogInfo } = route.params
-  const parsedDate = new Date(dogInfo.date)
   useEffect(() => {
     navigation.setOptions({ title: dogInfo.name || '' })
   })
+  const parsedDate = new Date(dogInfo.date)
   const info = [
     {
       title: 'Fecha aviso: ' + parsedDate.toDateString(),
@@ -73,7 +73,7 @@ const ShowLostDogInfoScreen = ({ navigation, route }) => {
   )
 }
 
-ShowLostDogInfoScreen.propTypes = {
+ShowMyPostedLostDogInfoScreen.propTypes = {
   navigation: PropTypes.object.isRequired,
   route: PropTypes.object.isRequired,
 }
@@ -92,4 +92,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default ShowLostDogInfoScreen
+export default ShowMyPostedLostDogInfoScreen

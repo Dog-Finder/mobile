@@ -6,7 +6,8 @@ import HomeBottomTab from './home/HomeBottomTab'
 import FoundDogStack from './FoundDogStack'
 import PersonalPublicationsScreen from '../screens/PersonalPublicationsScreen'
 import ProfileScreen from '../screens/ProfileScreen'
-import ShowMyPostedDogInfoScreen from '../screens/ShowMyPostedDogInfoScreen'
+import ShowMyPostedLostDogInfoScreen from '../screens/ShowMyPostedLostDogInfoScreen'
+import ShowMyPostedFoundDogInfoScreen from '../screens/ShowMyPostedFoundDogInfoScreen'
 
 const Stack = createStackNavigator()
 const AppNavigator = () => {
@@ -37,8 +38,35 @@ const AppNavigator = () => {
         }}
       />
       <Stack.Screen
-        name="ShowMyPostedDogInfo"
-        component={ShowMyPostedDogInfoScreen}
+        name="ShowMyPostedLostDogInfo"
+        component={ShowMyPostedLostDogInfoScreen}
+        options={() => ({
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: 'white',
+          },
+          headerTintColor: 'steelblue',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            textAlign: 'auto',
+          },
+        })}
+      />
+      <Stack.Screen
+        name="ShowMyPostedFoundDogInfo"
+        component={ShowMyPostedFoundDogInfoScreen}
+        options={() => ({
+          title: null,
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: 'white',
+          },
+          headerTintColor: 'steelblue',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            textAlign: 'auto',
+          },
+        })}
       />
     </Stack.Navigator>
   )

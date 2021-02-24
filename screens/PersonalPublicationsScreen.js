@@ -34,10 +34,10 @@ const PersonalPublicationsScreen = ({ navigation }) => {
     // eslint-disable-next-line prettier/prettier
     (async () => {
       const { token } = context
-      const { data } = await getUserLostDogList(token)
-      const orderDogDates = data.resource.slice(0)
+      const { data } = await getUserFoundDogList(token)
+      const orderDogDates = data.resource
       orderDogDates.sort(compareDogsByField('date'))
-      setMyLostDogList(orderDogDates)
+      setMyFoundDogList(orderDogDates)
       getCurrentLocation()
     })()
   }, [])
@@ -46,26 +46,12 @@ const PersonalPublicationsScreen = ({ navigation }) => {
     // eslint-disable-next-line prettier/prettier
     (async () => {
       const { token } = context
-      const { data } = await getUserFoundDogList(token)
-      const orderDogDates = data.resource.slice(0)
+      const { data } = await getUserLostDogList(token)
+      const orderDogDates = data.resource
       orderDogDates.sort(compareDogsByField('date'))
-      setMyFoundDogList(orderDogDates)
+      setMyLostDogList(orderDogDates)
     })()
   }, [])
-
-  const lostDogItems = myLostDogList.map((lostDog, i) => {
-    return (
-      <MyPostedDogItem
-        key={i}
-        dog={lostDog}
-        navigator={navigation}
-        userCoordinates={{
-          latitude,
-          longitude,
-        }}
-      ></MyPostedDogItem>
-    )
-  })
 
   const foundDogItems = myFoundDogList.map((foundDog, i) => {
     return (
@@ -77,6 +63,21 @@ const PersonalPublicationsScreen = ({ navigation }) => {
           latitude,
           longitude,
         }}
+        type={'found'}
+      ></MyPostedDogItem>
+    )
+  })
+  const lostDogItems = myLostDogList.map((lostDog, i) => {
+    return (
+      <MyPostedDogItem
+        key={i}
+        dog={lostDog}
+        navigator={navigation}
+        userCoordinates={{
+          latitude,
+          longitude,
+        }}
+        type={'lost'}
       ></MyPostedDogItem>
     )
   })

@@ -11,11 +11,17 @@ const MyPostedDogItem = props => {
   return (
     <TouchableOpacity
       delayPressIn={30}
-      onPress={() =>
-        navigator.push('ShowMyPostedDogInfo', {
-          dogInfo: props.dog,
-        })
-      }
+      onPress={() => {
+        if (props.type === 'found') {
+          navigator.navigate('ShowMyPostedFoundDogInfo', {
+            dogInfo: props.dog,
+          })
+        } else {
+          navigator.navigate('ShowMyPostedLostDogInfo', {
+            dogInfo: props.dog,
+          })
+        }
+      }}
     >
       <Card image={{ uri: imageLinks }} imageStyle={styles.image}>
         <View>
@@ -33,6 +39,7 @@ MyPostedDogItem.propTypes = {
   dog: PropTypes.object.isRequired,
   navigator: PropTypes.object.isRequired,
   userCoordinates: PropTypes.object.isRequired,
+  type: PropTypes.string.isRequired,
 }
 
 const styles = StyleSheet.create({

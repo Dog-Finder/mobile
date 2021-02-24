@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef } from 'react'
 import { StyleSheet, ScrollView, Dimensions } from 'react-native'
 import PropTypes from 'prop-types'
 import { Icon, ListItem } from 'react-native-elements'
@@ -7,13 +7,11 @@ import Image from 'react-native-scalable-image'
 
 const width = Dimensions.get('window').width
 const height = Dimensions.get('window').height
-const ShowLostDogInfoScreen = ({ navigation, route }) => {
+
+const ShowMyPostedFoundDogInfoScreen = ({ route }) => {
   const map = useRef(null)
   const { dogInfo } = route.params
   const parsedDate = new Date(dogInfo.date)
-  useEffect(() => {
-    navigation.setOptions({ title: dogInfo.name || '' })
-  })
   const info = [
     {
       title: 'Fecha aviso: ' + parsedDate.toDateString(),
@@ -66,14 +64,14 @@ const ShowLostDogInfoScreen = ({ navigation, route }) => {
             latitude: dogInfo.marker.latitude,
             longitude: dogInfo.marker.longitude,
           }}
-          title={'Acá se perdió.'}
+          title={'Acá fue encontrado.'}
         />
       </MapView>
     </ScrollView>
   )
 }
 
-ShowLostDogInfoScreen.propTypes = {
+ShowMyPostedFoundDogInfoScreen.propTypes = {
   navigation: PropTypes.object.isRequired,
   route: PropTypes.object.isRequired,
 }
@@ -92,4 +90,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default ShowLostDogInfoScreen
+export default ShowMyPostedFoundDogInfoScreen
