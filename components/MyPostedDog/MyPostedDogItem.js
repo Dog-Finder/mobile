@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, StyleSheet, View, TouchableOpacity } from 'react-native'
+import { Text, StyleSheet, View, TouchableOpacity, Alert } from 'react-native'
 import { Card } from 'react-native-elements'
 import PropTypes from 'prop-types'
 
@@ -21,6 +21,21 @@ const MyPostedDogItem = props => {
             dogInfo: props.dog,
           })
         }
+      }}
+      onLongPress={() => {
+        Alert.alert(
+          props.dog.name,
+          '¿Desea eliminar esta publicación?',
+          [
+            {
+              text: 'Cancelar',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel',
+            },
+            { text: 'Eliminar', onPress: () => console.log('OK Pressed') },
+          ],
+          { cancelable: true }
+        )
       }}
     >
       <Card image={{ uri: imageLinks }} imageStyle={styles.image}>
