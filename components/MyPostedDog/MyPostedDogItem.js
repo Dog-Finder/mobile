@@ -1,12 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Text, StyleSheet, View, TouchableOpacity, Alert } from 'react-native'
 import { Card } from 'react-native-elements'
 import PropTypes from 'prop-types'
+import { deleteLostDog, deleteFoundDog } from '../../api'
+import Context from '@context/context'
 
 const MyPostedDogItem = props => {
   const { imageLinks, date, sex } = props.dog //props: imageLinks, date, commentary, address, sex, marker
   const parsedDate = new Date(date)
   const navigator = props.navigator
+  const context = useContext(Context)
+  const { token } = context
 
   return (
     <TouchableOpacity
@@ -29,10 +33,18 @@ const MyPostedDogItem = props => {
           [
             {
               text: 'Cancelar',
-              onPress: () => console.log('Cancel Pressed'),
               style: 'cancel',
             },
-            { text: 'Eliminar', onPress: () => console.log('OK Pressed') },
+            {
+              text: 'Eliminar',
+              onPress: () => {
+                if (props.type === 'found') {
+                  deleteFoundDog(token, props.dog.id)
+                } else {
+                  deleteLostDog(token, props.dog.id)
+                }
+              },
+            },
           ],
           { cancelable: true }
         )

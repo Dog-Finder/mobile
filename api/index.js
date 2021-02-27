@@ -4,11 +4,13 @@ import {
   postFoundDogConfig,
   getFoundDogListConfig,
   getUserFoundDogListConfig,
+  deleteFoundDogConfig,
 } from './foundDog'
 import {
   postLostDogConfig,
   getLostDogListConfig,
   getUserLostDogListConfig,
+  deleteLostDogConfig,
 } from './lostDog'
 import { getSignedUrlConfig } from './images'
 import { signUpConfig, logInConfig, getUserDetailConfig } from './user'
@@ -50,4 +52,10 @@ export function logIn(data) {
 }
 export function getUserDetail(authToken) {
   return client.request(getUserDetailConfig(authToken))
+}
+export function deleteLostDog(authToken, lostId) {
+  return client.request(deleteLostDogConfig(authToken, lostId))
+}
+export function deleteFoundDog(authToken, foundId) {
+  return client.request(deleteFoundDogConfig(authToken, foundId))
 }
