@@ -22,7 +22,7 @@ const PersonalPublicationsScreen = ({ navigation }) => {
     })
   }
   //used to compare dog publications by date, to sort them
-  function compareDogsByField(field) {
+  function compareDogsByDate(field) {
     return function(dog1, dog2) {
       const dateDog1 = new Date(dog1[field]),
         dateDog2 = new Date(dog2[field])
@@ -36,7 +36,7 @@ const PersonalPublicationsScreen = ({ navigation }) => {
       const { token } = context
       const { data } = await getUserFoundDogList(token)
       const orderDogDates = data.resource
-      orderDogDates.sort(compareDogsByField('date'))
+      orderDogDates.sort(compareDogsByDate('date'))
       setMyFoundDogList(orderDogDates)
       getCurrentLocation()
     })()
@@ -48,7 +48,7 @@ const PersonalPublicationsScreen = ({ navigation }) => {
       const { token } = context
       const { data } = await getUserLostDogList(token)
       const orderDogDates = data.resource
-      orderDogDates.sort(compareDogsByField('date'))
+      orderDogDates.sort(compareDogsByDate('date'))
       setMyLostDogList(orderDogDates)
     })()
   }, [])
