@@ -37,11 +37,13 @@ const MyPostedDogItem = props => {
             },
             {
               text: 'Eliminar',
-              onPress: () => {
+              onPress: async () => {
                 if (props.type === 'found') {
-                  deleteFoundDog(token, props.dog.id)
+                  await deleteFoundDog(token, props.dog.id)
+                  navigator.push('PersonalPublications')
                 } else {
-                  deleteLostDog(token, props.dog.id)
+                  await deleteLostDog(token, props.dog.id)
+                  navigator.push('PersonalPublications')
                 }
               },
             },

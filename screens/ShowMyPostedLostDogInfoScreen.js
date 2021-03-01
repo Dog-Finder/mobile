@@ -1,14 +1,18 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useContext } from 'react'
 import { StyleSheet, ScrollView, Dimensions } from 'react-native'
 import PropTypes from 'prop-types'
 import { Icon, ListItem } from 'react-native-elements'
 import MapView, { Marker } from 'react-native-maps'
 import Image from 'react-native-scalable-image'
+import { deleteLostDog } from '../api'
+import Context from '@context/context'
 
 const width = Dimensions.get('window').width
 const height = Dimensions.get('window').height
 const ShowMyPostedLostDogInfoScreen = ({ navigation, route }) => {
   const map = useRef(null)
+  const context = useContext(Context)
+  const { token } = context
   const { dogInfo } = route.params
   useEffect(() => {
     navigation.setOptions({ title: dogInfo.name || '' })
