@@ -74,7 +74,7 @@ const ShowMyPostedFoundDogInfoScreen = ({ navigation, route }) => {
       headerRight: () => (
         <Button
           onPress={() => setDotsModalVisible(!dotsModalVisible)}
-          icon={<Icon name="ellipsis-v" type="font-awesome" color="black" />}
+          icon={<Icon name="ellipsis-h" type="font-awesome" color="black" />}
           buttonStyle={styles.dotsButtonStyle}
         />
       ),
