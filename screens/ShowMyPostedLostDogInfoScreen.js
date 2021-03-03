@@ -1,21 +1,36 @@
-import React, { useRef, useEffect, useContext } from 'react'
-import { StyleSheet, ScrollView, Dimensions } from 'react-native'
+import React, { useRef, useEffect, useState } from 'react'
+import { StyleSheet, ScrollView, Dimensions, View } from 'react-native'
 import PropTypes from 'prop-types'
-import { Icon, ListItem } from 'react-native-elements'
+import { Icon, ListItem, Button } from 'react-native-elements'
 import MapView, { Marker } from 'react-native-maps'
 import Image from 'react-native-scalable-image'
-import { deleteLostDog } from '../api'
-import Context from '@context/context'
+import ShowMyPostedDogOptionsModal from '../components/MyPostedDog/ShowMyPostedDogOptionsModal'
 
 const width = Dimensions.get('window').width
 const height = Dimensions.get('window').height
+
 const ShowMyPostedLostDogInfoScreen = ({ navigation, route }) => {
   const map = useRef(null)
-  const context = useContext(Context)
-  const { token } = context
   const { dogInfo } = route.params
+  const [dotsModalVisible, setDotsModalVisible] = useState(false) //modal for the dots button at header, for deleting or editing the post
+  const handleModalPress = opts => {
+    if (typeof opts !== undefined) {
+      setDotsModalVisible(opts)
+    }
+    setDotsModalVisible(!dotsModalVisible)
+  }
   useEffect(() => {
     navigation.setOptions({ title: dogInfo.name || '' })
+    navigation.setOptions({
+      // eslint-disable-next-line react/display-name
+      headerRight: () => (
+        <Button
+          onPress={() => setDotsModalVisible(!dotsModalVisible)}
+          icon={<Icon name="ellipsis-h" type="font-awesome" color="black" />}
+          buttonStyle={styles.dotsButtonStyle}
+        />
+      ),
+    })
   })
   const parsedDate = new Date(dogInfo.date)
   const info = [
@@ -39,41 +54,50 @@ const ShowMyPostedLostDogInfoScreen = ({ navigation, route }) => {
     },
   ]
   return (
-    <ScrollView>
-      <Image
-        source={{ uri: dogInfo.imageLinks }}
-        style={styles.image}
-        width={width * 0.6}
-      />
-      {info.map((item, i) => (
-        <ListItem
-          key={i}
-          title={item.title}
-          leftIcon={item.icon}
-          bottomDivider
+    <View>
+      <ShowMyPostedDogOptionsModal
+        navigator={navigation}
+        dogInfo={dogInfo}
+        type={'lost'}
+        dotsModalVisible={dotsModalVisible}
+        handleModalPress={handleModalPress}
+      ></ShowMyPostedDogOptionsModal>
+      <ScrollView>
+        <Image
+          source={{ uri: dogInfo.imageLinks }}
+          style={styles.image}
+          width={width * 0.6}
         />
-      ))}
-      <MapView
-        style={styles.mapStyle}
-        initialRegion={{
-          latitude: dogInfo.marker.latitude,
-          longitude: dogInfo.marker.longitude,
-          latitudeDelta: 0.0025,
-          longitudeDelta: 0.0025,
-        }}
-        showsBuildings={false}
-        loadingEnabled={true}
-        ref={map}
-      >
-        <Marker
-          coordinate={{
+        {info.map((item, i) => (
+          <ListItem
+            key={i}
+            title={item.title}
+            leftIcon={item.icon}
+            bottomDivider
+          />
+        ))}
+        <MapView
+          style={styles.mapStyle}
+          initialRegion={{
             latitude: dogInfo.marker.latitude,
             longitude: dogInfo.marker.longitude,
+            latitudeDelta: 0.0025,
+            longitudeDelta: 0.0025,
           }}
-          title={'Acá se perdió.'}
-        />
-      </MapView>
-    </ScrollView>
+          showsBuildings={false}
+          loadingEnabled={true}
+          ref={map}
+        >
+          <Marker
+            coordinate={{
+              latitude: dogInfo.marker.latitude,
+              longitude: dogInfo.marker.longitude,
+            }}
+            title={'Acá se perdió.'}
+          />
+        </MapView>
+      </ScrollView>
+    </View>
   )
 }
 
@@ -82,6 +106,7 @@ ShowMyPostedLostDogInfoScreen.propTypes = {
   route: PropTypes.object.isRequired,
 }
 const styles = StyleSheet.create({
+  dotsButtonStyle: { backgroundColor: 'white', paddingRight: 15 },
   image: {
     alignSelf: 'center',
     marginTop: 5,
