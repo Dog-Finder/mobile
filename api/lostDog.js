@@ -31,7 +31,7 @@ export function getUserLostDogListConfig(authToken) {
 
 export function deleteLostDogConfig(authToken, lostId) {
   return {
-    url: `/lost-dog/` + lostId,
+    url: `/lost-dog/${lostId}`,
     method: 'delete',
     headers: {
       Authorization: `Bearer ${authToken}`,

@@ -6,10 +6,10 @@ import Constants from 'expo-constants'
 
 const ProfileScreen = () => {
   const context = useContext(Context)
-  const [name, setName] = useState([])
-  const [id, setId] = useState([])
-  const [email, setEmail] = useState([])
-  const [createdAt, setcreatedAt] = useState([])
+  const [name, setName] = useState(null)
+  const [id, setId] = useState(null)
+  const [email, setEmail] = useState(null)
+  const [createdAt, setcreatedAt] = useState(null)
 
   useEffect(() => {
     // eslint-disable-next-line prettier/prettier
