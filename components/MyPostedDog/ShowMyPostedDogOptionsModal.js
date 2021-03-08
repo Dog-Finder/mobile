@@ -20,11 +20,11 @@ const ShowMyPostedDogOptionsModal = props => {
       await deleteLostDog(token, id)
     }
     setLoading(false)
+    props.handleModalPress()
     navigator.push('PersonalPublications')
   }
 
   const deletePost = async () => {
-    props.handleModalPress()
     Alert.alert(
       props.dogInfo.name,
       '¿Desea eliminar esta publicación?',
@@ -32,6 +32,9 @@ const ShowMyPostedDogOptionsModal = props => {
         {
           text: 'Cancelar',
           style: 'cancel',
+          onPress: () => {
+            props.handleModalPress()
+          },
         },
         {
           text: 'Eliminar',
@@ -94,6 +97,6 @@ ShowMyPostedDogOptionsModal.propTypes = {
   navigator: PropTypes.object.isRequired,
   dogInfo: PropTypes.object.isRequired,
   type: PropTypes.string.isRequired,
-  dotsModalVisible: PropTypes.bool.isRequired,
+  dotsModalVisible: PropTypes.bool,
   handleModalPress: PropTypes.func.isRequired,
 }
