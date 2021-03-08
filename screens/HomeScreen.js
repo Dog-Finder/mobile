@@ -5,11 +5,12 @@ import { Button } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Constants from 'expo-constants'
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View>
         <Button
+          onPress={() => navigation.navigate('Profile')}
           title="Mi Perfil"
           buttonStyle={styles.profileButton}
           titleStyle={styles.buttonTitle}
@@ -17,6 +18,7 @@ const HomeScreen = () => {
           iconRight
         />
         <Button
+          onPress={() => navigation.navigate('PersonalPublications')}
           title="Mis publicaciones"
           titleStyle={styles.buttonTitle}
           icon={<Icon name="bars" size={25} color="white" />}

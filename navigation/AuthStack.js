@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { AsyncStorage } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { createStackNavigator } from '@react-navigation/stack'
 import AuthLoadingScreen from 'screens/session/AuthLoadingScreen'
 import AuthScreen from 'screens/session/AuthScreen'

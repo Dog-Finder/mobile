@@ -28,3 +28,13 @@ export function getUserFoundDogListConfig(authToken) {
     },
   }
 }
+
+export function deleteFoundDogConfig(authToken, foundId) {
+  return {
+    url: `/found-dog/${foundId}`,
+    method: 'delete',
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  }
+}

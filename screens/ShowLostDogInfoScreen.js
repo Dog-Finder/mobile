@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { StyleSheet, ScrollView, Dimensions } from 'react-native'
 import PropTypes from 'prop-types'
 import { Icon, ListItem } from 'react-native-elements'
@@ -10,8 +10,10 @@ const height = Dimensions.get('window').height
 const ShowLostDogInfoScreen = ({ navigation, route }) => {
   const map = useRef(null)
   const { dogInfo } = route.params
-  navigation.setOptions({ title: dogInfo.name || '' })
   const parsedDate = new Date(dogInfo.date)
+  useEffect(() => {
+    navigation.setOptions({ title: dogInfo.name || '' })
+  })
   const info = [
     {
       title: 'Fecha aviso: ' + parsedDate.toDateString(),
