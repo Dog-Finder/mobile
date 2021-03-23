@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { SafeAreaView, ScrollView, StyleSheet } from 'react-native'
+import { ScrollView, StyleSheet, Text } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { ButtonGroup } from 'react-native-elements'
 import PropTypes from 'prop-types'
-import Constants from 'expo-constants'
 
 import Context from '@context/context'
 import LostDogItem from '../components/LostDog/LostDogItem'
@@ -9,6 +10,7 @@ import { getLostDogList } from '../api'
 
 const LostDogListScreen = ({ navigation }) => {
   const context = useContext(Context)
+  const buttons = ['Más cercanos', 'Más recientes']
   const [lostDogList, setLostDogList] = useState([])
   const [latitude, setLatitude] = useState(null)
   const [longitude, setLongitude] = useState(null)
@@ -44,7 +46,15 @@ const LostDogListScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView styles={styles.container}>
-      <ScrollView styles={styles.scrollView}>{lostDogItems}</ScrollView>
+      <ScrollView styles={styles.scrollView}>
+        <ButtonGroup
+          //onPress={this.updateIndex}
+          //selectedIndex={selectedIndex}
+          buttons={buttons}
+          containerStyle={{ height: 50 }}
+        />
+        {lostDogItems}
+      </ScrollView>
     </SafeAreaView>
   )
 }
@@ -56,9 +66,7 @@ LostDogListScreen.propTypes = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: Constants.statusBarHeight,
   },
-
   scrollView: {
     backgroundColor: 'pink',
     marginHorizontal: 20,
