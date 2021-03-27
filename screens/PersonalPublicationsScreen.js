@@ -22,6 +22,7 @@ const PersonalPublicationsScreen = ({ navigation }) => {
     })
   }
   //used to compare dog publications by date, to sort them
+  
   function compareDogsByDate() {
     return function(dog1, dog2) {
       const dateDog1 = new Date(dog1['date']),
