@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { StyleSheet, View, TouchableOpacity } from 'react-native'
 import PropTypes from 'prop-types'
 import * as Location from 'expo-location'
@@ -6,19 +6,21 @@ import { Input, Card, Image, Button } from 'react-native-elements'
 import DateTimeInput from 'components/inputs/DateTimeInput'
 import { SexInput } from 'components/inputs/SexInput'
 import MapInput from 'components/inputs/MapInput'
+import Context from '@context/context'
 
 const LostDogForm = ({ onSubmitHandler, pressPicture, imagePath }) => {
   const [name, setName] = useState('')
   const [sex, setSex] = useState('')
   const [commentary, setCommentary] = useState('')
   const [date, setDate] = useState(new Date())
+  const context = useContext(Context)
   const [marker, setMarker] = useState({
-    latitude: -33.4376,
-    longitude: 70.6332,
+    latitude: context.latitude,
+    longitude: context.longitude,
   })
   const [initialRegion, setinitialRegion] = useState({
-    latitude: -33.4376,
-    longitude: 70.6332,
+    latitude: context.latitude,
+    longitude: context.longitude,
     latitudeDelta: 0.009,
     longitudeDelta: 0.009,
   })
