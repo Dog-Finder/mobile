@@ -67,7 +67,6 @@ export default MyPostedDogItem
 MyPostedDogItem.propTypes = {
   dog: PropTypes.object.isRequired,
   navigator: PropTypes.object.isRequired,
-  userCoordinates: PropTypes.object.isRequired,
   type: PropTypes.string.isRequired,
 }
 

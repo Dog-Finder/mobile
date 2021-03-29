@@ -14,12 +14,12 @@ const FoundDogForm = ({ onSubmitHandler, pressPicture, imagePath }) => {
   const [date, setDate] = useState(new Date())
   const context = useContext(Context)
   const [marker, setMarker] = useState({
-    latitude: context.latitude,
-    longitude: context.longitude,
+    latitude: context.userLatitude,
+    longitude: context.userLongitude,
   })
   const [initialRegion, setinitialRegion] = useState({
-    latitude: context.latitude,
-    longitude: context.longitude,
+    latitude: context.userLatitude,
+    longitude: context.userLongitude,
     latitudeDelta: 0.009,
     longitudeDelta: 0.009,
   })

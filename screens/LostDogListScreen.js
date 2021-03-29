@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { ButtonGroup } from 'react-native-elements'
 import PropTypes from 'prop-types'
 import getDistance from 'geolib/es/getDistance'
+import getCurrentLocation from '../functions/getCurrentLocation'
 
 import Context from '@context/context'
 import LostDogItem from '../components/LostDog/LostDogItem'
@@ -14,14 +15,7 @@ const LostDogListScreen = ({ navigation }) => {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const buttons = ['Más cercanos', 'Más recientes']
   const [lostDogList, setLostDogList] = useState([])
-  const [latitude, setLatitude] = useState(context.latitude)
-  const [longitude, setLongitude] = useState(context.longitude)
-  const getCurrentLocation = async () => {
-    navigator.geolocation.getCurrentPosition(async position => {
-      setLatitude(parseFloat(position.coords.latitude))
-      setLongitude(parseFloat(position.coords.longitude))
-    })
-  }
+
   //used to compare dog publications by date, to sort them
   function compareDogsByDate() {
     return function(dog1, dog2) {
@@ -42,12 +36,12 @@ const LostDogListScreen = ({ navigation }) => {
     (async () => {
       const { token } = context
       const { data } = await getLostDogList(token)
-      getCurrentLocation().then(
+      getCurrentLocation(context).then(
         data.resource.forEach(
           dog =>
             (dog.distance = getDistance(dog['marker'], {
-              latitude: latitude,
-              longitude: longitude,
+              latitude: context.userLatitude,
+              longitude: context.userLongitude,
             }))
         )
       )
@@ -67,15 +61,7 @@ const LostDogListScreen = ({ navigation }) => {
 
   const lostDogItems = lostDogList.map((lostDog, i) => {
     return (
-      <LostDogItem
-        key={i}
-        dog={lostDog}
-        navigator={navigation}
-        userCoordinates={{
-          latitude,
-          longitude,
-        }}
-      ></LostDogItem>
+      <LostDogItem key={i} dog={lostDog} navigator={navigation}></LostDogItem>
     )
   })
 

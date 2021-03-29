@@ -4,17 +4,12 @@ import { Avatar } from 'react-native-elements'
 import Proptypes from 'prop-types'
 import Context from '@context/context'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import getCurrentLocation from '../functions/getCurrentLocation'
 
 const InitAppScreen = ({ navigation }) => {
-  const getCurrentLocation = async () => {
-    navigator.geolocation.getCurrentPosition(async position => {
-      context.setLatitude(parseFloat(position.coords.latitude))
-      context.setLongitude(parseFloat(position.coords.longitude))
-    })
-  }
   const context = useContext(Context)
   useEffect(() => {
-    getCurrentLocation()
+    getCurrentLocation(context)
   })
   return (
     <View style={styles.container}>

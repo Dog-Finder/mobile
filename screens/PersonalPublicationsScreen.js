@@ -6,23 +6,16 @@ import { Button } from 'react-native-elements'
 import Context from '@context/context'
 import MyPostedDogItem from '../components/MyPostedDog/MyPostedDogItem'
 import { getUserFoundDogList, getUserLostDogList } from '../api'
+import getCurrentLocation from '../functions/getCurrentLocation'
 
 const PersonalPublicationsScreen = ({ navigation }) => {
   const context = useContext(Context)
   const [myFoundDogList, setMyFoundDogList] = useState([])
   const [myLostDogList, setMyLostDogList] = useState([])
-  const [latitude, setLatitude] = useState(null)
-  const [longitude, setLongitude] = useState(null)
   const [showLostDogs, setShowLostDogs] = useState(true)
   const [showFoundDogs, setShowFoundDogs] = useState(true)
-  const getCurrentLocation = async () => {
-    navigator.geolocation.getCurrentPosition(async position => {
-      setLatitude(parseFloat(position.coords.latitude))
-      setLongitude(parseFloat(position.coords.longitude))
-    })
-  }
-  //used to compare dog publications by date, to sort them
 
+  //used to compare dog publications by date, to sort them
   function compareDogsByDate() {
     return function(dog1, dog2) {
       const dateDog1 = new Date(dog1['date']),
@@ -39,7 +32,7 @@ const PersonalPublicationsScreen = ({ navigation }) => {
       const orderDogDates = data.resource
       orderDogDates.sort(compareDogsByDate())
       setMyFoundDogList(orderDogDates)
-      getCurrentLocation()
+      getCurrentLocation(context)
     })()
   }, [])
 
@@ -60,10 +53,6 @@ const PersonalPublicationsScreen = ({ navigation }) => {
         key={i}
         dog={foundDog}
         navigator={navigation}
-        userCoordinates={{
-          latitude,
-          longitude,
-        }}
         type={'found'}
       ></MyPostedDogItem>
     )
@@ -74,10 +63,6 @@ const PersonalPublicationsScreen = ({ navigation }) => {
         key={i}
         dog={lostDog}
         navigator={navigation}
-        userCoordinates={{
-          latitude,
-          longitude,
-        }}
         type={'lost'}
       ></MyPostedDogItem>
     )

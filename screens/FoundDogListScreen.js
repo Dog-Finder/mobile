@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { ButtonGroup } from 'react-native-elements'
 import PropTypes from 'prop-types'
 import getDistance from 'geolib/es/getDistance'
+import getCurrentLocation from '../functions/getCurrentLocation'
 
 import Context from '@context/context'
 import { getFoundDogList } from '../api'
@@ -14,14 +15,6 @@ const FoundDogListScreen = ({ navigation }) => {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const buttons = ['Más cercanos', 'Más recientes']
   const [foundDogList, setFoundDogList] = useState([])
-  const [latitude, setLatitude] = useState(context.latitude)
-  const [longitude, setLongitude] = useState(context.longitude)
-  const getCurrentLocation = async () => {
-    navigator.geolocation.getCurrentPosition(async position => {
-      setLatitude(parseFloat(position.coords.latitude))
-      setLongitude(parseFloat(position.coords.longitude))
-    })
-  }
 
   //used to compare dog publications by date, to sort them
   function compareDogsByDate() {
@@ -43,12 +36,12 @@ const FoundDogListScreen = ({ navigation }) => {
     (async () => {
       const { token } = context
       const { data } = await getFoundDogList(token)
-      getCurrentLocation().then(
+      getCurrentLocation(context).then(
         data.resource.forEach(
           dog =>
             (dog.distance = getDistance(dog['marker'], {
-              latitude: latitude,
-              longitude: longitude,
+              latitude: context.userLatitude,
+              longitude: context.userLongitude,
             }))
         )
       )
@@ -72,10 +65,6 @@ const FoundDogListScreen = ({ navigation }) => {
         key={i}
         dog={foundDog}
         navigator={navigation}
-        userCoordinates={{
-          latitude: latitude,
-          longitude: longitude,
-        }}
       ></FoundDogItem>
     )
   })
