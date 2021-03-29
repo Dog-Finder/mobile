@@ -1,12 +1,16 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { StyleSheet, View, Button, Image } from 'react-native'
 import { Avatar } from 'react-native-elements'
 import Proptypes from 'prop-types'
 import Context from '@context/context'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import getCurrentLocation from '../functions/getCurrentLocation'
 
 const InitAppScreen = ({ navigation }) => {
   const context = useContext(Context)
+  useEffect(() => {
+    getCurrentLocation(context)
+  })
   return (
     <View style={styles.container}>
       <View style={styles.avatarContainer}>
