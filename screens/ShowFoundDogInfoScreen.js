@@ -1,16 +1,18 @@
 import React, { useRef } from 'react'
 import { StyleSheet, ScrollView, Dimensions } from 'react-native'
 import PropTypes from 'prop-types'
-import { Icon, ListItem } from 'react-native-elements'
+import { Icon, ListItem, Button } from 'react-native-elements'
 import MapView, { Marker } from 'react-native-maps'
 import Image from 'react-native-scalable-image'
+import getSimilar from '../functions/getSimilar'
 
 const width = Dimensions.get('window').width
 const height = Dimensions.get('window').height
 
-const ShowFoundDogInfoScreen = ({ route }) => {
+const ShowFoundDogInfoScreen = ({ route, navigation }) => {
   const map = useRef(null)
-  const { dogInfo } = route.params
+  const { dog } = route.params
+  const dogInfo = dog.notice
   const parsedDate = new Date(dogInfo.date)
   const info = [
     {
@@ -32,8 +34,11 @@ const ShowFoundDogInfoScreen = ({ route }) => {
       icon: <Icon name="info" type="material" color="#517fa4" />,
     },
   ]
+  const goToSimilar = () => {
+    navigation.push('SimilarDogList', { dog })
+  }
   return (
-    <ScrollView>
+    <ScrollView style={{ marginBottom: 10 }}>
       <Image
         source={{ uri: dogInfo.imageLinks }}
         style={styles.image}
@@ -67,6 +72,7 @@ const ShowFoundDogInfoScreen = ({ route }) => {
           title={'Acá fue encontrado.'}
         />
       </MapView>
+      <Button title="Buscar Similares" onPress={goToSimilar}></Button>
     </ScrollView>
   )
 }

@@ -17,8 +17,8 @@ import { signUpConfig, logInConfig, getUserDetailConfig } from './user'
 
 const client = axios.create({
   // baseURL: 'https://all31gfkx0.execute-api.us-east-1.amazonaws.com/dev', // production
-  baseURL: 'https://yi54rctdb2.execute-api.us-east-1.amazonaws.com/staging', // staging
-  // baseURL: 'http://localhost:3000/staging', // local
+  // baseURL: 'https://yi54rctdb2.execute-api.us-east-1.amazonaws.com/staging', // staging
+  baseURL: 'http://localhost:3000/dev', // local
   responseType: 'json',
   requestType: 'json',
 })

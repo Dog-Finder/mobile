@@ -13,7 +13,7 @@ export default class FoundDogItem extends Component {
   }
 
   render() {
-    const { imageLinks, date, sex, distance } = this.props.dog //props: imageLinks, date, commentary, address, sex, marker
+    const { imageLinks, date, sex, distance } = this.props.dog.notice //props: imageLinks, date, commentary, address, sex, marker
     const parsedDate = new Date(date)
     const navigator = this.props.navigator
     return (
@@ -21,7 +21,7 @@ export default class FoundDogItem extends Component {
         delayPressIn={30}
         onPress={() =>
           navigator.push('ShowFoundDogInfo', {
-            dogInfo: this.props.dog,
+            dog: this.props.dog,
           })
         }
       >
