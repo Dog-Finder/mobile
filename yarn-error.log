@@ -1,20 +1,30 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js upgrade
+  /Users/Yoav/.nvm/versions/node/v12.18.2/bin/node /usr/local/Cellar/yarn/1.22.4/libexec/bin/yarn.js add react-native-community
 
 PATH: 
-  C:\Users\Ian\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Ian\bin;C:\Python39\Scripts;C:\Python39;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files\nodejs;C:\ProgramData\chocolatey\bin;C:\Program Files (x86)\Yarn\bin;C:\Program Files\Git\cmd;C:\Users\Ian\AppData\Local\Microsoft\WindowsApps;C:\Users\Ian\AppData\Roaming\npm;C:\Users\Ian\AppData\Local\Yarn\bin;C:\Users\Ian\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
+  /Users/Yoav/.pyenv/shims:/Users/Yoav/Library/Android/sdk/platform-tools:/Users/Yoav/.pyenv/bin:/usr/local/opt/tcl-tk/bin:/Users/Yoav/.poetry/bin:/Users/Yoav/.nvm/versions/node/v12.18.2/bin:/Users/Yoav/bin:/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/VMware Fusion.app/Contents/Public:/Library/TeX/texbin:/usr/local/go/bin:/Library/Apple/usr/bin:/Applications/Wireshark.app/Contents/MacOS:/Library/Frameworks/Python.framework/Versions/3.6/bin/:/Users/Yoav/Documents/go/bin:/usr/local/opt/go/libexec/bin
 
 Yarn version: 
-  1.22.5
+  1.22.4
 
 Node version: 
-  14.15.3
+  12.18.2
 
 Platform: 
-  win32 x64
+  darwin x64
 
 Trace: 
-  Error: EPERM: operation not permitted, unlink 'C:\Users\Ian\Documents\Dog\mobile\node_modules\@expo\xdl\binaries\windows\adb\AdbWinApi.dll'
+  Error: https://registry.yarnpkg.com/react-native-community: Not found
+      at Request.params.callback [as _callback] (/usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:66987:18)
+      at Request.self.callback (/usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:140748:22)
+      at Request.emit (events.js:315:20)
+      at Request.<anonymous> (/usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:141720:10)
+      at Request.emit (events.js:315:20)
+      at IncomingMessage.<anonymous> (/usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:141642:12)
+      at Object.onceWrapper (events.js:421:28)
+      at IncomingMessage.emit (events.js:327:22)
+      at endReadableNT (_stream_readable.js:1221:12)
+      at processTicksAndRejections (internal/process/task_queues.js:84:21)
 
 npm manifest: 
   {
