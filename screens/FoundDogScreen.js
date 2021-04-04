@@ -2,8 +2,8 @@ import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, SafeAreaView } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import FoundDogForm from '../components/FoundDogForm/FoundDogForm'
-import { postFoundDog, getSignedUrl } from '../api'
+import FoundDogForm from '@components/FoundDogForm/FoundDogForm'
+import { postFoundDog, getSignedUrl } from '@api'
 import Context from '@context/context'
 
 const FoundDogScreen = ({ navigation, route }) => {

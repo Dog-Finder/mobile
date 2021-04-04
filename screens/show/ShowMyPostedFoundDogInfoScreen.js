@@ -4,12 +4,12 @@ import PropTypes from 'prop-types'
 import { Icon, ListItem, Button } from 'react-native-elements'
 import MapView, { Marker } from 'react-native-maps'
 import Image from 'react-native-scalable-image'
-import ShowMyPostedDogOptionsModal from '../components/MyPostedDog/ShowMyPostedDogOptionsModal'
+import ShowMyPostedDogOptionsModal from '@components/MyPostedDog/ShowMyPostedDogOptionsModal'
 
 const width = Dimensions.get('window').width
 const height = Dimensions.get('window').height
 
-const ShowMyPostedLostDogInfoScreen = ({ navigation, route }) => {
+const ShowMyPostedFoundDogInfoScreen = ({ navigation, route }) => {
   const map = useRef(null)
   const { dogInfo } = route.params
   const [dotsModalVisible, setDotsModalVisible] = useState(false) //modal for the dots button at header, for deleting or editing the post
@@ -19,19 +19,6 @@ const ShowMyPostedLostDogInfoScreen = ({ navigation, route }) => {
     }
     setDotsModalVisible(!dotsModalVisible)
   }
-  useEffect(() => {
-    navigation.setOptions({ title: dogInfo.name || '' })
-    navigation.setOptions({
-      // eslint-disable-next-line react/display-name
-      headerRight: () => (
-        <Button
-          onPress={() => setDotsModalVisible(!dotsModalVisible)}
-          icon={<Icon name="ellipsis-h" type="font-awesome" color="black" />}
-          buttonStyle={styles.dotsButtonStyle}
-        />
-      ),
-    })
-  })
   const parsedDate = new Date(dogInfo.date)
   const info = [
     {
@@ -53,12 +40,25 @@ const ShowMyPostedLostDogInfoScreen = ({ navigation, route }) => {
       icon: <Icon name="info" type="material" color="#517fa4" />,
     },
   ]
+  useEffect(() => {
+    navigation.setOptions({
+      // eslint-disable-next-line react/display-name
+      headerRight: () => (
+        <Button
+          onPress={() => setDotsModalVisible(!dotsModalVisible)}
+          icon={<Icon name="ellipsis-h" type="font-awesome" color="black" />}
+          buttonStyle={styles.dotsButtonStyle}
+        />
+      ),
+    })
+  }, [navigation])
+
   return (
     <View>
       <ShowMyPostedDogOptionsModal
         navigator={navigation}
         dogInfo={dogInfo}
-        type={'lost'}
+        type={'found'}
         dotsModalVisible={dotsModalVisible}
         handleModalPress={handleModalPress}
       ></ShowMyPostedDogOptionsModal>
@@ -93,7 +93,7 @@ const ShowMyPostedLostDogInfoScreen = ({ navigation, route }) => {
               latitude: dogInfo.marker.latitude,
               longitude: dogInfo.marker.longitude,
             }}
-            title={'Acá se perdió.'}
+            title={'Acá fue encontrado.'}
           />
         </MapView>
       </ScrollView>
@@ -101,7 +101,7 @@ const ShowMyPostedLostDogInfoScreen = ({ navigation, route }) => {
   )
 }
 
-ShowMyPostedLostDogInfoScreen.propTypes = {
+ShowMyPostedFoundDogInfoScreen.propTypes = {
   navigation: PropTypes.object.isRequired,
   route: PropTypes.object.isRequired,
 }
@@ -121,4 +121,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default ShowMyPostedLostDogInfoScreen
+export default ShowMyPostedFoundDogInfoScreen

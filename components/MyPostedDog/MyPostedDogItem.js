@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { Text, StyleSheet, View, TouchableOpacity, Alert } from 'react-native'
 import { Card } from 'react-native-elements'
 import PropTypes from 'prop-types'
-import { deleteLostDog, deleteFoundDog } from '../../api'
+import { deleteLostDog, deleteFoundDog } from '@api'
 import Context from '@context/context'
 
 const MyPostedDogItem = props => {

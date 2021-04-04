@@ -4,9 +4,9 @@ import PropTypes from 'prop-types'
 import Constants from 'expo-constants'
 import { Button } from 'react-native-elements'
 import Context from '@context/context'
-import MyPostedDogItem from '../components/MyPostedDog/MyPostedDogItem'
-import { getUserFoundDogList, getUserLostDogList } from '../api'
-import getCurrentLocation from '../functions/getCurrentLocation'
+import MyPostedDogItem from '@components/MyPostedDog/MyPostedDogItem'
+import { getUserFoundDogList, getUserLostDogList } from '@api'
+import getCurrentLocation from '@functions/getCurrentLocation'
 
 const PersonalPublicationsScreen = ({ navigation }) => {
   const context = useContext(Context)

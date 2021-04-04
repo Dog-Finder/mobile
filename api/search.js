@@ -1,10 +1,10 @@
-export function searchKNNConfig(authToken, imageLink) {
+export function searchKNNConfig(authToken, imageLink, index) {
   return {
     url: '/search',
     method: 'post',
     headers: {
       Authorization: `Bearer ${authToken}`,
     },
-    data: { imageLink },
+    data: { imageLink, index },
   }
 }

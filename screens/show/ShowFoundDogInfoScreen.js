@@ -33,7 +33,8 @@ const ShowFoundDogInfoScreen = ({ route, navigation }) => {
     },
   ]
   const goToSimilar = () => {
-    navigation.push('SimilarDogList', { dog })
+    const similarIndex = 'found'
+    navigation.push('SimilarDogList', { dog, similarIndex })
   }
   return (
     <ScrollView style={{ marginBottom: 10 }}>

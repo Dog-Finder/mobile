@@ -60,6 +60,6 @@ export function deleteLostDog(authToken, lostId) {
 export function deleteFoundDog(authToken, foundId) {
   return client.request(deleteFoundDogConfig(authToken, foundId))
 }
-export function searchKNN(authToken, imageLink) {
-  return client.request(searchKNNConfig(authToken, imageLink))
+export function searchKNN(authToken, imageLink, index) {
+  return client.request(searchKNNConfig(authToken, imageLink, index))
 }

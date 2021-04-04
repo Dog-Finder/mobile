@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import { StyleSheet, View, Alert } from 'react-native'
 import PropTypes from 'prop-types'
 import { Icon, Button } from 'react-native-elements'
-import { deleteFoundDog, deleteLostDog } from '../../api'
+import { deleteFoundDog, deleteLostDog } from '@api'
 import Context from '@context/context'
 import Modal from 'react-native-modal'
 

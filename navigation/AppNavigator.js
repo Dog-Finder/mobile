@@ -1,13 +1,13 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import InitAppScreen from '../screens/InitAppScreen'
-import LostDogScreen from '../screens/LostDogScreen'
+import InitAppScreen from '@screens/InitAppScreen'
+import LostDogScreen from '@screens/LostDogScreen'
 import HomeBottomTab from './home/HomeBottomTab'
 import FoundDogStack from './FoundDogStack'
-import PersonalPublicationsScreen from '../screens/PersonalPublicationsScreen'
-import ProfileScreen from '../screens/ProfileScreen'
-import ShowMyPostedLostDogInfoScreen from '../screens/ShowMyPostedLostDogInfoScreen'
-import ShowMyPostedFoundDogInfoScreen from '../screens/ShowMyPostedFoundDogInfoScreen'
+import PersonalPublicationsScreen from '@screens/PersonalPublicationsScreen'
+import ProfileScreen from '@screens/ProfileScreen'
+import ShowMyPostedLostDogInfoScreen from '@screens/show/ShowMyPostedLostDogInfoScreen'
+import ShowMyPostedFoundDogInfoScreen from '@screens/show/ShowMyPostedFoundDogInfoScreen'
 
 const Stack = createStackNavigator()
 const AppNavigator = () => {
