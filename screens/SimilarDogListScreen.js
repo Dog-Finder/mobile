@@ -16,7 +16,7 @@ const SimilarDogListScreen = ({ route, navigation }) => {
     // eslint-disable-next-line prettier/prettier
     (async () => {
       const { token } = context
-      const { data } = await searchKNN(token, dog.notice.imageLinks)
+      const { data } = await searchKNN(token, dog.imageLinks)
       setFoundDogList(data.resource)
     })()
   }, [])

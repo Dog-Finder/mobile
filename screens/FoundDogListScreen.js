@@ -19,15 +19,15 @@ const FoundDogListScreen = ({ navigation }) => {
   //used to compare dog publications by date, to sort them
   function compareDogsByDate() {
     return function(dog1, dog2) {
-      const dateDog1 = new Date(dog1.notice['date']),
-        dateDog2 = new Date(dog2.notice['date'])
+      const dateDog1 = new Date(dog1['date']),
+        dateDog2 = new Date(dog2['date'])
       return dateDog2 - dateDog1
     }
   }
   //used to compare dog publications by distance, to sort them
   function compareDogsByDistance() {
     return function(dog1, dog2) {
-      return dog1.notice['distance'] - dog2.notice['distance']
+      return dog1['distance'] - dog2['distance']
     }
   }
 
@@ -39,7 +39,7 @@ const FoundDogListScreen = ({ navigation }) => {
       getCurrentLocation(context).then(
         data.resource.forEach(
           dog =>
-            (dog.notice.distance = getDistance(dog.notice['marker'], {
+            (dog.distance = getDistance(dog['marker'], {
               latitude: context.userLatitude,
               longitude: context.userLongitude,
             }))

@@ -13,7 +13,7 @@ export default class FoundDogItem extends Component {
   }
 
   render() {
-    const { imageLinks, date, sex, distance } = this.props.dog.notice //props: imageLinks, date, commentary, address, sex, marker
+    const { imageLinks, date, sex, distance, score } = this.props.dog //props: imageLinks, date, commentary, address, sex, marker
     const parsedDate = new Date(date)
     const navigator = this.props.navigator
     return (
@@ -33,6 +33,7 @@ export default class FoundDogItem extends Component {
               Distancia a ubicación actual:{' '}
               {Math.round((distance / 1000 + Number.EPSILON) * 10) / 10} km.
             </Text>
+            {score ? <Text>Score: {score}</Text> : null}
           </View>
         </Card>
       </TouchableOpacity>
