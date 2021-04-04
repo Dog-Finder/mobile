@@ -16,15 +16,11 @@ const MyPostedDogItem = props => {
     <TouchableOpacity
       delayPressIn={30}
       onPress={() => {
-        if (props.type === 'found') {
-          navigator.navigate('ShowMyPostedFoundDogInfo', {
-            dogInfo: props.dog,
-          })
-        } else {
-          navigator.navigate('ShowMyPostedLostDogInfo', {
-            dogInfo: props.dog,
-          })
-        }
+        const nextScreen =
+          props.type === 'found'
+            ? 'ShowMyPostedFoundDogInfo'
+            : 'ShowMyPostedLostDogInfo'
+        navigator.navigate(nextScreen, { dog: props.dog })
       }}
       onLongPress={() => {
         Alert.alert(

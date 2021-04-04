@@ -4,10 +4,8 @@ import InitAppScreen from '@screens/InitAppScreen'
 import LostDogScreen from '@screens/LostDogScreen'
 import HomeBottomTab from './home/HomeBottomTab'
 import FoundDogStack from './FoundDogStack'
-import PersonalPublicationsScreen from '@screens/PersonalPublicationsScreen'
+import PersonalPublicationsStack from './home/PersonalPublicationsStack'
 import ProfileScreen from '@screens/ProfileScreen'
-import ShowMyPostedLostDogInfoScreen from '@screens/show/ShowMyPostedLostDogInfoScreen'
-import ShowMyPostedFoundDogInfoScreen from '@screens/show/ShowMyPostedFoundDogInfoScreen'
 
 const Stack = createStackNavigator()
 const AppNavigator = () => {
@@ -23,50 +21,7 @@ const AppNavigator = () => {
       <Stack.Screen name="Profile" component={ProfileScreen} />
       <Stack.Screen
         name="PersonalPublications"
-        component={PersonalPublicationsScreen}
-        options={{
-          title: 'Mis publicaciones',
-          headerShown: true,
-          headerStyle: {
-            backgroundColor: 'white',
-          },
-          headerTintColor: 'steelblue',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-            textAlign: 'auto',
-          },
-        }}
-      />
-      <Stack.Screen
-        name="ShowMyPostedLostDogInfo"
-        component={ShowMyPostedLostDogInfoScreen}
-        options={() => ({
-          headerShown: true,
-          headerStyle: {
-            backgroundColor: 'white',
-          },
-          headerTintColor: 'steelblue',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-            textAlign: 'auto',
-          },
-        })}
-      />
-      <Stack.Screen
-        name="ShowMyPostedFoundDogInfo"
-        component={ShowMyPostedFoundDogInfoScreen}
-        options={() => ({
-          title: null,
-          headerShown: true,
-          headerStyle: {
-            backgroundColor: 'white',
-          },
-          headerTintColor: 'steelblue',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-            textAlign: 'auto',
-          },
-        })}
+        component={PersonalPublicationsStack}
       />
     </Stack.Navigator>
   )
