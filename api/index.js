@@ -14,6 +14,7 @@ import {
 } from './lostDog'
 import { getSignedUrlConfig } from './images'
 import { signUpConfig, logInConfig, getUserDetailConfig } from './user'
+import { searchKNNConfig } from './search'
 
 const client = axios.create({
   // baseURL: 'https://all31gfkx0.execute-api.us-east-1.amazonaws.com/dev', // production
@@ -58,4 +59,7 @@ export function deleteLostDog(authToken, lostId) {
 }
 export function deleteFoundDog(authToken, foundId) {
   return client.request(deleteFoundDogConfig(authToken, foundId))
+}
+export function searchKNN(authToken, imageLink) {
+  return client.request(searchKNNConfig(authToken, imageLink))
 }

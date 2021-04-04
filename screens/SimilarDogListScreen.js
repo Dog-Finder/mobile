@@ -4,12 +4,11 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import PropTypes from 'prop-types'
 
 import Context from '@context/context'
-import { getFoundDogList } from '../api'
+import { searchKNN } from '../api'
 import FoundDogItem from '../components/FoundDog/FoundDogItem'
 
 const SimilarDogListScreen = ({ route, navigation }) => {
   const { dog } = route.params
-  console.log(dog)
   const context = useContext(Context)
   const [foundDogList, setFoundDogList] = useState([])
 
@@ -17,7 +16,7 @@ const SimilarDogListScreen = ({ route, navigation }) => {
     // eslint-disable-next-line prettier/prettier
     (async () => {
       const { token } = context
-      const { data } = await getFoundDogList(token)
+      const { data } = await searchKNN(token, dog.notice.imageLinks)
       setFoundDogList(data.resource)
     })()
   }, [])

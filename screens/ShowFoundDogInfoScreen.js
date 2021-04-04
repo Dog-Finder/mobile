@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import { Icon, ListItem, Button } from 'react-native-elements'
 import MapView, { Marker } from 'react-native-maps'
 import Image from 'react-native-scalable-image'
-import getSimilar from '../functions/getSimilar'
 
 const width = Dimensions.get('window').width
 const height = Dimensions.get('window').height
