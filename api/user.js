@@ -23,3 +23,13 @@ export function getUserDetailConfig(authToken) {
     },
   }
 }
+
+export function restoreSessionConfig(authToken) {
+  return {
+    url: '/restore',
+    method: 'post',
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  }
+}

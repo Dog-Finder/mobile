@@ -1,6 +1,7 @@
 import React, { useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
-import { StyleSheet, View, ActivityIndicator, AsyncStorage } from 'react-native'
+import { StyleSheet, View, ActivityIndicator } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { signUp } from '@api'
 import Context from '@context/context'
 

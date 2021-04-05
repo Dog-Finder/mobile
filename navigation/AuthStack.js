@@ -7,6 +7,7 @@ import SignUpScreens from '@screens/session/SignUpScreens'
 import SignInScreen from '@screens/session/SignInScreen'
 import AppNavigator from './AppNavigator'
 import Context from '@context/context'
+import { restoreSession } from '@api'
 
 const Stack = createStackNavigator()
 
@@ -15,12 +16,19 @@ const AuthStack = () => {
   const [loading, setLoading] = useState(true)
   const userToken = context.token !== ''
   useEffect(() => {
-    const restoreSession = async () => {
-      const token = await AsyncStorage.getItem('token')
-      if (token !== null) context.setToken(token)
+    const restore = async () => {
+      const oldToken = await AsyncStorage.getItem('token')
+      try {
+        const { data } = await restoreSession(oldToken)
+        const token = data.resource
+        context.setToken(token)
+        AsyncStorage.setItem('token', token)
+      } catch (error) {
+        setLoading(false) // TODO: catch exception more cleanly (e.g. with status code)
+      }
       setLoading(false)
     }
-    restoreSession()
+    restore()
   }, [])
   if (loading) return <AuthLoadingScreen />
   return (

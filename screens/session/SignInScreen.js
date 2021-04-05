@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react'
-import { StyleSheet, SafeAreaView, AsyncStorage } from 'react-native'
+import { StyleSheet, SafeAreaView } from 'react-native'
 import { Input, Button, Card } from 'react-native-elements'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import VerticalContainer from '@components/layout/VerticalContainer'
 import { logIn } from '@api'
 import Context from '@context/context'
