@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { Text, StyleSheet, View, TouchableOpacity, Alert } from 'react-native'
 import { Card } from 'react-native-elements'
 import PropTypes from 'prop-types'
-import { deleteLostDog, deleteFoundDog } from '../../api'
+import { deleteLostDog, deleteFoundDog } from '@api'
 import Context from '@context/context'
 
 const MyPostedDogItem = props => {
@@ -16,15 +16,11 @@ const MyPostedDogItem = props => {
     <TouchableOpacity
       delayPressIn={30}
       onPress={() => {
-        if (props.type === 'found') {
-          navigator.navigate('ShowMyPostedFoundDogInfo', {
-            dogInfo: props.dog,
-          })
-        } else {
-          navigator.navigate('ShowMyPostedLostDogInfo', {
-            dogInfo: props.dog,
-          })
-        }
+        const nextScreen =
+          props.type === 'found'
+            ? 'ShowMyPostedFoundDogInfo'
+            : 'ShowMyPostedLostDogInfo'
+        navigator.navigate(nextScreen, { dog: props.dog })
       }}
       onLongPress={() => {
         Alert.alert(

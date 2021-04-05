@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { StyleSheet, View, Text } from 'react-native'
-import { getUserDetail } from '../api'
+import { getUserDetail } from '@api'
 import Context from '@context/context'
 import Constants from 'expo-constants'
 

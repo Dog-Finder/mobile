@@ -4,9 +4,10 @@ import PropTypes from 'prop-types'
 import Constants from 'expo-constants'
 import { Button } from 'react-native-elements'
 import Context from '@context/context'
-import MyPostedDogItem from '../components/MyPostedDog/MyPostedDogItem'
-import { getUserFoundDogList, getUserLostDogList } from '../api'
-import getCurrentLocation from '../functions/getCurrentLocation'
+import MyPostedDogItem from '@components/MyPostedDog/MyPostedDogItem'
+import { getUserFoundDogList, getUserLostDogList } from '@api'
+import getCurrentLocation from '@functions/getCurrentLocation'
+import { compareDogsByDate } from '@functions/sorting'
 
 const PersonalPublicationsScreen = ({ navigation }) => {
   const context = useContext(Context)
@@ -14,15 +15,6 @@ const PersonalPublicationsScreen = ({ navigation }) => {
   const [myLostDogList, setMyLostDogList] = useState([])
   const [showLostDogs, setShowLostDogs] = useState(true)
   const [showFoundDogs, setShowFoundDogs] = useState(true)
-
-  //used to compare dog publications by date, to sort them
-  function compareDogsByDate() {
-    return function(dog1, dog2) {
-      const dateDog1 = new Date(dog1['date']),
-        dateDog2 = new Date(dog2['date'])
-      return dateDog2 - dateDog1
-    }
-  }
 
   useEffect(() => {
     // eslint-disable-next-line prettier/prettier

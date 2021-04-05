@@ -1,9 +1,9 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import FoundDogScreen from '../screens/FoundDogScreen'
-import PictureScreen from '../screens/camera/PictureScreen'
-import AcceptPictureScreen from '../screens/camera/AcceptPictureScreen'
-import ShowPictureScreen from '../screens/camera/ShowPictureScreen'
+import FoundDogScreen from '@screens/FoundDogScreen'
+import PictureScreen from '@screens/camera/PictureScreen'
+import AcceptPictureScreen from '@screens/camera/AcceptPictureScreen'
+import ShowPictureScreen from '@screens/camera/ShowPictureScreen'
 
 const Stack = createStackNavigator()
 const InitAppStack = () => {

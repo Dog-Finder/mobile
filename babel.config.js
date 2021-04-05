@@ -15,6 +15,7 @@ module.exports = function(api) {
             '@context': './context',
             '@api': './api',
             '@constants': './constants',
+            '@functions': './functions',
           },
         },
       ],

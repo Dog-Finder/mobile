@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import { StyleSheet, SafeAreaView } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import * as ImagePicker from 'expo-image-picker'
-import LostDogForm from '../components/LostDogForm/LostDogForm'
+import LostDogForm from '@components/LostDogForm/LostDogForm'
 import Context from '@context/context'
-import { postLostDog, getSignedUrl } from '../api'
+import { postLostDog, getSignedUrl } from '@api'
 
 const LostDogScreen = ({ navigation }) => {
   const context = useContext(Context)
