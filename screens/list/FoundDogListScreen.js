@@ -4,38 +4,24 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { ButtonGroup } from 'react-native-elements'
 import PropTypes from 'prop-types'
 import getDistance from 'geolib/es/getDistance'
-import getCurrentLocation from '../functions/getCurrentLocation'
+import getCurrentLocation from '@functions/getCurrentLocation'
+import { compareDogsByDate, compareDogsByDistance } from '@functions/sorting'
 
 import Context from '@context/context'
-import LostDogItem from '../components/LostDog/LostDogItem'
-import { getLostDogList } from '../api'
+import { getFoundDogList } from '@api'
+import FoundDogItem from '@components/FoundDog/FoundDogItem'
 
-const LostDogListScreen = ({ navigation }) => {
+const FoundDogListScreen = ({ navigation }) => {
   const context = useContext(Context)
   const [selectedIndex, setSelectedIndex] = useState(0)
   const buttons = ['Más cercanos', 'Más recientes']
-  const [lostDogList, setLostDogList] = useState([])
-
-  //used to compare dog publications by date, to sort them
-  function compareDogsByDate() {
-    return function(dog1, dog2) {
-      const dateDog1 = new Date(dog1['date']),
-        dateDog2 = new Date(dog2['date'])
-      return dateDog2 - dateDog1
-    }
-  }
-  //used to compare dog publications by distance, to sort them
-  function compareDogsByDistance() {
-    return function(dog1, dog2) {
-      return dog1['distance'] - dog2['distance']
-    }
-  }
+  const [foundDogList, setFoundDogList] = useState([])
 
   useEffect(() => {
     // eslint-disable-next-line prettier/prettier
     (async () => {
       const { token } = context
-      const { data } = await getLostDogList(token)
+      const { data } = await getFoundDogList(token)
       getCurrentLocation(context).then(
         data.resource.forEach(
           dog =>
@@ -46,25 +32,28 @@ const LostDogListScreen = ({ navigation }) => {
         )
       )
       data.resource.sort(compareDogsByDistance())
-      setLostDogList(data.resource)
+      setFoundDogList(data.resource)
     })()
   }, [])
 
   function OnSortingPress(index, selectedIndex) {
     if (selectedIndex === 0 && index === 1) {
-      lostDogList.sort(compareDogsByDate())
+      foundDogList.sort(compareDogsByDate())
     } else if (selectedIndex === 1 && index === 0) {
-      lostDogList.sort(compareDogsByDistance())
+      foundDogList.sort(compareDogsByDistance())
     }
     setSelectedIndex(index)
   }
 
-  const lostDogItems = lostDogList.map((lostDog, i) => {
+  const foundDogItems = foundDogList.map((foundDog, i) => {
     return (
-      <LostDogItem key={i} dog={lostDog} navigator={navigation}></LostDogItem>
+      <FoundDogItem
+        key={i}
+        dog={foundDog}
+        navigator={navigation}
+      ></FoundDogItem>
     )
   })
-
   return (
     <SafeAreaView styles={styles.container}>
       <ScrollView styles={styles.scrollView}>
@@ -73,13 +62,13 @@ const LostDogListScreen = ({ navigation }) => {
           selectedIndex={selectedIndex}
           buttons={buttons}
         />
-        {lostDogItems}
+        {foundDogItems}
       </ScrollView>
     </SafeAreaView>
   )
 }
 
-LostDogListScreen.propTypes = {
+FoundDogListScreen.propTypes = {
   navigation: PropTypes.object.isRequired,
 }
 
@@ -93,4 +82,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default LostDogListScreen
+export default FoundDogListScreen

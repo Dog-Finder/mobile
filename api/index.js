@@ -19,6 +19,7 @@ import {
   getUserDetailConfig,
   restoreSessionConfig,
 } from './user'
+import { searchKNNConfig } from './search'
 
 const client = axios.create({
   // baseURL: 'https://all31gfkx0.execute-api.us-east-1.amazonaws.com/dev', // production
@@ -66,4 +67,7 @@ export function deleteFoundDog(authToken, foundId) {
 }
 export function restoreSession(authToken) {
   return client.request(restoreSessionConfig(authToken))
+}
+export function searchKNN(authToken, imageLink, index) {
+  return client.request(searchKNNConfig(authToken, imageLink, index))
 }

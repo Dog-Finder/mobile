@@ -2,11 +2,12 @@ import React, { useContext, useState } from 'react'
 import { StyleSheet, View, Alert } from 'react-native'
 import PropTypes from 'prop-types'
 import { Icon, Button } from 'react-native-elements'
-import { deleteFoundDog, deleteLostDog } from '../../api'
+import { deleteFoundDog, deleteLostDog } from '@api'
 import Context from '@context/context'
 import Modal from 'react-native-modal'
 
 const ShowMyPostedDogOptionsModal = props => {
+  const { dog } = props
   const [loading, setLoading] = useState(false)
   const navigator = props.navigator
   const context = useContext(Context)
@@ -26,7 +27,7 @@ const ShowMyPostedDogOptionsModal = props => {
 
   const deletePost = async () => {
     Alert.alert(
-      props.dogInfo.name,
+      dog.name,
       '¿Desea eliminar esta publicación?',
       [
         {
@@ -39,7 +40,7 @@ const ShowMyPostedDogOptionsModal = props => {
         {
           text: 'Eliminar',
           onPress: () => {
-            onDeletePost(token, props.dogInfo.id, props.type)
+            onDeletePost(token, dog.id, props.type)
           },
         },
       ],
@@ -95,7 +96,7 @@ export default ShowMyPostedDogOptionsModal
 
 ShowMyPostedDogOptionsModal.propTypes = {
   navigator: PropTypes.object.isRequired,
-  dogInfo: PropTypes.object.isRequired,
+  dog: PropTypes.object.isRequired,
   type: PropTypes.string.isRequired,
   dotsModalVisible: PropTypes.bool,
   handleModalPress: PropTypes.func.isRequired,

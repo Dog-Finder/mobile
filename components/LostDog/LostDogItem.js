@@ -21,7 +21,7 @@ export default class LostDogItem extends Component {
         delayPressIn={30}
         onPress={() =>
           navigator.push('ShowLostDogInfo', {
-            dogInfo: this.props.dog,
+            dog: this.props.dog,
           })
         }
       >
