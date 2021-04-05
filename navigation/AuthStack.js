@@ -23,7 +23,9 @@ const AuthStack = () => {
         const token = data.resource
         context.setToken(token)
         AsyncStorage.setItem('token', token)
-      } catch (error) {}
+      } catch (error) {
+        setLoading(false) // TODO: catch exception more cleanly (e.g. with status code)
+      }
       setLoading(false)
     }
     restore()
